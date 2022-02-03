@@ -1,5 +1,6 @@
 import Ad from './Ad.js';
-import Container from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 function Adlist(props) {
   const ads = props.data
@@ -7,9 +8,9 @@ function Adlist(props) {
   return (
     ads.map((ad) => {
       return (
-        <Container>
-          <Ad images={ad.images} description = {ad.description} title = {ad.title}/>
-        </Container>
+        <Grid>
+          <Ad images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>
+        </Grid>
       )
     })
   )
