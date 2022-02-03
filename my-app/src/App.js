@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import AdList from './Components/AdList';
+import FilterBar from './Components/FilterBar';
+import data from './data';
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+import Button from '@mui/material/Button';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <home>
+    <h1>JamSpace</h1>
+    <img src="https://blog.reverbnation.com/wp-content/uploads/2017/12/why-your-band-needs-to-practice-1500px.jpg"></img>
+    <div>
+      <FilterBar/>
+      <AdList data = {data}/>
     </div>
+    </home>
   );
 }
 
