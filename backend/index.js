@@ -2,6 +2,7 @@ import app from './server.js';
 import mongodb from 'mongodb';
 import dotenv from 'dotenv';
 import ListingsDAO from './dao/listingsDAO.js';
+import AdsDAO from './dao/adsDAO.js';
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ MongoClient.connect(process.env.INSTRUMENTLISTINGS_DB_URI, {
   })
   .then(async client => {
     await ListingsDAO.injectDB(client);
+    await AdsDAO.injectDB(client);
     app.listen(port, () => {
       console.log(`Server up and running on port ${port}`);
     });
