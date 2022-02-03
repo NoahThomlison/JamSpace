@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 let listings;
 
 export default class ListingsDAO {
@@ -58,5 +60,55 @@ export default class ListingsDAO {
       );
       return { listingsList: [], totalNumListings: 0 };
     }
+  }
+
+  static async getListingById(id) {
+    let cursor;
+    let query = { _id: new ObjectId(id) };
+    console.log(query);
+    try {
+      cursor = await listings.find(query);
+    } catch (e) {
+      console.error(`Unable to issue find command, ${e}`);
+      return { listing: {} };
+    }
+
+    const displayCursor = cursor;
+
+    try {
+      const listing = await displayCursor.toArray();
+      return { listing };
+    } catch (e) {
+      console.error(
+        `Unable to convert cursor to array or problem counting documents, ${e}`
+      );
+      return { listing };
+    }
+
+    // try {
+    //   const pipeline = [
+    //     {
+    //       $match: {
+    //         _id: new ObjectId(id),
+    //       },
+    //     },
+    //     {
+    //       $lookup: {
+    //         from: 'listings',
+    //         let: {
+    //           id: '$_id',
+    //         },
+    //         pipeline: [
+    //           $match: {
+    //             $expr: {
+    //               $eq: ['$restaurant_id', '$$id'],
+
+    //             }
+    //           }
+    //         ]
+    //       }
+    //     }
+    //   ]
+    // }
   }
 }

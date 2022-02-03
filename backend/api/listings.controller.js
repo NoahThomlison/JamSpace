@@ -34,4 +34,20 @@ export default class ListingsController {
     };
     res.json(response);
   }
+
+  static async apiGetListingById(req, res, next) {
+    try {
+      let id = req.params.id || {};
+      let listing = await ListingsDAO.getListingById(id);
+      console.log(listing);
+      if (!listing) {
+        res.status(404).json({ error: 'Not found' });
+        return;
+      }
+      res.json(listing);
+    } catch (e) {
+      console.log(`api, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
 }

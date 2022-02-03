@@ -5,6 +5,7 @@ import AdsCtrl from './ads.controller.js';
 const router = express.Router();
 
 router.route('/').get(ListingsCtrl.apiGetListings);
+router.route('/id/:id').get(ListingsCtrl.apiGetListingById);
 
 router
   .route('/ad')
