@@ -9,6 +9,31 @@ const AdListings = props => {
   const [searchDescription, setSearchDescription] = useState('');
   const [searchInstrumentType, setSearchInstrumentType] = useState('');
 
+  // Instrument Types to populate the search filter dropdown
+  const instruments = [
+    'Drums',
+    'Acoustic Guitar',
+    'Bass Guitar',
+    'Electric Guitar',
+    'Keyboard',
+  ];
+
+  // Brands to populate the search filter dropdown
+  const brands = [
+    'African',
+    'Epiphone',
+    'Fender',
+    'Gibson',
+    'Ibanez',
+    'Korg',
+    'Larrivee',
+    'Mapex',
+    'Roland',
+    'Squier',
+    'Taylor Guitars',
+    'Yamaha',
+  ];
+
   useEffect(() => {
     retrieveListings();
   }, []);
@@ -43,9 +68,10 @@ const AdListings = props => {
       });
   };
 
-  const refreshList = () => {
-    retrieveListings();
-  };
+  // Not used yet
+  // const refreshList = () => {
+  //   retrieveListings();
+  // };
 
   const find = (query, by) => {
     ListingsDataService.find(query, by)
@@ -75,79 +101,86 @@ const AdListings = props => {
   };
 
   return (
-    <div>
-      <div className='row pb-1'>
-        <div className='input-group col-lg-4'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Search by Brand'
-            value={searchBrand}
-            onChange={onChangeSearchBrand}
-          />
-          <div className='input-group-append'>
-            <button
-              className='btn btn-outline-secondary'
-              type='button'
-              onClick={findByBrand}
-            >
-              Search
-            </button>
+    <div className='container'>
+      <div className='row pt-3 justify-content-around'>
+        <div className='col-lg-5'>
+          <div className='input-group'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Search by City'
+              value={searchCity}
+              onChange={onChangeSearchCity}
+            />
+            <div className='input-group-append'>
+              <button
+                className='btn btn-outline-secondary'
+                type='button'
+                onClick={findByCity}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
-        <div className='input-group col-lg-4'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Search by City'
-            value={searchCity}
-            onChange={onChangeSearchCity}
-          />
-          <div className='input-group-append'>
-            <button
-              className='btn btn-outline-secondary'
-              type='button'
-              onClick={findByCity}
-            >
-              Search
-            </button>
+        <div className='col-lg-5'>
+          <div className='input-group'>
+            <input
+              type='text'
+              className='form-control'
+              placeholder='Search by Keyword'
+              value={searchDescription}
+              onChange={onChangeSearchDescription}
+            />
+            <div className='input-group-append'>
+              <button
+                className='btn btn-outline-secondary'
+                type='button'
+                onClick={findByDescription}
+              >
+                Search
+              </button>
+            </div>
           </div>
         </div>
-        <div className='input-group col-lg-4'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Search by Keyword'
-            value={searchDescription}
-            onChange={onChangeSearchDescription}
-          />
-          <div className='input-group-append'>
-            <button
-              className='btn btn-outline-secondary'
-              type='button'
-              onClick={findByDescription}
-            >
-              Search
-            </button>
+        <div className='row pb-5 justify-content-around'>
+          <div className='col-lg-4 pt-3'>
+            <div className='input-group'>
+              <select onChange={onChangeSearchBrand}>
+                <option value=''>All Brands</option>
+                {brands.map(brand => (
+                  <option value={brand}>{brand}</option>
+                ))}
+              </select>
+              <div className='input-group-append'>
+                <button
+                  className='btn btn-outline-secondary'
+                  type='button'
+                  onClick={findByBrand}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className='input-group col-lg-4'>
-          <select onChange={onChangeSearchInstrumentType}>
-            <option value=''>All Instruments</option>
-            <option value='Drums'>Drums</option>
-            <option value='Acoustic Guitar'>Acoustic Guitar</option>
-            <option value='Bass Guitar'>Bass Guitar</option>
-            <option value='Electric Guitar'>Electric Guitar</option>
-            <option value='Keyboard'> Keyboard</option>
-          </select>
-          <div className='input-group-append'>
-            <button
-              className='btn btn-outline-secondary'
-              type='button'
-              onClick={findByInstrumentType}
-            >
-              Search
-            </button>
+          <div className='col-lg-3 pt-3'>
+            <div className='input-group'>
+              <select onChange={onChangeSearchInstrumentType}>
+                <option value=''>All Instruments</option>
+                {instruments.map(instrument => (
+                  <option value={instrument}>{instrument}</option>
+                ))}
+              </select>
+              <div className='input-group-append'>
+                <button
+                  className='btn btn-outline-secondary'
+                  type='button'
+                  onClick={findByInstrumentType}
+                >
+                  Search
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -169,11 +202,16 @@ const AdListings = props => {
                     <img
                       src={listing.images[0]}
                       className='rounded img-fluid'
+                      alt='Main'
                     />
                     <p className='card-text'>
                       {descLength > maxLength
                         ? listing.description.substring(0, 200) + '  . . .'
                         : listing.description}
+                      <br />
+                      <strong>Price: </strong>D: <em>${listing.price.daily}</em>
+                      , W: <em>${listing.price.weekly}</em>, M:{' '}
+                      <em>${listing.price.monthly}</em>
                       <br />
                       <strong>Instrument Type: </strong>
                       {listing.instrument_type}
@@ -192,7 +230,6 @@ const AdListings = props => {
                         View Ad
                       </Link>
                       <a
-                        target='_blank'
                         href={'https://www.google.com/maps/place/' + address}
                         className='btn btn-primary col-lg-5 mx-1 mb-1'
                       >

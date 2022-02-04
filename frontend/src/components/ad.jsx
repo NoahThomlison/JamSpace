@@ -3,7 +3,7 @@ import ListingsDataService from '../services/listings';
 import { Link, useParams } from 'react-router-dom';
 
 const Ad = props => {
-  const { userName } = props;
+  const { user } = props;
   const id = useParams().id;
   const initialListingState = {
     id: null,
@@ -42,7 +42,7 @@ const Ad = props => {
         <div className='text-center'>
           <h5>{listing.title}</h5>
           <br />
-          <img src={listing.images[0]} />
+          <img src={listing.images[0]} alt='Main' />
           <br />
           <br />
           <p>
@@ -79,7 +79,7 @@ const Ad = props => {
             <strong>Hosted By: </strong>
             <br />
             <br />
-            <img className='rounded img-fluid' src={listing.host.image} />
+            <img className='prof-img' src={listing.host.image} alt='Host' />
             <br />
             <br />
             <strong>{listing.host.name}</strong>
