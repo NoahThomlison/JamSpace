@@ -36,8 +36,6 @@ const AdListings = props => {
   const retrieveListings = () => {
     ListingsDataService.getAll()
       .then(response => {
-        console.log('HEEERRRRRREEEEE');
-        console.log(response);
         setListings(response.data.listings);
       })
       .catch(e => {
@@ -64,7 +62,6 @@ const AdListings = props => {
     find(searchBrand, 'brand');
   };
 
-  // This is not working yet.
   const findByCity = () => {
     find(searchCity, 'city');
   };
@@ -76,11 +73,6 @@ const AdListings = props => {
   const findByInstrumentType = () => {
     find(searchInstrumentType, 'instrument_type');
   };
-
-  // Sample Test Code
-  //const address = 'Hamilton, Ontario, Canada';
-
-  console.log(listings);
 
   return (
     <div>
@@ -140,13 +132,14 @@ const AdListings = props => {
           </div>
         </div>
         <div className='input-group col-lg-4'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Search by Instrument Type'
-            value={searchInstrumentType}
-            onChange={onChangeSearchInstrumentType}
-          />
+          <select onChange={onChangeSearchInstrumentType}>
+            <option value=''>All Instruments</option>
+            <option value='Drums'>Drums</option>
+            <option value='Acoustic Guitar'>Acoustic Guitar</option>
+            <option value='Bass Guitar'>Bass Guitar</option>
+            <option value='Electric Guitar'>Electric Guitar</option>
+            <option value='Keyboard'> Keyboard</option>
+          </select>
           <div className='input-group-append'>
             <button
               className='btn btn-outline-secondary'
@@ -159,45 +152,59 @@ const AdListings = props => {
         </div>
       </div>
       <div className='row'>
-        {listings.map(listing => {
-          const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.country}`;
-          return (
-            <div className='col-lg-4 pb-1'>
-              <div className='card'>
-                <div className='card-body'>
-                  <h5 className='card-title'>{listing.title}</h5>
-                  <p className='card-text'>
-                    {listing.description}
-                    <br />
-                    <strong>Instrument Type: </strong>
-                    {listing.instrument_type}
-                    <br />
-                    <strong>Brand: </strong>
-                    {listing.brand}
-                    <br />
-                    <strong>Address: </strong>
-                    {address}
-                  </p>
-                  <div className='row'>
-                    <Link
-                      to={'/listings/' + listing._id}
-                      className='btn btn-primary col-lg-5 mx-1 mb-1'
-                    >
-                      View Ad
-                    </Link>
-                    <a
-                      target='_blank'
-                      href={'https://www.google.com/maps/place/' + address}
-                      className='btn btn-primary col-lg-5 mx-1 mb-1'
-                    >
-                      View Map
-                    </a>
+        {listings.length === 0 ? (
+          <h4 className='text-center'>
+            Sorry, there is nothing available to rent.
+          </h4>
+        ) : (
+          listings.map(listing => {
+            const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
+            const descLength = listing.description.length;
+            const maxLength = 250;
+            return (
+              <div className='col-lg-4 pb-1'>
+                <div className='card'>
+                  <div className='card-body'>
+                    <h5 className='card-title'>{listing.title}</h5>
+                    <img
+                      src={listing.images[0]}
+                      className='rounded img-fluid'
+                    />
+                    <p className='card-text'>
+                      {descLength > maxLength
+                        ? listing.description.substring(0, 200) + '  . . .'
+                        : listing.description}
+                      <br />
+                      <strong>Instrument Type: </strong>
+                      {listing.instrument_type}
+                      <br />
+                      <strong>Brand: </strong>
+                      {listing.brand}
+                      <br />
+                      <strong>Address: </strong>
+                      {address}
+                    </p>
+                    <div className='row'>
+                      <Link
+                        to={'/listings/' + listing._id}
+                        className='btn btn-primary col-lg-5 mx-1 mb-1'
+                      >
+                        View Ad
+                      </Link>
+                      <a
+                        target='_blank'
+                        href={'https://www.google.com/maps/place/' + address}
+                        className='btn btn-primary col-lg-5 mx-1 mb-1'
+                      >
+                        View Map
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
     </div>
   );
