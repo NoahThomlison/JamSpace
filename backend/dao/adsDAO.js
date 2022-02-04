@@ -20,15 +20,33 @@ export default class AdsDAO {
     }
   }
 
-  static async addAd(title, description, user, date) {
+  static async addAd(
+    title,
+    description,
+    instrument_type,
+    brand,
+    condition,
+    price,
+    deposit,
+    images,
+    userId,
+    user,
+    address,
+    date
+  ) {
     try {
       const adDoc = {
         title: title,
         description: description,
-        host_id: user._id,
-        host: {
-          host_name: user.name,
-        },
+        instrument_type: instrument_type,
+        brand: brand,
+        condition: condition,
+        price: price,
+        security_deposit: deposit,
+        images: [images],
+        host_id: new ObjectId(userId),
+        host: user,
+        address: address,
         created_on: date,
         updated_on: date,
       };

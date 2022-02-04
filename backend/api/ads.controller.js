@@ -5,13 +5,44 @@ export default class AdsController {
     try {
       const title = req.body.title;
       const description = req.body.description;
+      const instrumentType = req.body.instrument_type;
+      const brand = req.body.brand;
+      const condition = req.body.condition;
+      const price = {
+        daily: req.body.daily,
+        weekly: req.body.weekly,
+        monthly: req.body.monthly,
+      };
+      const deposit = req.body.deposit;
+      const images = req.body.images;
+      const userId = req.body.user_id;
       const userInfo = {
         name: req.body.name,
-        _id: req.body.user_id,
+        image: req.body.user_img,
+        about: req.body.user_about,
+      };
+      const address = {
+        city: req.body.city,
+        province: req.body.province,
+        country: req.body.country,
+        postal_code: req.body.postal_code,
       };
       const date = new Date();
       console.log(req.body);
-      const adResponse = await AdsDAO.addAd(title, description, userInfo, date);
+      const adResponse = await AdsDAO.addAd(
+        title,
+        description,
+        instrumentType,
+        brand,
+        condition,
+        price,
+        deposit,
+        images,
+        userId,
+        userInfo,
+        address,
+        date
+      );
       res.json({ status: 'success' });
     } catch (e) {
       res.status(500).json({ error: e.message });
