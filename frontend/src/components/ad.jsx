@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ListingsDataService from '../services/listings';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const Ad = props => {
-  const { user } = props;
+  //const { user } = props;
   const id = useParams().id;
   const initialListingState = {
     id: null,
