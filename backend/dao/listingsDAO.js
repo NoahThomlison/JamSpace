@@ -21,7 +21,7 @@ export default class ListingsDAO {
   static async getListings({
     filters = null,
     page = 0,
-    listingsPerPage = 20,
+    listingsPerPage = 18,
   } = {}) {
     let query;
     if (filters) {
@@ -84,31 +84,5 @@ export default class ListingsDAO {
       );
       return { listing };
     }
-
-    // try {
-    //   const pipeline = [
-    //     {
-    //       $match: {
-    //         _id: new ObjectId(id),
-    //       },
-    //     },
-    //     {
-    //       $lookup: {
-    //         from: 'listings',
-    //         let: {
-    //           id: '$_id',
-    //         },
-    //         pipeline: [
-    //           $match: {
-    //             $expr: {
-    //               $eq: ['$restaurant_id', '$$id'],
-
-    //             }
-    //           }
-    //         ]
-    //       }
-    //     }
-    //   ]
-    // }
   }
 }

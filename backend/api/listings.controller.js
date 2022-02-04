@@ -5,7 +5,7 @@ export default class ListingsController {
   static async apiGetListings(req, res, next) {
     const listingsPerPage = req.query.listingsPerPage
       ? parseInt(req.query.listingsPerPage, 10)
-      : 20;
+      : 18;
     const page = req.query.page ? parseInt(req.query.page, 10) : 0;
 
     let filters = {};

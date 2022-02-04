@@ -94,34 +94,3 @@ export default class AdsController {
     }
   }
 }
-
-/*
-title : "Fender Guitar"
-description :"Beautiful Fender Guitar with all the wonderful things musicians love."
-instrument_type:"Electric Guitar"
-brand:"Fender"
-condition:"Mint"
-price:Object
-  daily:30
-  weekly:75
-  monthly:175
-security_deposit:200
-images:Array
-  0:"https://picsum.photos/id/1025/200/300.jpg"
-  1:"https://picsum.photos/id/237/200/300.jpg"
-host:Object
-host_id:61fa160127f71329bafba7d2
-host_name:"Tyler Shelton"
-host_image:"https://i.picsum.photos/id/1/5616/3744.jpg"
-host_location:"Hamilton, Ontario, Canada"
-host_about:"Loves music making things."
-address:Object
-  city:"Hamilton"
-  province:"Ontario"
-  country:"Canada"
-  coordinates:Array
-    0:"43.244148750557365"
-    1:"-79.78604591496422"
-created_on:"2022-02-01T05:00:00.000+00:00"
-updated_on:"2022-02-01T06:30:00.000+00:00"
-*/
