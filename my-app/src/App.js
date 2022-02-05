@@ -1,23 +1,37 @@
 import './App.css';
 import AdList from './Components/AdList';
 import FilterBar from './Components/FilterBar';
+import Questions from './Components/Questions'
+import Header from './Components/Header'
 import data from './data';
-import * as React from 'react';
-import ReactDOM from 'react-dom';
-import Button from '@mui/material/Button';
+// import questions from './renterQuestionsData'
+import heroImage from "./images/thehitsBW.jpg"
+import {Box, Paper} from '@mui/material/';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+  hero: {
+    height: '75vh',
+    backgroundImage: `url(${heroImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center"
+  },
+});
+
 
 function App() {
-
+  const styles = useStyles()
   return (
     <home>
-    <h1>JamSpace</h1>
-    <img src="https://blog.reverbnation.com/wp-content/uploads/2017/12/why-your-band-needs-to-practice-1500px.jpg"></img>
-    <div>
+      <Header></Header>
+      <Box className={styles.hero}/>
+      <Questions></Questions>
       <FilterBar/>
       <AdList data = {data}/>
-    </div>
     </home>
   );
 }
 
 export default App;
+
+// my-app\src\images\the hits.jpg
