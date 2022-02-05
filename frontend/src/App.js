@@ -44,7 +44,7 @@ function App() {
                   className='nav-link'
                   style={{ cursor: 'pointer' }}
                 >
-                  Logout {user.name}
+                  Logout {user.username}
                 </a>
               ) : (
                 <Link to={'/login'} className='nav-link'>

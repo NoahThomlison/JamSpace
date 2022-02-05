@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = props => {
+  // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
   const initialUserState = {
-    name: '',
+    username: '',
     password: '',
+    userId: '61fc9dcb934a52db529c8f94',
   };
 
   const [user, setUser] = useState(initialUserState);
@@ -23,16 +25,16 @@ const Login = props => {
       <div className='text-center'>
         <div className='form-group mb-3'>
           <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
-          <label htmlFor='user'>Username</label>
+          <label htmlFor='username'>Username</label>
           <input
             type='text'
             className='form-control'
-            id='name'
+            id='username'
             required
-            value={user.name}
+            value={user.username}
             onChange={handleInputChange}
             placeholder='Username'
-            name='name'
+            name='username'
           />
         </div>
         <div className='form-group mb-4'>
@@ -50,7 +52,10 @@ const Login = props => {
         </div>
 
         <Link to='/'>
-          <button onClick={login} className='btn btn-lg btn-primary btn-block'>
+          <button
+            onClick={login}
+            className='btn btn-lg btn-outline-dark btn-block'
+          >
             Sign In
           </button>
         </Link>
