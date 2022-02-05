@@ -8,6 +8,7 @@ import AdListings from './components/ad-listings';
 import Login from './components/login';
 import Ad from './components/ad';
 import CreateListing from './components/create-listing';
+import Home from './components/home';
 
 function App() {
   const [user, setUser] = useState('');
@@ -24,10 +25,12 @@ function App() {
     <div>
       <nav className='navbar sticky-top navbar-expand navbar-dark bg-dark'>
         <div className='container-fluid'>
-          <div className='navbar-brand'>JamSpace</div>
+          <Link to={'/'} className='nav-link'>          
+            <div className='navbar-brand'>JamSpace</div>
+          </Link>
           <div className='navbar-nav mr-auto'>
             <li className='nav-item'>
-              <Link to={'/'} className='nav-link'>
+              <Link to={'/listings'} className='nav-link'>
                 Listings
               </Link>
             </li>
@@ -55,13 +58,14 @@ function App() {
           </div>
         </div>
       </nav>
-
-      <div className='container mt-3'>
+      
+      <div>
         <Routes>
-          <Route path={'/'} element={<AdListings user={user} />} />
-          <Route path='/listings/new' element={<CreateListing user={user} />} />
-          <Route path='/listings/:id' element={<Ad user={user} />} />
-          <Route path='/login' element={<Login login={login} />} />
+            <Route path={'/'} element={<Home user={user} />} />
+            <Route path={'/listings'} element={<AdListings user={user}/>}/>
+            <Route path='/listings/new' element={<CreateListing user={user} />} />
+            <Route path='/listings/:id' element={<Ad user={user} />} />
+            <Route path='/login' element={<Login login={login} />} />
         </Routes>
       </div>
     </div>
