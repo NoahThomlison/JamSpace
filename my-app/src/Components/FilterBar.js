@@ -1,6 +1,4 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {Card, CardActions, Container, CardContent, CardMedia, CardHeader, Button, Grid, Typography} from '@mui/material/';
 
 function FilterBar() {
   return (

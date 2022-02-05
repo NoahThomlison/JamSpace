@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useState} from "react";
-import {Card, Button, Typography, Grid, Paper, IconButton, Box} from '@mui/material/';
+import {Card, Button, Typography, Grid, Paper, IconButton, Box, Accordion, AccordionSummary, AccordionDetails} from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
@@ -13,17 +13,23 @@ const Question = ( props ) => {
   }
 
   return (
-    <Box>
-      <Box component="div" sx={{ display: 'flex', justifyContent: 'flexStart', alignItems: 'center',width: "90%"}}>
-        <Typography>{question}</Typography>
-        <IconButton variant="contained" onClick={() => toggleExpaned()}>{expanded ? <ExpandLessIcon/> : <ExpandMoreIcon/>}</IconButton>
-        </Box>
-          <Box component="div" sx={{ display: 'flex', flexDirection: "column", justifyContent: 'center', alignItems: 'center',width: "90%"}}>
-          {expanded ? <Typography>{answer}</Typography>:<Typography></Typography>}
-        </Box>
-    </Box>
+  <Accordion>
+    <AccordionSummary
+      expandIcon={<ExpandMoreIcon />}
+      aria-controls="panel1a-content"
+      id="panel1a-header"
+    >
+      <Typography>{question}</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <Typography>
+        {answer}
+      </Typography>
+    </AccordionDetails>
+  </Accordion>
   )
 }
 
 export default Question;
+
 
