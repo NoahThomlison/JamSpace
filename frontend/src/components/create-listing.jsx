@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ListingsDataService from '../services/listings';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const CreateListing = props => {
   const { username, userId } = props.user;
