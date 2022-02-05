@@ -19,9 +19,10 @@ const Login = props => {
   };
 
   return (
-    <div className='submit-form'>
-      <div>
-        <div className='form-group'>
+    <div className='submit-form d-flex justify-content-center'>
+      <div className='text-center'>
+        <div className='form-group mb-3'>
+          <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
           <label htmlFor='user'>Username</label>
           <input
             type='text'
@@ -30,10 +31,11 @@ const Login = props => {
             required
             value={user.name}
             onChange={handleInputChange}
+            placeholder='Username'
             name='name'
           />
         </div>
-        <div className='form-group'>
+        <div className='form-group mb-4'>
           <label htmlFor='password'>Password</label>
           <input
             type='password'
@@ -42,12 +44,14 @@ const Login = props => {
             required
             value={user.password}
             onChange={handleInputChange}
+            placeholder='Password'
             name='password'
           />
         </div>
+
         <Link to='/'>
-          <button onClick={login} className='btn btn-success'>
-            Login
+          <button onClick={login} className='btn btn-lg btn-primary btn-block'>
+            Sign In
           </button>
         </Link>
       </div>
