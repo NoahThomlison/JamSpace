@@ -4,7 +4,7 @@ import FilterBar from './Components/FilterBar';
 import Questions from './Components/Questions'
 import Header from './Components/Header'
 import data from './data';
-import heroImage from "./images/thehitsBW.jpg"
+import heroImage from "./images/thehitsfunky.pdn"
 import {Box, Paper} from '@mui/material/';
 import { makeStyles } from '@mui/styles';
 

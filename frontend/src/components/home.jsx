@@ -7,11 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AdListings from '../components/ad-listings';
 import Questions from "../components/Questions"
 import CreateListing from '../components/create-listing';
+import AdListingsScroll from '../components/ad-listings-scroll';
+
 
 // MUI
-import heroImage from "../images/thehitsBW.jpg"
+import heroImage from "../images/thehitsfunky.jpg"
 import {Box, Paper} from '@mui/material/';
 import { makeStyles } from '@mui/styles';
+// import AdListingsScroll from './ad-listings-scroll';
 
 const useStyles = makeStyles({
   hero: {
@@ -30,7 +33,7 @@ function Home(user) {
     <div>
       <Box className={styles.hero}/>
       <Questions/>
-      <AdListings user={user}/>
+      <AdListingsScroll user={user}/>
     </div>
   );
 }
