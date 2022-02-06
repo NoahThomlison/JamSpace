@@ -15,10 +15,9 @@ function Ad({id, description, title, price, images, key}) {
   const weekly = price.weekly.$numberInt
   const monthly = price.monthly.$numberInt
   const subheader = "D:$" + daily + "W:$" + weekly + "M:$" +monthly
-  
-  // const style = 
+
   return(
-      <ImageListItem key={key} onClick={() => alert(id)}>
+      <ImageListItem key={key}>
         <img src={image} loading="lazy" alt={title} id={id} sx={{height:500}}/>
         <ImageListItemBar title={title} subtitle={subheader}/>
       </ImageListItem>
