@@ -4,7 +4,6 @@ import FilterBar from './Components/FilterBar';
 import Questions from './Components/Questions'
 import Header from './Components/Header'
 import data from './data';
-// import questions from './renterQuestionsData'
 import heroImage from "./images/thehitsBW.jpg"
 import {Box, Paper} from '@mui/material/';
 import { makeStyles } from '@mui/styles';
@@ -33,5 +32,3 @@ function App() {
 }
 
 export default App;
-
-// my-app\src\images\the hits.jpg
