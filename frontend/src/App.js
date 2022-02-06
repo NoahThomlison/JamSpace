@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // Import Custom Components
-import Ad from './components/Ad';
+import IndividualAd from './components/IndividualAd';
 import AdListings from './components/AdListings';
 import CreateListing from './components/CreateListing';
 import Home from './components/Home';
@@ -15,7 +15,7 @@ import Login from './components/Login';
 import Footer from './components/Footer/Footer';
 
 //Import Listing Database Call Helper Function
-import listingData from './helpers/listingData';
+import listingsData from './helpers/listingsData';
 
 //Import Autentication Helper Functions
 import { login, logout } from './helpers/authentication';
@@ -34,7 +34,7 @@ function App() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    listingData(setListings);
+    listingsData(setListings);
   }, []);
 
   return (
@@ -95,7 +95,7 @@ function App() {
             }
           />
           <Route path='/listings/new' element={<CreateListing user={user} />} />
-          <Route path='/listings/:id' element={<Ad user={user} />} />
+          <Route path='/listings/:id' element={<IndividualAd user={user} />} />
           <Route
             path='/login'
             element={<Login login={login} setUser={setUser} user={user} />}

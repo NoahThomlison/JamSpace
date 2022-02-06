@@ -1,7 +1,7 @@
 // Import the db query calls
 import ListingsDataService from '../services/listings';
 
-const listingData = setListings => {
+const listingsData = setListings => {
   ListingsDataService.getAll()
     .then(response => {
       setListings(response.data.listings);
@@ -11,4 +11,4 @@ const listingData = setListings => {
     });
 };
 
-export default listingData;
+export default listingsData;
