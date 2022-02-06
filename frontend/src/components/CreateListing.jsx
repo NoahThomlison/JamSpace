@@ -79,9 +79,7 @@ const CreateListing = props => {
     } else {
       ListingsDataService.createListing(data)
         .then(response => {
-          console.log('Did you get here?');
           setSubmitted(true);
-          console.log(response.data);
         })
         .catch(e => {
           console.log(e);
@@ -91,7 +89,8 @@ const CreateListing = props => {
 
   return (
     <div>
-      {props.user ? (
+      {/* If the username is not set as an empty string, display the new listing form, otherwise display the message to Login */}
+      {username !== '' ? (
         <div className='submit-form mb-5'>
           {submitted ? (
             <div>

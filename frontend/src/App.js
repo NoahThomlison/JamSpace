@@ -1,35 +1,41 @@
+// Import React Components/Hooks
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+
+// Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // Import Custom Components
-import AdListings from './components/ad-listings';
-import Login from './components/login';
-import Ad from './components/ad';
-import CreateListing from './components/create-listing';
-import Home from './components/home';
-
-//Import Listing Database Call
-import ListingData from './helpers/ListingData';
+import Ad from './components/Ad';
+import AdListings from './components/AdListings';
+import CreateListing from './components/CreateListing';
+import Home from './components/Home';
+import Login from './components/Login';
 import Footer from './components/Footer/Footer';
 
-function App() {
-  const [user, setUser] = useState('');
+//Import Listing Database Call Helper Function
+import listingData from './helpers/listingData';
 
+//Import Autentication Helper Functions
+import { login, logout } from './helpers/authentication';
+
+function App() {
+  // State Initializers
+  const initialUserState = {
+    username: '',
+    password: '',
+    // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
+    userId: '61fc9dcb934a52db529c8f94',
+  };
+
+  // State Variables
+  const [user, setUser] = useState(initialUserState);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    ListingData(setListings);
+    listingData(setListings);
   }, []);
-
-  async function login(user = null) {
-    setUser(user);
-  }
-
-  async function logout() {
-    setUser(null);
-  }
 
   return (
     <div>
@@ -50,9 +56,10 @@ function App() {
               </Link>
             </li>
             <li className='nav-item'>
-              {user ? (
+              {/* If a username is set, show Logout, otherwise show the Login Link */}
+              {user.username !== '' ? (
                 <a
-                  onClick={logout}
+                  onClick={() => logout(setUser)}
                   href='/login'
                   className='nav-link'
                   style={{ cursor: 'pointer' }}
@@ -89,7 +96,10 @@ function App() {
           />
           <Route path='/listings/new' element={<CreateListing user={user} />} />
           <Route path='/listings/:id' element={<Ad user={user} />} />
-          <Route path='/login' element={<Login login={login} />} />
+          <Route
+            path='/login'
+            element={<Login login={login} setUser={setUser} user={user} />}
+          />
         </Routes>
       </div>
       <Footer />

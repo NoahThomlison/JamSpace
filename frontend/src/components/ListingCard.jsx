@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Listing = props => {
+const ListingCard = props => {
   const { listing } = props;
 
   const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
@@ -56,4 +56,4 @@ const Listing = props => {
   );
 };
 
-export default Listing;
+export default ListingCard;

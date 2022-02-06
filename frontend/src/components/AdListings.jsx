@@ -1,6 +1,6 @@
 import React from 'react';
 import Filters from './Filters';
-import Listing from './Listing';
+import ListingCard from './ListingCard';
 
 const AdListings = props => {
   const { listings, setListings } = props;
@@ -16,7 +16,7 @@ const AdListings = props => {
           </h4>
         ) : (
           listings.map(listing => (
-            <Listing key={listing._id} listing={listing} />
+            <ListingCard key={listing._id} listing={listing} />
           ))
         )}
       </div>

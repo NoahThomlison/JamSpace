@@ -1,11 +1,14 @@
+// Import React Components
 import React from 'react';
+
+// Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import Custom Components
-import AdListings from '../components/ad-listings';
+import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
 
-// MUI
+// Import MUI
 import heroImage from '../images/thehitsBW.jpg';
 import { Box } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
@@ -20,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-function Home(props) {
+const Home = props => {
   const { listings, setListings, user } = props;
   const styles = useStyles();
 
@@ -31,6 +34,6 @@ function Home(props) {
       <AdListings listings={listings} setListings={setListings} user={user} />
     </div>
   );
-}
+};
 
 export default Home;

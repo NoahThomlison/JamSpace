@@ -6,9 +6,11 @@ import {
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
 
+// Import Styles
 import './Footer.css';
 
 export default function Footer() {
+  // calculates the current date and provides the year for the footer
   const date = new Date();
   const year = date.getFullYear();
 
@@ -21,6 +23,7 @@ export default function Footer() {
             <h5>Copyright ⓒ {year} JamSpace</h5>
           </div>
           <div className='footer'>
+            {/* Need to add the links to the social pages */}
             <a href='' className='facebook social'>
               <FontAwesomeIcon icon={faFacebook} size='2x' />
             </a>
