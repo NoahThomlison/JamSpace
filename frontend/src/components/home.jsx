@@ -1,4 +1,4 @@
-// Import React Components
+// Import React Component
 import React from 'react';
 
 // Import Styles
