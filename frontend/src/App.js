@@ -1,31 +1,47 @@
-import React, { useState } from 'react';
+// Import React Components/Hooks
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+
+// Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 // Import Custom Components
-import AdListings from './components/ad-listings';
-import Login from './components/login';
-import Ad from './components/ad';
-import CreateListing from './components/create-listing';
-import Home from './components/home';
+import IndividualAd from './components/IndividualAd';
+import AdListings from './components/AdListings';
+import CreateListing from './components/CreateListing';
+import Home from './components/Home';
+import Login from './components/Login';
+import Footer from './components/Footer/Footer';
+
+//Import Listing Database Call Helper Function
+import listingsData from './helpers/listingsData';
+
+//Import Autentication Helper Functions
+import { login, logout } from './helpers/authentication';
 
 function App() {
-  const [user, setUser] = useState('');
+  // State Initializers
+  const initialUserState = {
+    username: '',
+    password: '',
+    // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
+    userId: '61fc9dcb934a52db529c8f94',
+  };
 
-  async function login(user = null) {
-    setUser(user);
-  }
+  // State Variables
+  const [user, setUser] = useState(initialUserState);
+  const [listings, setListings] = useState([]);
 
-  async function logout() {
-    setUser(null);
-  }
+  useEffect(() => {
+    listingsData(setListings);
+  }, []);
 
   return (
     <div>
       <nav className='navbar sticky-top navbar-expand navbar-dark bg-dark'>
         <div className='container-fluid'>
-          <Link to={'/'} className='nav-link'>          
+          <Link to={'/'} className='nav-link'>
             <div className='navbar-brand'>JamSpace</div>
           </Link>
           <div className='navbar-nav mr-auto'>
@@ -40,9 +56,10 @@ function App() {
               </Link>
             </li>
             <li className='nav-item'>
-              {user ? (
+              {/* If a username is set, show Logout, otherwise show the Login Link */}
+              {user.username !== '' ? (
                 <a
-                  onClick={logout}
+                  onClick={() => logout(setUser)}
                   href='/login'
                   className='nav-link'
                   style={{ cursor: 'pointer' }}
@@ -58,16 +75,34 @@ function App() {
           </div>
         </div>
       </nav>
-      
+
       <div>
         <Routes>
-            <Route path={'/'} element={<Home user={user} />} />
-            <Route path={'/listings'} element={<AdListings user={user}/>}/>
-            <Route path='/listings/new' element={<CreateListing user={user} />} />
-            <Route path='/listings/:id' element={<Ad user={user} />} />
-            <Route path='/login' element={<Login login={login} />} />
+          <Route
+            path={'/'}
+            element={
+              <Home listings={listings} setListings={setListings} user={user} />
+            }
+          />
+          <Route
+            path={'/listings'}
+            element={
+              <AdListings
+                listings={listings}
+                setListings={setListings}
+                user={user}
+              />
+            }
+          />
+          <Route path='/listings/new' element={<CreateListing user={user} />} />
+          <Route path='/listings/:id' element={<IndividualAd user={user} />} />
+          <Route
+            path='/login'
+            element={<Login login={login} setUser={setUser} user={user} />}
+          />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

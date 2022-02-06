@@ -1,23 +1,30 @@
+// Import React Components
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Login = props => {
-  // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
+  // Pull in the login and setUser functions and the current user info
+  const { login, setUser, user } = props;
+
+  // Set the initial state of the user with the info passed in with user
   const initialUserState = {
-    username: '',
-    password: '',
-    userId: '61fc9dcb934a52db529c8f94',
+    username: user.username,
+    password: user.password,
+    userId: user.userId,
   };
 
-  const [user, setUser] = useState(initialUserState);
+  // State variable to record changes made in the form
+  const [newUser, setNewUser] = useState(initialUserState);
 
+  // Handles the input change for both the username and password form fields
   const handleInputChange = event => {
     const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
+    setNewUser({ ...newUser, [name]: value });
   };
 
-  const login = () => {
-    props.login(user);
+  // Handles the Sign in button click
+  const handleOnClick = () => {
+    login(setUser, newUser);
   };
 
   return (
@@ -31,7 +38,7 @@ const Login = props => {
             className='form-control'
             id='username'
             required
-            value={user.username}
+            value={newUser.username}
             onChange={handleInputChange}
             placeholder='Username'
             name='username'
@@ -44,7 +51,7 @@ const Login = props => {
             className='form-control'
             id='password'
             required
-            value={user.password}
+            value={newUser.password}
             onChange={handleInputChange}
             placeholder='Password'
             name='password'
@@ -53,7 +60,7 @@ const Login = props => {
 
         <Link to='/'>
           <button
-            onClick={login}
+            onClick={handleOnClick}
             className='btn btn-lg btn-outline-dark btn-block'
           >
             Sign In

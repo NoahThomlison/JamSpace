@@ -1,42 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ListingsDataService from '../services/listings';
-import { Link } from 'react-router-dom';
 
-const AdListings = props => {
-  const [listings, setListings] = useState([]);
+// Import dropdown data
+import { instruments, brands } from '../staticData/filterDropdownData.js';
+
+const Filters = props => {
+  const { setListings } = props;
+
   const [searchBrand, setSearchBrand] = useState('');
   const [searchCity, setSearchCity] = useState('');
   const [searchDescription, setSearchDescription] = useState('');
   const [searchInstrumentType, setSearchInstrumentType] = useState('');
-
-  // Instrument Types to populate the search filter dropdown
-  const instruments = [
-    'Drums',
-    'Acoustic Guitar',
-    'Bass Guitar',
-    'Electric Guitar',
-    'Keyboard',
-  ];
-
-  // Brands to populate the search filter dropdown
-  const brands = [
-    'African',
-    'Epiphone',
-    'Fender',
-    'Gibson',
-    'Ibanez',
-    'Korg',
-    'Larrivee',
-    'Mapex',
-    'Roland',
-    'Squier',
-    'Taylor Guitars',
-    'Yamaha',
-  ];
-
-  useEffect(() => {
-    retrieveListings();
-  }, []);
 
   const onChangeSearchBrand = e => {
     const brand = e.target.value;
@@ -58,25 +32,9 @@ const AdListings = props => {
     setSearchInstrumentType(instrumentType);
   };
 
-  const retrieveListings = () => {
-    ListingsDataService.getAll()
-      .then(response => {
-        setListings(response.data.listings);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-  // Not used yet
-  // const refreshList = () => {
-  //   retrieveListings();
-  // };
-
   const find = (query, by) => {
     ListingsDataService.find(query, by)
       .then(response => {
-        console.log(response.data);
         setListings(response.data.listings);
       })
       .catch(e => {
@@ -184,67 +142,8 @@ const AdListings = props => {
           </div>
         </div>
       </div>
-      <div className='row'>
-        {listings.length === 0 ? (
-          <h4 className='text-center'>
-            Sorry, there is nothing available to rent.
-          </h4>
-        ) : (
-          listings.map(listing => {
-            const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
-            const descLength = listing.description.length;
-            const maxLength = 250;
-            return (
-              <div className='col-lg-4 pb-1'>
-                <div className='card'>
-                  <div className='card-body'>
-                    <h5 className='card-title'>{listing.title}</h5>
-                    <img
-                      src={listing.images[0]}
-                      className='rounded img-fluid'
-                      alt='Main'
-                    />
-                    <p className='card-text'>
-                      {descLength > maxLength
-                        ? listing.description.substring(0, 200) + '  . . .'
-                        : listing.description}
-                      <br />
-                      <strong>Price: </strong>D: <em>${listing.price.daily}</em>
-                      , W: <em>${listing.price.weekly}</em>, M:{' '}
-                      <em>${listing.price.monthly}</em>
-                      <br />
-                      <strong>Instrument Type: </strong>
-                      {listing.instrument_type}
-                      <br />
-                      <strong>Brand: </strong>
-                      {listing.brand}
-                      <br />
-                      <strong>Address: </strong>
-                      {address}
-                    </p>
-                    <div className='row'>
-                      <Link
-                        to={'/listings/' + listing._id}
-                        className='btn btn-primary col-lg-5 mx-1 mb-1'
-                      >
-                        View Ad
-                      </Link>
-                      <a
-                        href={'https://www.google.com/maps/place/' + address}
-                        className='btn btn-primary col-lg-5 mx-1 mb-1'
-                      >
-                        View Map
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
     </div>
   );
 };
 
-export default AdListings;
+export default Filters;
