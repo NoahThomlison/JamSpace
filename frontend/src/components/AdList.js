@@ -43,7 +43,7 @@ function AdList(props) {
       <ImageList cols={6} rows={2}>
         {ads.map((ad) => {
           return (
-            <Ad id={ad._id.$oid} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>
+            <Ad ad={ad} id={ad._id} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>
           )
         })}
       </ImageList>
