@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // Import Custom Components
 import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
+import AdList from '../components/AdList';
 
 // Import MUI
 import heroImage from '../images/thehitsBW.jpg';
@@ -31,7 +32,8 @@ const Home = props => {
     <div>
       <Box className={styles.hero} />
       <Questions />
-      <AdListings listings={listings} setListings={setListings} user={user} />
+      <AdList listings={listings}></AdList>
+      {/* <AdListings listings={listings} setListings={setListings} user={user} /> */}
     </div>
   );
 };
