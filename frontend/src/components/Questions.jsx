@@ -11,13 +11,13 @@ function Questions() {
         <Typography variant="h4" sx={{textAlign: "center"}}>How does it work?</Typography>
         <Box sx={{display: "flex"}}>
           <Paper sx={{width: "100%"}}>
-            <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>For Jammers</Typography>
+            <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Wanna Jam?</Typography>
             {renterQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}
           </Paper>
           <Paper sx={{width: "100%"}}>
-          <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>For Lenders</Typography>
+          <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Want some Space?</Typography>
             {lenderQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}

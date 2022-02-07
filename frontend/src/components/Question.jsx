@@ -21,8 +21,8 @@ const Question = ( props ) => {
     >
       <Typography>{question}</Typography>
     </AccordionSummary>
-    <AccordionDetails>
-      <Typography>
+    <AccordionDetails sx={{ display: 'flex', justifyContent: 'flex-end' }} >
+      <Typography sx={{ width: "95%" }}>
         {answer}
       </Typography>
     </AccordionDetails>
