@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ListingsDataService from '../services/listings';
 import { useParams } from 'react-router-dom';
 
-const Ad = props => {
+const IndividualAd = props => {
   //const { user } = props;
   const id = useParams().id;
   const initialListingState = {
@@ -97,4 +97,4 @@ const Ad = props => {
   );
 };
 
-export default Ad;
+export default IndividualAd;
