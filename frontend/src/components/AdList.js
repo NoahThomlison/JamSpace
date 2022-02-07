@@ -3,6 +3,7 @@ import {Box, Container, Grid, Item, ImageList } from '@mui/material/';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {useState, useEffect} from "react"
+import '../App.css';
 
 
 import ImageListItem from '@mui/material/ImageListItem';
@@ -12,17 +13,17 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 
 
-function Adlist(props) {
-
+function AdList(props) {
   let adCount = 6
-  let slideCount = Math.ceil(props.data.length/adCount)
+  const { listings, setListings } = props;
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(adCount)
-  const [ads, setAds] = useState(props.data.slice(min, max))
+  const [ads, setAds] = useState(listings.slice(min, max))
+  let slideCount = Math.ceil(listings.length/adCount)
 
   useEffect(() => {
-    setAds(props.data.slice(min, max));
-  }, [min, max, props.data]);
+    setAds(listings.slice(min, max));
+  }, [min, max, listings]);
 
   const next = () => {
     setMin(min+adCount)
@@ -35,10 +36,10 @@ function Adlist(props) {
   }
  
   return (
-    <Container sx={{display:"flex", justifyContents:"center", alignItems:"center"}}>
+    <Container sx={{marginTop: 10, height: 300, maxWidth: 1, maxHeight: 1, display:"flex", justifyContents:"center", alignItems:"center"}}>
           {min/adCount > 0 ? 
       <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > : 
-      <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton >}
+      <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton>}
       <ImageList cols={6} rows={2}>
         {ads.map((ad) => {
           return (
@@ -53,4 +54,4 @@ function Adlist(props) {
   )
 }
 
-export default Adlist;
+export default AdList;

@@ -21,13 +21,13 @@ const useStyles = makeStyles({
 function App() {
   const styles = useStyles()
   return (
-    <home>
+    <Box>
       <Header></Header>
       <Box className={styles.hero}/>
       <Questions></Questions>
       <FilterBar/>
       <AdList data = {data}/>
-    </home>
+    </Box>
   );
 }
 
