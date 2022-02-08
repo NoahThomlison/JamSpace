@@ -2,19 +2,51 @@ import React, { useState, useCallback } from 'react';
 import ListingsDataService from '../services/listings';
 import { Link } from 'react-router-dom';
 
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import Select from '@mui/material/Select';
-
+//MUI
+import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
+import { makeStyles } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+//Drag and Drop
 import {useDropzone} from 'react-dropzone'
 
 
-//MUI
-import { Autocomplete, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment } from "@mui/material"
+//MUI styles
+const useStyles = makeStyles({
+  dragDrop: {
+    flex: "1",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "20px",
+    borderWidth: "5px",
+    borderRadius: "2px",
+    borderColor: "#eeeeee",
+    borderStyle: "dashed",
+    backgroundColor:" #fafafa",
+    color:"#bdbdbd",
+    outline: "none",
+    transition: "border .24s ease-in-out",
+    width: "50%",
+    '&:hover':{
+      borderColor: '#d9d9d9',
+    }
+  },
+  fourItems: {
+    width: "25%",
+    },
+  threeItems: {
+    width: "33.333333%",
+  },
+});
 
 
 const CreateListing = props => {
   const { username, userId } = props.user;
+  const classes = useStyles();
+  console.log(classes)
   // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
     title: '',
@@ -97,7 +129,8 @@ const CreateListing = props => {
         });
     }
   };
-
+  
+  //Drag and Drop functionality
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
   
   const files = acceptedFiles.map(file => (
@@ -120,38 +153,28 @@ const CreateListing = props => {
             </div>
           ) : (
             <div>
-
-
-
-
-              <h3 className='mb-4'>{editing ? 'Edit' : 'Create'} Listing: </h3>
-
-                <Box className="container" sx={{backgroundColor: "#808080"}}>
-      <div {...getRootProps({className: 'dropzone'})}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
-      </div>
-      <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
-      </aside>
-    </Box>
-
-    <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
-
-    
+              <Container sx={{display:"flex", flexDirection: "column", alignItems:"center"}}>              
+                <h3 className='mb-4'>{editing ? 'Edit' : 'Create'} Listing: </h3>
+              <Container sx={{display: "flex"}}>
+                <Container className={classes.dragDrop} >
+                  <Box {...getRootProps({className: 'dropzone'})}>
+                    <input {...getInputProps()} />
+                    <Typography variant="h2">
+                    <AddAPhotoIcon fontSize="xl"></AddAPhotoIcon>
+                    </Typography>
+                  </Box>
+                  <aside>
+                    <ul>{files}</ul>
+                  </aside>
+                </Container>
+                <Container sx={{display: "flex", flexDirection: "column", width: "50%"}}>
+                <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
                 {/* <TextField id="outlined-textarea" label="Description" name="description" variant="outlined"  onChange={handleInputChange}/> */}
-                <TextField
-                  id="outlined-multiline-static"
-                  label="Description"
-                  name="description"
-                  multiline
-                  rows={4}
-                  onChange={handleInputChange}
-                />
+                <TextField sx={{marginTop: "20px"}} id="outlined-multiline-static" label="Description" name="description" multiline rows={4} onChange={handleInputChange}/>
                 {/* dropdown */}
                 {/* <TextField id="outlined-basic" name="instrument_type" label="Instument Type" variant="outlined"/> */}
-                <FormControl sx={{width:150}}>
+                <Box sx={{width:"100%", marginTop: "20px"}}> 
+                <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Instument Type</InputLabel>
                   <Select
                     labelId="demo-simple-select-helper-label"
@@ -168,7 +191,7 @@ const CreateListing = props => {
 
 
                 {/* <TextField id="outlined-basic" name="condition"  label="Condition" variant="outlined" onChange={handleInputChange}/> */}
-                <FormControl sx={{width:150}}>
+                <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Condition</InputLabel>
                   <Select
                     labelId="demo-simple-select-helper-label"
@@ -187,7 +210,7 @@ const CreateListing = props => {
 
 
                 {/* <TextField id="outlined-basic" name="brand" label="Brand" variant="outlined" onChange={handleInputChange}/> */}
-                <FormControl sx={{width:150}}>
+                <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Brand</InputLabel>
                   <Select
                     labelId="demo-simple-select-helper-label"
@@ -201,28 +224,31 @@ const CreateListing = props => {
                     <MenuItem value={30}>Something</MenuItem>
                   </Select>
                 </FormControl>
+                </Box>
 
-                <TextField id="outlined-basic" name="images" label="Link to Image" variant="outlined" onChange={handleInputChange}/>
+                {/* <TextField id="outlined-basic" name="images" label="Link to Image" variant="outlined" onChange={handleInputChange}/> */}
 
+                <Box sx={{marginTop: "20px"}}>
                 {/* //prices  */}
-                <TextField id="outlined-basic" name='daily' label="Daily($)" variant="outlined" onChange={handleInputChange}/>
-                <TextField id="outlined-basic" name='weekly' label="Weekly($)" variant="outlined" onChange={handleInputChange}/>
-                <TextField id="outlined-basic" name='monthly' label="Monthly($)" variant="outlined" onChange={handleInputChange}/>
-                <TextField id="outlined-basic" name='deposit' label="Security Deposit($)" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='daily' label="Daily($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField id="outlined-basic" name='weekly' label="Weekly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField id="outlined-basic" name='monthly' label="Monthly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField id="outlined-basic" name='deposit' label="Deposit($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                </Box>
 
                 {/* //location  */}
-                <TextField id="outlined-basic" name='city' label="City:" variant="outlined" onChange={handleInputChange}/>
-                <TextField id="outlined-basic" name='province' label="Province:" variant="outlined" onChange={handleInputChange}/>
-                <TextField id="outlined-basic" name='country' label="Country:" variant="outlined" onChange={handleInputChange}/>
-                <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code:" variant="outlined" onChange={handleInputChange}/>
-              <div className='text-center mt-3'>
-                <button
-                  onClick={saveListing}
-                  className='btn btn-lg btn-outline-dark btn-block'
-                >
-                  Submit
-                </button>
-              </div>
+                <Box sx={{marginTop: "20px"}}>
+                <TextField id="outlined-basic" name='city' label="City" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField id="outlined-basic" name='province' label="Province" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField id="outlined-basic" name='country' label="Country" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                </Box>
+                </Container>
+                
+                </Container>
+                <Button onClick={saveListing} sx={{width:"200px", marginTop:"20px"}} variant="outlined">Submit</Button>
+
+                </Container>
             </div>
           )}
         </div>
