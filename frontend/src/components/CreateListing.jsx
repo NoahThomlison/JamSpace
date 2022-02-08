@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import ListingsDataService from '../services/listings';
 import { Link } from 'react-router-dom';
 
+//MUI
+import { Autocomplete, TextField } from "@mui/material"
+
+
 const CreateListing = props => {
   const { username, userId } = props.user;
-
   // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
     title: '',
@@ -66,6 +69,7 @@ const CreateListing = props => {
       postal_code: listing.postal_code,
     };
 
+
     if (editing) {
       data.listing_id = props.location.state.currentListing._id;
       ListingsDataService.updateListing(data)
@@ -89,6 +93,7 @@ const CreateListing = props => {
 
   return (
     <div>
+
       {/* If the username is not set as an empty string, display the new listing form, otherwise display the message to Login */}
       {username !== '' ? (
         <div className='submit-form mb-5'>
@@ -102,262 +107,20 @@ const CreateListing = props => {
           ) : (
             <div>
               <h3 className='mb-4'>{editing ? 'Edit' : 'Create'} Listing: </h3>
-              <div className='form-group row'>
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='title'
-                >
-                  <strong>Title: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='title'
-                    required
-                    value={listing.title}
-                    onChange={handleInputChange}
-                    name='title'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='description'
-                >
-                  <strong>Description: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='description'
-                    required
-                    value={listing.description}
-                    onChange={handleInputChange}
-                    name='description'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='instrument_type'
-                >
-                  <strong>Instument Type: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='instrument_type'
-                    required
-                    value={listing.instrument_type}
-                    onChange={handleInputChange}
-                    name='instrument_type'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='brand'
-                >
-                  <strong>Brand: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='brand'
-                    required
-                    value={listing.brand}
-                    onChange={handleInputChange}
-                    name='brand'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='condition'
-                >
-                  <strong>Condition: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='condition'
-                    required
-                    value={listing.condition}
-                    onChange={handleInputChange}
-                    name='condition'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='images'
-                >
-                  <strong>Link to Image: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='images'
-                    required
-                    value={listing.images}
-                    onChange={handleInputChange}
-                    name='images'
-                  />
-                </div>
-
-                <div className='mb-2'>
-                  <h3>Price: </h3>
-                </div>
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='daily'
-                >
-                  <strong>Daily: </strong>
-                </label>
-                <div className='col-sm-2 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='daily'
-                    required
-                    value={listing.daily}
-                    onChange={handleInputChange}
-                    name='daily'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='weekly'
-                >
-                  <strong>Weekly: </strong>
-                </label>
-                <div className='col-sm-2 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='weekly'
-                    required
-                    value={listing.weekly}
-                    onChange={handleInputChange}
-                    name='weekly'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='monthly'
-                >
-                  <strong>Monthly: </strong>
-                </label>
-                <div className='col-sm-2 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='monthly'
-                    required
-                    value={listing.monthly}
-                    onChange={handleInputChange}
-                    name='monthly'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='deposit'
-                >
-                  <strong>Security Deposit: </strong>
-                </label>
-                <div className='col-sm-10 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='deposit'
-                    required
-                    value={listing.deposit}
-                    onChange={handleInputChange}
-                    name='deposit'
-                  />
-                </div>
-
-                <div className='mb-2'>
-                  <h3>Instrument Location: </h3>
-                </div>
-                <label className='col-sm-2 create-listing-label' htmlFor='city'>
-                  <strong>City: </strong>
-                </label>
-                <div className='col-sm-4 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='city'
-                    required
-                    value={listing.city}
-                    onChange={handleInputChange}
-                    name='city'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='province'
-                >
-                  <strong>Province: </strong>
-                </label>
-                <div className='col-sm-4 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='province'
-                    required
-                    value={listing.province}
-                    onChange={handleInputChange}
-                    name='province'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='country'
-                >
-                  <strong>Country: </strong>
-                </label>
-                <div className='col-sm-4 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='country'
-                    required
-                    value={listing.country}
-                    onChange={handleInputChange}
-                    name='country'
-                  />
-                </div>
-
-                <label
-                  className='col-sm-2 create-listing-label'
-                  htmlFor='postal_code'
-                >
-                  <strong>Postal Code: </strong>
-                </label>
-                <div className='col-sm-4 mb-3'>
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='postal_code'
-                    required
-                    value={listing.postal_code}
-                    onChange={handleInputChange}
-                    name='postal_code'
-                  />
-                </div>
-              </div>
+                <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" label="Description" name="description" variant="outlined"  onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name="instrument_type" label="Instument Type" variant="outlined"/>
+                <TextField id="outlined-basic" name="brand" label="Brand" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name="condition"  label="Condition" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name="images" label="Link to Image" variant="outlined" onChange={handleInputChange}/> 
+                <TextField id="outlined-basic" name='daily' label="Daily:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='weekly' label="Weekly:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='monthly' label="Monthly:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='deposit' label="Security Deposit:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='city' label="City:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='province' label="Province:" variant="outlined" onChange={handleInputChange}/>
+                <TextField id="outlined-basic" name='country' label="Country:" variant="outlined" onChange={handleInputChange}/>
+                <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code:" variant="outlined" onChange={handleInputChange}/>
               <div className='text-center mt-3'>
                 <button
                   onClick={saveListing}
@@ -369,6 +132,7 @@ const CreateListing = props => {
             </div>
           )}
         </div>
+
       ) : (
         <div className='text-center mt-5'>
           <h2>Please Log In To Create A Listing.</h2>
