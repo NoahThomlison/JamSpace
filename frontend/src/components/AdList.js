@@ -14,11 +14,11 @@ import InfoIcon from '@mui/icons-material/Info';
 
 
 function AdList(props) {
-  let adCount = 6
+  let adCount = 3
   const { listings, setListings } = props;
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(adCount)
-  const [ads, setAds] = useState(listings.slice(min, max))
+  const [ads, setAds] = useState([])
   let slideCount = Math.ceil(listings.length/adCount)
 
   useEffect(() => {
@@ -40,7 +40,9 @@ function AdList(props) {
           {min/adCount > 0 ? 
       <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > : 
       <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton>}
-      <ImageList cols={6} rows={2}>
+      <ImageList cols={3} sx={{
+      display: 'flex',
+      alignItems: 'center'}}>
         {ads.map((ad) => {
           return (
             <Ad id={ad._id.$oid} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>
