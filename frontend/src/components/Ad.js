@@ -4,7 +4,6 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 function Ad({ad, id, description, title, price, images, key}) {
-  console.log({price})
   const image = images[0]
   const daily = price.daily
   const weekly = price.weekly
