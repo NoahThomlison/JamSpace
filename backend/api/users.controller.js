@@ -4,10 +4,16 @@ import UsersDAO from '../dao/usersDAO.js';
 export default class UsersController {
   // Get all users from the users collection in the database
   static async apiGetUsers(req, res, next) {
-    const { usersList, totalNumUsers } = await UsersDAO.getUsers();
+    let filters = {};
+    if (req.query.email) {
+      filters.email = req.query.email;
+    }
+
+    const { usersList, totalNumUsers } = await UsersDAO.getUsers({ filters });
 
     let response = {
       users: usersList,
+      filters: filters,
       total_results: totalNumUsers,
     };
     res.json(response);

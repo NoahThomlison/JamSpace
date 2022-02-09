@@ -19,11 +19,18 @@ export default class UsersDAO {
   }
 
   // Get all Users
-  static async getUsers() {
+  static async getUsers({ filters = null }) {
+    let query;
+    if (filters) {
+      if ('email' in filters) {
+        query = { email: { $eq: filters['email'] } };
+      }
+    }
+
     let cursor;
 
     try {
-      cursor = await users.find();
+      cursor = await users.find(query);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return { usersList: [], totalNumUsers: 0 };
@@ -32,7 +39,7 @@ export default class UsersDAO {
     const displayCursor = cursor;
     try {
       const usersList = await displayCursor.toArray();
-      const totalNumUsers = await users.countDocuments();
+      const totalNumUsers = await users.countDocuments(query);
       return { usersList, totalNumUsers };
     } catch (e) {
       console.error(
@@ -42,7 +49,7 @@ export default class UsersDAO {
     }
   }
 
-  // Get specific user
+  // Get specific user by id
   static async getUserById(id) {
     let cursor;
     let query = { _id: new ObjectId(id) };
