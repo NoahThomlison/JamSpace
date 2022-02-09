@@ -1,7 +1,9 @@
+import { findAndSet } from './usersData';
+
 // Basic Login and Logout functions
 
 function login(setUser, user = null) {
-  setUser(user);
+  findAndSet(setUser, user.email);
 }
 
 function logout(setUser) {

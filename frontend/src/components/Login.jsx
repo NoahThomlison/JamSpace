@@ -8,9 +8,14 @@ const Login = props => {
 
   // Set the initial state of the user with the info passed in with user
   const initialUserState = {
-    username: user.username,
-    password: user.password,
     userId: user.userId,
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    password: user.password,
+    address: user.address,
+    host: user.host,
+    listing_ids: user.listing_ids,
   };
 
   // State variable to record changes made in the form
@@ -32,16 +37,16 @@ const Login = props => {
       <div className='text-center'>
         <div className='form-group mb-3'>
           <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='email'>Email</label>
           <input
             type='text'
             className='form-control'
-            id='username'
+            id='email'
             required
-            value={newUser.username}
+            value={newUser.email}
             onChange={handleInputChange}
-            placeholder='Username'
-            name='username'
+            placeholder='Email Address'
+            name='email'
           />
         </div>
         <div className='form-group mb-4'>

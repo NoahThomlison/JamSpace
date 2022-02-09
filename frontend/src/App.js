@@ -24,10 +24,14 @@ import { login, logout } from './helpers/authentication';
 function App() {
   // State Initializers
   const initialUserState = {
-    username: '',
+    userId: '',
+    first_name: '',
+    last_name: '',
+    email: '',
     password: '',
-    // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
-    userId: '61fc9dcb934a52db529c8f94',
+    address: {},
+    host: null,
+    listing_ids: [],
   };
 
   // State Variables
@@ -36,6 +40,10 @@ function App() {
 
   useEffect(() => {
     listingsData(setListings);
+  }, []);
+
+  useEffect(() => {
+    setUser(user);
   }, []);
 
   return (
@@ -58,14 +66,15 @@ function App() {
             </li>
             <li className='nav-item'>
               {/* If a username is set, show Logout, otherwise show the Login Link */}
-              {user.username !== '' ? (
+              {console.log(user)}
+              {user.email !== '' ? (
                 <a
                   onClick={() => logout(setUser)}
                   href='/login'
                   className='nav-link'
                   style={{ cursor: 'pointer' }}
                 >
-                  Logout {user.username}
+                  Logout {user.first_name}
                 </a>
               ) : (
                 <Link to={'/login'} className='nav-link'>

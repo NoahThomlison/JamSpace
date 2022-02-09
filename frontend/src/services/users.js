@@ -9,6 +9,12 @@ class UsersDataService {
     return http.get(`/id/${id}`);
   }
 
+  // find User by Email
+  find(query) {
+    console.log(`?email=${query}`);
+    return http.get(`?email=${query}`);
+  }
+
   createUser(data) {
     return http.post('/user', data);
   }
