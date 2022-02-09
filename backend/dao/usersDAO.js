@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import bcrypt from 'bcrypt';
 
 let users;
 
@@ -38,9 +39,27 @@ export default class UsersDAO {
 
     const displayCursor = cursor;
     try {
+      const userPassword = filters.password;
+      let successfulMatch = false;
       const usersList = await displayCursor.toArray();
+      const dbPassword = usersList[0].password;
       const totalNumUsers = await users.countDocuments(query);
-      return { usersList, totalNumUsers };
+      successfulMatch = await new Promise((resolve, reject) => {
+        bcrypt.compare(userPassword, dbPassword, function (err, result) {
+          if (result) {
+            resolve(true);
+          } else {
+            reject(false);
+          }
+        });
+      });
+
+      console.log(successfulMatch);
+      if (successfulMatch) {
+        return { usersList, totalNumUsers };
+      } else {
+        return { usersList: [], totalNumUsers: 0 };
+      }
     } catch (e) {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`
