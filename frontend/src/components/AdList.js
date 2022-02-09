@@ -36,16 +36,21 @@ function AdList(props) {
   }
  
   return (
-    <Container sx={{marginTop: 10, height: 300, maxWidth: 1, maxHeight: 1, display:"flex", justifyContents:"center", alignItems:"center"}}>
+    <Container sx={{marginTop: 10, height: "auto", maxWidth: 1, display:"flex", justifyContents:"center", alignItems:"center", flexDirection: 'row',}}>
           {min/adCount > 0 ? 
       <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > : 
       <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton>}
-      <ImageList cols={3} sx={{
+      <ImageList sx={{
+        // width: "100%",
+        height: 300,
       display: 'flex',
-      alignItems: 'center'}}>
+      flexDirection: 'row',
+      alignItems: 'center',
+      // flexWrap: 'wrap',
+      }}>
         {ads.map((ad) => {
           return (
-            <Ad id={ad._id.$oid} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>
+            <Ad id={ad._id.$oid} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title} adCount={adCount}/>
           )
         })}
       </ImageList>

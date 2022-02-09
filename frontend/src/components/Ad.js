@@ -26,27 +26,34 @@ function Ad({
 	price,
 	images,
 	key,
+	adCount
 }) {
 	console.log({ price });
 	const image = images[0];
 	const daily = price.daily;
 	const weekly = price.weekly;
 	const monthly = price.monthly;
+	const imageWidth	= Math.floor(100/adCount)/100
 	const subheader =
 		" D:$" + daily + " W:$" + weekly + " M:$" + monthly;
 
 	return (
-		<ImageListItem key={key}>
+		<ImageListItem key={key} sx={{ width: imageWidth, height: 300 , display:"flex", justifyContents:"center", alignItems:"center" }}>
+			<div sx={{ width: imageWidth, height: "20%" , }}>
 			<img
 				src={image}
 				loading="lazy"
 				alt={title}
 				id={id}
-				sx={{ height: "auto", width: "auto" }}
-			/>
+				// sx={{ maxHeight: "50%"}}
+				/>
+				</div>
+
 			<ImageListItemBar
 				title={title}
 				subtitle={subheader}
+				position="below"
+				
 			/>
 		</ImageListItem>
 	);
