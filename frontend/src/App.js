@@ -13,7 +13,6 @@ import CreateListing from './components/CreateListing';
 import Home from './components/Home';
 import Login from './components/Login';
 import Footer from './components/Footer/Footer';
-import Booking from './components/Booking';
 
 //Import Listing Database Call Helper Function
 import listingsData from './helpers/listingsData';
@@ -101,7 +100,6 @@ function App() {
             path='/login'
             element={<Login login={login} setUser={setUser} user={user} />}
           />
-          <Route path='/listings/book' element={<Booking user={user} />} />
         </Routes>
       </div>
       <Footer />
