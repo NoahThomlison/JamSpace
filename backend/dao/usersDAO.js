@@ -47,7 +47,7 @@ export default class UsersDAO {
     let cursor;
     let query = { _id: new ObjectId(id) };
     try {
-      cursor = await listings.find(query);
+      cursor = await users.find(query);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return { user: {} };
