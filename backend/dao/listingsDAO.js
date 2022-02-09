@@ -65,7 +65,6 @@ export default class ListingsDAO {
   static async getListingById(id) {
     let cursor;
     let query = { _id: new ObjectId(id) };
-    console.log(query);
     try {
       cursor = await listings.find(query);
     } catch (e) {

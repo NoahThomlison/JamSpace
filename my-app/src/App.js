@@ -1,33 +1,32 @@
 import './App.css';
 import AdList from './Components/AdList';
 import FilterBar from './Components/FilterBar';
-import Questions from './Components/Questions'
-import Header from './Components/Header'
+import Questions from './Components/Questions';
+import Header from './Components/Header';
 import data from './data';
-import heroImage from "./images/thehitsBW.jpg"
-import {Box, Paper} from '@mui/material/';
+import heroImage from './images/thehitsBW.jpg';
+import { Box, Paper } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   hero: {
     height: '75vh',
     backgroundImage: `url(${heroImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   },
 });
 
-
 function App() {
-  const styles = useStyles()
+  const styles = useStyles();
   return (
-    <home>
+    <Box>
       <Header></Header>
-      <Box className={styles.hero}/>
+      <Box className={styles.hero} />
       <Questions></Questions>
-      <FilterBar/>
-      <AdList data = {data}/>
-    </home>
+      <FilterBar />
+      <AdList data={data} />
+    </Box>
   );
 }
 
