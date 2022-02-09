@@ -39,7 +39,6 @@ export default class ListingsController {
     try {
       let id = req.params.id || {};
       let listing = await ListingsDAO.getListingById(id);
-      console.log(listing);
       if (!listing) {
         res.status(404).json({ error: 'Not found' });
         return;

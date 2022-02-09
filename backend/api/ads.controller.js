@@ -28,7 +28,6 @@ export default class AdsController {
         postal_code: req.body.postal_code,
       };
       const date = new Date();
-      console.log(req.body);
       const adResponse = await AdsDAO.addAd(
         title,
         description,
@@ -49,6 +48,7 @@ export default class AdsController {
     }
   }
 
+  // This may not work correctly
   static async apiUpdateAd(req, res, next) {
     try {
       const adId = req.body.ad_id;
@@ -85,7 +85,6 @@ export default class AdsController {
     try {
       const adId = req.query.id;
       const userId = req.body.user_id;
-      console.log(adId);
       const adResponse = await AdsDAO.deleteAd(adId, userId);
 
       res.json({ status: 'success' });
