@@ -1,61 +1,69 @@
 import * as React from "react";
-import {
-	Card,
-	CardActions,
-	CardContent,
-	CardMedia,
-	CardHeader,
-	Button,
-	Grid,
-	Typography,
-	Container,
-} from "@mui/material/";
-import "../App.css";
-
-import ImageList from "@mui/material/ImageList";
+import { NavLink } from "react-router-dom";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
-import ListSubheader from "@mui/material/ListSubheader";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
+import { Box, sizing } from "@mui/system";
+import { Link } from "react-router-dom";
+
 
 function Ad({
+	ad,
 	id,
 	description,
 	title,
 	price,
 	images,
 	key,
-	adCount
+	adCount,
 }) {
 	console.log({ price });
 	const image = images[0];
 	const daily = price.daily;
 	const weekly = price.weekly;
 	const monthly = price.monthly;
-	const imageWidth	= Math.floor(100/adCount)/100
+	const imageWidth = 2 / adCount;
+	const textwidth = 4 / adCount;
+
 	const subheader =
-		" D:$" + daily + " W:$" + weekly + " M:$" + monthly;
+		"D:$" + daily + "W:$" + weekly + "M:$" + monthly;
 
 	return (
-		<ImageListItem key={key} sx={{ width: imageWidth, height: 300 , display:"flex", justifyContents:"center", alignItems:"center" }}>
-			<div sx={{ width: imageWidth, height: "20%" , }}>
-			<img
-				src={image}
-				loading="lazy"
-				alt={title}
-				id={id}
-				// sx={{ maxHeight: "50%"}}
-				/>
-				</div>
-
-			<ImageListItemBar
-				title={title}
-				subtitle={subheader}
-				position="below"
-				
-			/>
-		</ImageListItem>
+		<Card sx={{ width: imageWidth, maxHeight:1, display: 'flex',flex:1 }}>
+      <NavLink to={`/listings/${id}`}>
+			<CardActionArea>
+      <NavLink to={`/listings/${id}`} className='nav-link' />
+      <Box sx={{ maxeight:"md", display: 'inline-flex',flex:1 }}>
+				<CardMedia
+            component="img"
+            height="auto"
+            image={image}
+            alt={title}
+            sx={{maxHeight:150}}
+          />
+        </Box>
+				<CardContent>
+					<Typography
+						gutterBottom
+						variant="h7"
+						component="div"
+					>
+						{title}
+					</Typography>
+					<Typography
+						variant="body2"
+						color="text.secondary"
+					>
+						{subheader}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
+      </NavLink>
+		</Card>
 	);
 }
 

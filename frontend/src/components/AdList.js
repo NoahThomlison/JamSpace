@@ -14,7 +14,7 @@ import InfoIcon from '@mui/icons-material/Info';
 
 
 function AdList(props) {
-  let adCount = 3
+  let adCount = 5
   const { listings, setListings } = props;
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(adCount)
@@ -42,15 +42,16 @@ function AdList(props) {
       <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton>}
       <ImageList sx={{
         // width: "100%",
-        height: 300,
+        height: "auto",
       display: 'flex',
+      flex:1,
       flexDirection: 'row',
       alignItems: 'center',
-      // flexWrap: 'wrap',
+      //  flexWrap: 'wrap',
       }}>
         {ads.map((ad) => {
           return (
-            <Ad id={ad._id.$oid} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title} adCount={adCount}/>
+            <Ad ad={ad} id={ad._id} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}  adCount={adCount} sx={{flex:1}}/>
           )
         })}
       </ImageList>
