@@ -1,6 +1,7 @@
-import React, { useState, useCallback, setState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ListingsDataService from '../services/listings';
 import { Link } from 'react-router-dom';
+import {brands, instruments} from '../staticData/filterDropdownData'
 
 //MUI
 import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
@@ -42,12 +43,6 @@ const useStyles = makeStyles({
 
 const CreateListing = props => {
   const { username, userId } = props.user;
-  const classes = useStyles();
-  const [dailyRate, setDailyRate] = useState("")
-  const [weeklyRate, setWeeklyRate] = useState("")
-  const [monthlyRate, setMonthlyRate] = useState("")
-  const [deposit, setDeposit] = useState("")
-
 
   // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
@@ -60,7 +55,7 @@ const CreateListing = props => {
     weekly: null,
     monthly: null,
     deposit: null,
-    images: [''],
+    images: ['intialStateOverride'],
     user_id: userId,
     name: username,
     user_img: 'https://picsum.photos/id/1025/4951/3301.jpg',
@@ -71,6 +66,25 @@ const CreateListing = props => {
     postal_code: '',
   };
 
+  const classes = useStyles();
+  const [dailyRate, setDailyRate] = useState("")
+  const [weeklyRate, setWeeklyRate] = useState("")
+  const [monthlyRate, setMonthlyRate] = useState("")
+  const [deposit, setDeposit] = useState("")
+  const [formComplete, setFormComplete] = useState(false)
+  const [listing, setListing] = useState(initialListingState);
+  const [submitted, setSubmitted] = useState(false);
+ 
+  //check if form is filled out completely
+  useEffect(() => {
+    if (Object.values(listing).some((x) => x ==="" || x === null)){
+      setFormComplete(false)
+    }
+    else{
+       setFormComplete(true)
+    }
+  },[listing]);
+
   let editing = false;
 
   // EDITING STILL NEEDS TO BE IMPLEMENTED
@@ -80,8 +94,6 @@ const CreateListing = props => {
   //   initialListingState = props.location.state.currentListing.text;
   // }
 
-  const [listing, setListing] = useState(initialListingState);
-  const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = event => {
     const { name, value } = event.target;
@@ -152,8 +164,6 @@ const CreateListing = props => {
     </li>
   ));
 
- 
-
   return (
     <div>
       {/* If the username is not set as an empty string, display the new listing form, otherwise display the message to Login */}
@@ -190,29 +200,30 @@ const CreateListing = props => {
                       <FormControl className={classes.threeItems}>
                         <InputLabel id="demo-simple-select-helper-label">Instrument Type</InputLabel>
                         <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="instrument_type" label="Brand" onChange={handleInputChange}>
-                          <MenuItem value={10}>Guitar</MenuItem>
-                          <MenuItem value={20}>Drums</MenuItem>
-                          <MenuItem value={30}>Soemthing else?</MenuItem>
+                          {instruments.map((instrument) => {
+                            return(                          <MenuItem value={instrument}>{instrument}</MenuItem>
+                            )
+                          })}
                         </Select>
                       </FormControl>
                       {/* Condition */}
                       <FormControl className={classes.threeItems}>
                         <InputLabel id="demo-simple-select-helper-label">Condition</InputLabel>
                         <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="condition" label="Condition" onChange={handleInputChange}>
-                          <MenuItem value={10}>Excellent</MenuItem>
-                          <MenuItem value={20}>Good</MenuItem>
-                          <MenuItem value={30}>Fair</MenuItem>
-                          <MenuItem value={30}>Not so hot</MenuItem>
-                          <MenuItem value={30}>Smashed</MenuItem>
+                          <MenuItem value={"Excellent"}>Excellent</MenuItem>
+                          <MenuItem value={"Good"}>Good</MenuItem>
+                          <MenuItem value={"Fair"}>Fair</MenuItem>
+                          <MenuItem value={"Not so hot"}>Not so hot</MenuItem>
+                          <MenuItem value={"Smashed"}>Smashed</MenuItem>
                         </Select>
                       </FormControl>
                       {/* Brand */}
                       <FormControl className={classes.threeItems}>
                         <InputLabel id="demo-simple-select-helper-label">Brand</InputLabel>
                         <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="brand" label="Brand" onChange={handleInputChange}>
-                          <MenuItem value={10}>Something</MenuItem>
-                          <MenuItem value={20}>Something</MenuItem>
-                          <MenuItem value={30}>Something</MenuItem>
+                          {brands.map((brand) => {
+                            return(
+                          <MenuItem value={brand}>{brand}</MenuItem>)})}
                         </Select>
                       </FormControl>
                     </Box>
@@ -233,15 +244,38 @@ const CreateListing = props => {
                     {/* Location */}
                     <Box sx={{marginTop: "20px"}}>
                       <TextField id="outlined-basic" name='city' label="City" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                      <TextField id="outlined-basic" name='province' label="Province" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                      <TextField id="outlined-basic" name='country' label="Country" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                      <FormControl className={classes.fourItems}>
+                        <InputLabel id="demo-simple-select-helper-label">Province</InputLabel>
+                        <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="province" label="Province" onChange={handleInputChange}>
+                          <MenuItem value={"AB"}>AB</MenuItem>
+                          <MenuItem value={"BC"}>BC</MenuItem>
+                          <MenuItem value={"MB"}>MB</MenuItem>
+                          <MenuItem value={"NB"}>NB</MenuItem>
+                          <MenuItem value={"NL"}>NL</MenuItem>
+                          <MenuItem value={"NS"}>NS</MenuItem>
+                          <MenuItem value={"NT"}>NT</MenuItem>
+                          <MenuItem value={"NU"}>NU</MenuItem>
+                          <MenuItem value={"ON"}>ON</MenuItem>
+                          <MenuItem value={"QC"}>QC</MenuItem>
+                          <MenuItem value={"SK"}>SK</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <FormControl className={classes.fourItems}>
+                        <InputLabel id="demo-simple-select-helper-label">Country</InputLabel>
+                        <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="country" label="Country" onChange={handleInputChange}>
+                          <MenuItem value={"Canada"}>Canada</MenuItem>
+                          <MenuItem value={"United States"}>United States</MenuItem>
+                        </Select>
+                      </FormControl>
                       <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code" variant="outlined" onChange={handleInputChange} className= {classes. fourItems}/>
                     </Box>
 
                   </Container>
                   
                 </Container>
-                <Button onClick={saveListing} sx={{width:"200px", marginTop:"20px"}} variant="outlined">Submit</Button>
+                {formComplete ? 
+                <Button onClick={saveListing} sx={{width:"200px", marginTop:"20px"}} variant="contained">Submit</Button>
+                :<Button onClick={saveListing} sx={{width:"200px", marginTop:"20px"}} variant="disabled">Submit</Button>}
               </Container>
             </div>
           )}
