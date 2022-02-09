@@ -44,6 +44,10 @@ const CreateListing = props => {
   const { username, userId } = props.user;
   const classes = useStyles();
   const [dailyRate, setDailyRate] = useState("")
+  const [weeklyRate, setWeeklyRate] = useState("")
+  const [monthlyRate, setMonthlyRate] = useState("")
+  const [deposit, setDeposit] = useState("")
+
 
   // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
@@ -85,15 +89,15 @@ const CreateListing = props => {
   };
 
    const priceCalculator = event =>{
-    const { name, value } = event.target;
-
-    const dailyRate = value * 0.005
-    const weeklyRate = dailyRate * 4
-    const monthlyRate = weeklyRate * 3.5
-    setListing({ ...listing, ["daily"]: dailyRate, ["weekly"]: weeklyRate, ["monthly"]: monthlyRate, ["deposit"]: value});
-    console.log(dailyRate)
-    setDailyRate(dailyRate)
-    
+    const { value } = event.target;
+    const dailyRateCalc = value * 0.005
+    const weeklyRateCalc = dailyRateCalc * 4
+    const monthlyRateCalc = weeklyRateCalc * 3.5
+    setListing({ ...listing, ["daily"]: dailyRateCalc, ["weekly"]: weeklyRateCalc, ["monthly"]: monthlyRateCalc, ["deposit"]: value});
+    setDailyRate(dailyRateCalc)
+    setWeeklyRate(weeklyRateCalc)
+    setMonthlyRate(monthlyRateCalc)
+    setDeposit(value)
   };
 
   const saveListing = () => {
@@ -166,104 +170,82 @@ const CreateListing = props => {
             <div>
               <Container sx={{display:"flex", flexDirection: "column", alignItems:"center"}}>              
                 <h3 className='mb-4'>{editing ? 'Edit' : 'Create'} Listing: </h3>
-              <Container sx={{display: "flex"}}>
-                <Container className={classes.dragDrop} sx={{display:"flex"}} >
-                  <Box {...getRootProps({className: 'dropzone'})}>
-                    <input {...getInputProps()} />
-                    <Typography variant="h2">
-                    <AddAPhotoIcon fontSize="xl"></AddAPhotoIcon>
-                    </Typography>
-                  </Box>
-                  <aside>
-                    <ul>{files}</ul>
-                  </aside>
-                </Container>
-                <Container sx={{display: "flex", flexDirection: "column", width: "50%"}}>
-                <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
-                <TextField sx={{marginTop: "20px"}} id="outlined-multiline-static" label="Description" name="description" multiline rows={4} onChange={handleInputChange}/>
-                {/* dropdown */}
-                <Box sx={{width:"100%", marginTop: "20px"}}> 
-                <FormControl className={classes.threeItems}>
-                  <InputLabel id="demo-simple-select-helper-label">Instument Type</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    name="instrument_type"
-                    label="Brand"
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value={10}>Guitar</MenuItem>
-                    <MenuItem value={20}>Drums</MenuItem>
-                    <MenuItem value={30}>Soemthing else?</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl className={classes.threeItems}>
-                  <InputLabel id="demo-simple-select-helper-label">Condition</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    name="condition"
-                    label="Condition"
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value={10}>Excellent</MenuItem>
-                    <MenuItem value={20}>Good</MenuItem>
-                    <MenuItem value={30}>Fair</MenuItem>
-                    <MenuItem value={30}>Not so hot</MenuItem>
-                    <MenuItem value={30}>Smashed</MenuItem>
-                  </Select>
-                </FormControl>
+                <Container sx={{display: "flex"}}>
+                  <Container className={classes.dragDrop} sx={{display:"flex"}} >
+                    <Box {...getRootProps({className: 'dropzone'})}>
+                      <input {...getInputProps()} />
+                      <Typography variant="h2">
+                        <AddAPhotoIcon fontSize="xl"></AddAPhotoIcon>
+                      </Typography>
+                    </Box>
+                    <aside>
+                      <ul>{files}</ul>
+                    </aside>
+                  </Container>
+                  <Container sx={{display: "flex", flexDirection: "column", width: "50%"}}>
+                    <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
+                    <TextField sx={{marginTop: "20px"}} id="outlined-multiline-static" label="Description" name="description" multiline rows={4} onChange={handleInputChange}/>
+                    {/* Instrument Type */}
+                    <Box sx={{width:"100%", marginTop: "20px"}}> 
+                      <FormControl className={classes.threeItems}>
+                        <InputLabel id="demo-simple-select-helper-label">Instrument Type</InputLabel>
+                        <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="instrument_type" label="Brand" onChange={handleInputChange}>
+                          <MenuItem value={10}>Guitar</MenuItem>
+                          <MenuItem value={20}>Drums</MenuItem>
+                          <MenuItem value={30}>Soemthing else?</MenuItem>
+                        </Select>
+                      </FormControl>
+                      {/* Condition */}
+                      <FormControl className={classes.threeItems}>
+                        <InputLabel id="demo-simple-select-helper-label">Condition</InputLabel>
+                        <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="condition" label="Condition" onChange={handleInputChange}>
+                          <MenuItem value={10}>Excellent</MenuItem>
+                          <MenuItem value={20}>Good</MenuItem>
+                          <MenuItem value={30}>Fair</MenuItem>
+                          <MenuItem value={30}>Not so hot</MenuItem>
+                          <MenuItem value={30}>Smashed</MenuItem>
+                        </Select>
+                      </FormControl>
+                      {/* Brand */}
+                      <FormControl className={classes.threeItems}>
+                        <InputLabel id="demo-simple-select-helper-label">Brand</InputLabel>
+                        <Select labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" name="brand" label="Brand" onChange={handleInputChange}>
+                          <MenuItem value={10}>Something</MenuItem>
+                          <MenuItem value={20}>Something</MenuItem>
+                          <MenuItem value={30}>Something</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Box>
 
-                <FormControl className={classes.threeItems}>
-                  <InputLabel id="demo-simple-select-helper-label">Brand</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    name="brand"
-                    label="Brand"
-                    onChange={handleInputChange}
-                  >
-                    <MenuItem value={10}>Something</MenuItem>
-                    <MenuItem value={20}>Something</MenuItem>
-                    <MenuItem value={30}>Something</MenuItem>
-                  </Select>
-                </FormControl>
-                </Box>
-                <TextField id="outlined-basic" name='instrument_value' label="Instrument Value" variant="outlined" onChange={priceCalculator} className={classes.fourItems}/>
+                    {/* Instrument Value */}
+                    <Box sx={{marginTop: "20px", width: "100%"}}>
+                      <TextField sx={{width: "100%"}} id="outlined-basic" name='instrument_value' label="Instrument Value" variant="outlined" onChange={priceCalculator}/>
+                    </Box>
 
-                <Box sx={{marginTop: "20px"}}>
-                {/* //prices  */}
-                <TextField id="outlined-basic" name='daily' label="Daily($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField id="outlined-basic" name='weekly' label="Weekly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField id="outlined-basic" name='monthly' label="Monthly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField id="outlined-basic" name='deposit' label="Deposit($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                </Box>
+                    {/* Rates */}
+                    <Box sx={{marginTop: "20px"}}>
+                      <TextField name='dailyFilled' id="outlined-read-only-input" label="Deposit" value= {deposit} className={classes.fourItems}/>
+                      <TextField name='dailyFilled' id="outlined-read-only-input" label="Daily Rate" value= {dailyRate} className={classes.fourItems}/>
+                      <TextField name='dailyFilled' id="outlined-read-only-input" label="Weekly Rate" value= {weeklyRate} className={classes.fourItems}/>
+                      <TextField name='dailyFilled' id="outlined-read-only-input" label="Monthly Rate" value= {monthlyRate} className={classes.fourItems}/>
+                    </Box>
+          
+                    {/* Location */}
+                    <Box sx={{marginTop: "20px"}}>
+                      <TextField id="outlined-basic" name='city' label="City" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                      <TextField id="outlined-basic" name='province' label="Province" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                      <TextField id="outlined-basic" name='country' label="Country" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                      <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code" variant="outlined" onChange={handleInputChange} className= {classes. fourItems}/>
+                    </Box>
 
-                <Box sx={{marginTop: "20px"}}>
-                {/* //prices  */}
-                <TextField name='dailyFilled' id="dailyFilled" defaultValue= {`${dailyRate}`} className={classes.fourItems}/>
-                <TextField name='weeklyFilled' label="Weekly($)"  className={classes.fourItems}/>
-                <TextField name='monthlyFilled' label="Monthly($)"  className={classes.fourItems}/>
-                <TextField name='depositFilled' label="Deposit($)"  className={classes.fourItems}/>
-                </Box>
-
-                {/* //location  */}
-                <Box sx={{marginTop: "20px"}}>
-                <TextField id="outlined-basic" name='city' label="City" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField id="outlined-basic" name='province' label="Province" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField id="outlined-basic" name='country' label="Country" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                <TextField startAdornment={"$"} id="outlined-basic" name='postal_code' label="Postal Code" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
-                </Box>
-                </Container>
-                
+                  </Container>
+                  
                 </Container>
                 <Button onClick={saveListing} sx={{width:"200px", marginTop:"20px"}} variant="outlined">Submit</Button>
-
-                </Container>
+              </Container>
             </div>
           )}
         </div>
-
       ) : (
         <div className='text-center mt-5'>
           <h2>Please Log In To Create A Listing.</h2>
