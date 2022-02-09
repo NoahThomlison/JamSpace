@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, setState } from 'react';
 import ListingsDataService from '../services/listings';
 import { Link } from 'react-router-dom';
 
@@ -11,13 +11,11 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 //Drag and Drop
 import {useDropzone} from 'react-dropzone'
 
-
 //MUI styles
 const useStyles = makeStyles({
   dragDrop: {
-    flex: "1",
     display: "flex",
-    flexDirection: "column",
+    flex: "1",
     alignItems: "center",
     justifyContent: "center",
     padding: "20px",
@@ -42,11 +40,11 @@ const useStyles = makeStyles({
   },
 });
 
-
 const CreateListing = props => {
   const { username, userId } = props.user;
   const classes = useStyles();
-  console.log(classes)
+  const [dailyRate, setDailyRate] = useState("")
+
   // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
     title: '',
@@ -84,6 +82,18 @@ const CreateListing = props => {
   const handleInputChange = event => {
     const { name, value } = event.target;
     setListing({ ...listing, [name]: value });
+  };
+
+   const priceCalculator = event =>{
+    const { name, value } = event.target;
+
+    const dailyRate = value * 0.005
+    const weeklyRate = dailyRate * 4
+    const monthlyRate = weeklyRate * 3.5
+    setListing({ ...listing, ["daily"]: dailyRate, ["weekly"]: weeklyRate, ["monthly"]: monthlyRate, ["deposit"]: value});
+    console.log(dailyRate)
+    setDailyRate(dailyRate)
+    
   };
 
   const saveListing = () => {
@@ -132,12 +142,13 @@ const CreateListing = props => {
   
   //Drag and Drop functionality
   const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
-  
-  const files = acceptedFiles.map(file => (
+    const files = acceptedFiles.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes
     </li>
   ));
+
+ 
 
   return (
     <div>
@@ -156,7 +167,7 @@ const CreateListing = props => {
               <Container sx={{display:"flex", flexDirection: "column", alignItems:"center"}}>              
                 <h3 className='mb-4'>{editing ? 'Edit' : 'Create'} Listing: </h3>
               <Container sx={{display: "flex"}}>
-                <Container className={classes.dragDrop} >
+                <Container className={classes.dragDrop} sx={{display:"flex"}} >
                   <Box {...getRootProps({className: 'dropzone'})}>
                     <input {...getInputProps()} />
                     <Typography variant="h2">
@@ -169,10 +180,8 @@ const CreateListing = props => {
                 </Container>
                 <Container sx={{display: "flex", flexDirection: "column", width: "50%"}}>
                 <TextField id="outlined-basic" label="Title" name="title" variant="outlined" onChange={handleInputChange}/>
-                {/* <TextField id="outlined-textarea" label="Description" name="description" variant="outlined"  onChange={handleInputChange}/> */}
                 <TextField sx={{marginTop: "20px"}} id="outlined-multiline-static" label="Description" name="description" multiline rows={4} onChange={handleInputChange}/>
                 {/* dropdown */}
-                {/* <TextField id="outlined-basic" name="instrument_type" label="Instument Type" variant="outlined"/> */}
                 <Box sx={{width:"100%", marginTop: "20px"}}> 
                 <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Instument Type</InputLabel>
@@ -188,9 +197,6 @@ const CreateListing = props => {
                     <MenuItem value={30}>Soemthing else?</MenuItem>
                   </Select>
                 </FormControl>
-
-
-                {/* <TextField id="outlined-basic" name="condition"  label="Condition" variant="outlined" onChange={handleInputChange}/> */}
                 <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Condition</InputLabel>
                   <Select
@@ -208,8 +214,6 @@ const CreateListing = props => {
                   </Select>
                 </FormControl>
 
-
-                {/* <TextField id="outlined-basic" name="brand" label="Brand" variant="outlined" onChange={handleInputChange}/> */}
                 <FormControl className={classes.threeItems}>
                   <InputLabel id="demo-simple-select-helper-label">Brand</InputLabel>
                   <Select
@@ -225,8 +229,7 @@ const CreateListing = props => {
                   </Select>
                 </FormControl>
                 </Box>
-
-                {/* <TextField id="outlined-basic" name="images" label="Link to Image" variant="outlined" onChange={handleInputChange}/> */}
+                <TextField id="outlined-basic" name='instrument_value' label="Instrument Value" variant="outlined" onChange={priceCalculator} className={classes.fourItems}/>
 
                 <Box sx={{marginTop: "20px"}}>
                 {/* //prices  */}
@@ -234,6 +237,14 @@ const CreateListing = props => {
                 <TextField id="outlined-basic" name='weekly' label="Weekly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
                 <TextField id="outlined-basic" name='monthly' label="Monthly($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
                 <TextField id="outlined-basic" name='deposit' label="Deposit($)" variant="outlined" onChange={handleInputChange} className={classes.fourItems}/>
+                </Box>
+
+                <Box sx={{marginTop: "20px"}}>
+                {/* //prices  */}
+                <TextField name='dailyFilled' id="dailyFilled" defaultValue= {`${dailyRate}`} className={classes.fourItems}/>
+                <TextField name='weeklyFilled' label="Weekly($)"  className={classes.fourItems}/>
+                <TextField name='monthlyFilled' label="Monthly($)"  className={classes.fourItems}/>
+                <TextField name='depositFilled' label="Deposit($)"  className={classes.fourItems}/>
                 </Box>
 
                 {/* //location  */}
