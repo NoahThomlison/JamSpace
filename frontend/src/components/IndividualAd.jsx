@@ -10,13 +10,25 @@ import ListingsDataService from '../services/listings';
 import './IndividualAd.css';
 
 // Import Material UI
-import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
+import { makeStyles } from '@mui/styles';
+import AddIcon from '@mui/icons-material/Add';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+//Drag and Drop
+import {useDropzone} from 'react-dropzone'
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
+import ListSubheader from '@mui/material/ListSubheader';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+
 
 const IndividualAd = props => {
   //const { user } = props;
@@ -52,6 +64,7 @@ const IndividualAd = props => {
   // State Variables
   const [listing, setListing] = useState(initialListingState);
   const [booking, setBooking] = useState(initialDateState);
+  const [index, setIndex] = useState(0);
 
   const getListing = id => {
     ListingsDataService.get(id)
@@ -91,16 +104,37 @@ const IndividualAd = props => {
     }));
   }
 
+  const previous = () => {
+    if(index - 1 < 0){
+     setIndex(listing.images.length - 1)
+    }
+    else(
+    setIndex(index - 1)
+    )
+  }
+
+  const next = () => {
+    if(index + 1 > listing.images.length-1){
+      setIndex(0)
+     }
+     else(
+    setIndex(index + 1)
+    )
+  }
+
   return (
     <div>
       {/* If there is a valid listing, show it, otherwise  */}
       {listing ? (
         <div className='m-5'>
-          <div className='text-center top-ad mb-5'>
+          <Box className='' sx={{display: "flex", flexDirection: "column"}}>
             <h3 className='mb-3'>{listing.title}</h3>
-            <br />
-            <img src={listing.images[0]} alt='Main' />
-          </div>
+            <Box>
+              <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
+              <img src={listing.images[index]} alt='Main' />
+              <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
+            </Box>
+          </Box>
           <div className='row mx-5'>
             <div className='left-side-ad col-7 mb-5'>
               <div className='mb-2'>
@@ -213,7 +247,7 @@ const IndividualAd = props => {
             </div>
           </div>
           <hr />
-          <div className='bottom-ad text-center'>
+          <div className=''>
             <strong>Hosted By: </strong>
             <br />
             <br />
@@ -236,3 +270,4 @@ const IndividualAd = props => {
 };
 
 export default IndividualAd;
+
