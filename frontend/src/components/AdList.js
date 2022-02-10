@@ -5,21 +5,18 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {useState, useEffect} from "react"
 import '../App.css';
 
-
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+
 
 
 function AdList(props) {
-  let adCount = 6
+  let adCount = 10
   const { listings, setListings } = props;
   const [min, setMin] = useState(0)
   const [max, setMax] = useState(adCount)
   const [ads, setAds] = useState(listings.slice(min, max))
   let slideCount = Math.ceil(listings.length/adCount)
+  const numRows = adCount/2
 
   useEffect(() => {
     setAds(listings.slice(min, max));
@@ -40,7 +37,7 @@ function AdList(props) {
           {min/adCount > 0 ? 
       <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > : 
       <IconButton ><ArrowBackIosIcon color="disabled"/></IconButton>}
-      <ImageList cols={6} rows={2}>
+      <ImageList cols={numRows} >
         {ads.map((ad) => {
           return (
             <Ad ad={ad} id={ad._id} images={ad.images} price={ad.price} description = {ad.description} title = {ad.title}/>

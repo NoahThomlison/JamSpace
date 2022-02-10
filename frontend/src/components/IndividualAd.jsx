@@ -96,7 +96,7 @@ const IndividualAd = props => {
       {/* If there is a valid listing, show it, otherwise  */}
       {listing ? (
         <div className='m-5'>
-          <div className='text-center top-ad mb-5'>
+          <div >
             <h3 className='mb-3'>{listing.title}</h3>
             <br />
             <img src={listing.images[0]} alt='Main' />
@@ -142,7 +142,7 @@ const IndividualAd = props => {
               <strong>Location: </strong>
               {listing.address.city}, {listing.address.province}
             </div>
-            <div className='right-side-ad col-5 my-3 text-center'>
+            <div className='right-side-ad'>
               <Box
                 sx={{
                   boxShadow: 3,
