@@ -1,13 +1,22 @@
 import { parse } from 'dotenv';
 import UsersDAO from '../dao/usersDAO.js';
+import bcrypt from 'bcrypt';
 
 export default class UsersController {
   // Get all users from the users collection in the database
   static async apiGetUsers(req, res, next) {
-    const { usersList, totalNumUsers } = await UsersDAO.getUsers();
+    let filters = {};
+    const { email, password } = req.query;
+    if (email && password) {
+      filters.email = email;
+      filters.password = password;
+    }
+
+    const { usersList, totalNumUsers } = await UsersDAO.getUsers({ filters });
 
     let response = {
       users: usersList,
+      filters: filters,
       total_results: totalNumUsers,
     };
     res.json(response);
@@ -46,16 +55,18 @@ export default class UsersController {
       const host = false;
       const listing_ids = [];
       const date = new Date();
-      const adResponse = await UsersDAO.addUser(
-        first_name,
-        last_name,
-        email,
-        password,
-        address,
-        host,
-        listing_ids,
-        date
-      );
+      const adResponse = bcrypt.hash(password, 10, function (err, hash) {
+        UsersDAO.addUser(
+          first_name,
+          last_name,
+          email,
+          hash,
+          address,
+          host,
+          listing_ids,
+          date
+        );
+      });
       res.json({ status: 'success' });
     } catch (e) {
       res.status(500).json({ error: e.message });

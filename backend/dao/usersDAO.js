@@ -1,4 +1,5 @@
 import { ObjectId } from 'mongodb';
+import bcrypt from 'bcrypt';
 
 let users;
 
@@ -19,11 +20,18 @@ export default class UsersDAO {
   }
 
   // Get all Users
-  static async getUsers() {
+  static async getUsers({ filters = null }) {
+    let query;
+    if (filters) {
+      if ('email' in filters) {
+        query = { email: { $eq: filters['email'] } };
+      }
+    }
+
     let cursor;
 
     try {
-      cursor = await users.find();
+      cursor = await users.find(query);
     } catch (e) {
       console.error(`Unable to issue find command, ${e}`);
       return { usersList: [], totalNumUsers: 0 };
@@ -31,9 +39,27 @@ export default class UsersDAO {
 
     const displayCursor = cursor;
     try {
+      const userPassword = filters.password;
+      let successfulMatch = false;
       const usersList = await displayCursor.toArray();
-      const totalNumUsers = await users.countDocuments();
-      return { usersList, totalNumUsers };
+      const dbPassword = usersList[0].password;
+      const totalNumUsers = await users.countDocuments(query);
+      successfulMatch = await new Promise((resolve, reject) => {
+        bcrypt.compare(userPassword, dbPassword, function (err, result) {
+          if (result) {
+            resolve(true);
+          } else {
+            reject(false);
+          }
+        });
+      });
+
+      console.log(successfulMatch);
+      if (successfulMatch) {
+        return { usersList, totalNumUsers };
+      } else {
+        return { usersList: [], totalNumUsers: 0 };
+      }
     } catch (e) {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`
@@ -42,7 +68,7 @@ export default class UsersDAO {
     }
   }
 
-  // Get specific user
+  // Get specific user by id
   static async getUserById(id) {
     let cursor;
     let query = { _id: new ObjectId(id) };

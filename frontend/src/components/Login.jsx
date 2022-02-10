@@ -4,13 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Login = props => {
   // Pull in the login and setUser functions and the current user info
-  const { login, setUser, user } = props;
+  const { login, handleCookie, setUser, user } = props;
 
   // Set the initial state of the user with the info passed in with user
   const initialUserState = {
-    username: user.username,
+    email: user.email,
     password: user.password,
-    userId: user.userId,
   };
 
   // State variable to record changes made in the form
@@ -24,7 +23,7 @@ const Login = props => {
 
   // Handles the Sign in button click
   const handleOnClick = () => {
-    login(setUser, newUser);
+    login(setUser, newUser, handleCookie);
   };
 
   return (
@@ -32,16 +31,16 @@ const Login = props => {
       <div className='text-center'>
         <div className='form-group mb-3'>
           <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='email'>Email</label>
           <input
             type='text'
             className='form-control'
-            id='username'
+            id='email'
             required
-            value={newUser.username}
+            value={newUser.email}
             onChange={handleInputChange}
-            placeholder='Username'
-            name='username'
+            placeholder='Email Address'
+            name='email'
           />
         </div>
         <div className='form-group mb-4'>

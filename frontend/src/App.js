@@ -1,6 +1,7 @@
 // Import React Components/Hooks
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 // Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,25 +19,49 @@ import Booking from './components/Booking';
 //Import Listing Database Call Helper Function
 import listingsData from './helpers/listingsData';
 
+//Import Users Database Call Helper Function
+import { userData } from './helpers/usersData';
+
 //Import Autentication Helper Functions
 import { login, logout } from './helpers/authentication';
 
 function App() {
+  const [cookies, setCookies, removeCookie] = useCookies(['id']);
+
   // State Initializers
   const initialUserState = {
-    username: '',
+    userId: cookies.id || '',
+    first_name: '',
+    last_name: '',
+    email: '',
     password: '',
-    // HARD CODED IN USER ID UNTIL USER DB IS CONNECTED
-    userId: '61fc9dcb934a52db529c8f94',
+    address: {},
+    host: null,
+    listing_ids: [],
   };
 
-  // State Variables
   const [user, setUser] = useState(initialUserState);
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
     listingsData(setListings);
   }, []);
+
+  useEffect(() => {
+    if (cookies.id) {
+      userData(setUser, cookies.id);
+    }
+  }, [cookies.id]);
+
+  const handleCookie = value => {
+    setCookies('id', value, {
+      path: '/',
+    });
+  };
+
+  const destroyCookie = () => {
+    removeCookie('id');
+  };
 
   return (
     <div>
@@ -58,14 +83,14 @@ function App() {
             </li>
             <li className='nav-item'>
               {/* If a username is set, show Logout, otherwise show the Login Link */}
-              {user.username !== '' ? (
+              {user.email !== '' ? (
                 <a
-                  onClick={() => logout(setUser)}
+                  onClick={() => logout(setUser, destroyCookie)}
                   href='/login'
                   className='nav-link'
                   style={{ cursor: 'pointer' }}
                 >
-                  Logout {user.username}
+                  Logout {user.first_name}
                 </a>
               ) : (
                 <Link to={'/login'} className='nav-link'>
@@ -99,7 +124,14 @@ function App() {
           <Route path='/listings/:id' element={<IndividualAd user={user} />} />
           <Route
             path='/login'
-            element={<Login login={login} setUser={setUser} user={user} />}
+            element={
+              <Login
+                login={login}
+                handleCookie={handleCookie}
+                setUser={setUser}
+                user={user}
+              />
+            }
           />
           <Route path='/listings/book' element={<Booking user={user} />} />
         </Routes>
