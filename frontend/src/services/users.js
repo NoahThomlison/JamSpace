@@ -10,9 +10,8 @@ class UsersDataService {
   }
 
   // find User by Email
-  find(query) {
-    console.log(`?email=${query}`);
-    return http.get(`?email=${query}`);
+  find(email, password) {
+    return http.get(`?email=${email}&password=${password}`);
   }
 
   createUser(data) {

@@ -13,12 +13,9 @@ function Ad({ ad, id, description, title, price, images, key }) {
   return (
     <NavLink to={`/listings/${id}`} className='nav-link px-1'>
       <ImageListItem key={key}>
-        <div
-          style={{ width: '10.45rem', height: '10rem' }}
-          className='text-center'
-        >
+        <div style={{ height: '10rem' }} className='text-center'>
           <img
-            style={{ 'max-width': '100%', 'max-height': '100%' }}
+            style={{ maxWidth: '100%', maxHeight: '100%' }}
             src={image}
             loading='lazy'
             id={id}

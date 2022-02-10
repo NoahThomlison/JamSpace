@@ -4,18 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Login = props => {
   // Pull in the login and setUser functions and the current user info
-  const { login, setUser, user } = props;
+  const { login, handleCookie, setUser, user } = props;
 
   // Set the initial state of the user with the info passed in with user
   const initialUserState = {
-    userId: user.userId,
-    first_name: user.first_name,
-    last_name: user.last_name,
     email: user.email,
     password: user.password,
-    address: user.address,
-    host: user.host,
-    listing_ids: user.listing_ids,
   };
 
   // State variable to record changes made in the form
@@ -29,7 +23,7 @@ const Login = props => {
 
   // Handles the Sign in button click
   const handleOnClick = () => {
-    login(setUser, newUser);
+    login(setUser, newUser, handleCookie);
   };
 
   return (

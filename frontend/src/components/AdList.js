@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 
 function AdList(props) {
-  let adCount = 12;
+  let adCount = 10;
   const { listings, setListings } = props;
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(adCount);
@@ -58,7 +58,7 @@ function AdList(props) {
           <ArrowBackIosIcon color='disabled' />
         </IconButton>
       )}
-      <ImageList cols={6} rows={2}>
+      <ImageList cols={5} rows={2}>
         {ads.map(ad => {
           return (
             <Ad
