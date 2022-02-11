@@ -7,24 +7,28 @@ import lenderQuestions from '../staticData/lenderQuestionsData'
 function Questions() {
 
   return (
-    <Container sx={{marginTop: "30px"}}>
-        <Typography variant="h4" sx={{textAlign: "center"}}>How does it work?</Typography>
-        <Box sx={{display: "flex"}}>
-          <Paper sx={{width: "100%"}}>
+    <Container sx={{color: "#FFFFFF", backgroundColor: "#808080", borderRadius: "10px"}}>
+      <Box>
+        <Typography variant="h3">How does it work?</Typography>
+        <Box sx={{display: "flex", justifyContent: "space-between"}}>
+          <Box sx={{width: "45%"}}>
             <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Wanna Jam?</Typography>
             {renterQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}
-          </Paper>
-          <Paper sx={{width: "100%"}}>
+          </Box>
+          <Box sx={{width: "45%"}}>
           <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Want some Space?</Typography>
             {lenderQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}
-          </Paper>
+          </Box>
+        </Box>
         </Box>
     </Container>
   )
 }
 
 export default Questions;
+
+// sx={{color: "#FFFFFF"}}
