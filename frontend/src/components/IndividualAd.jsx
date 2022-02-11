@@ -123,77 +123,54 @@ const IndividualAd = props => {
   }
 
   return (
-    <div>
+    <Container sx={{display:"flex"}}>
       {/* If there is a valid listing, show it, otherwise  */}
       {listing ? (
-        <div className='m-5'>
-          <Box className='' sx={{display: "flex", flexDirection: "column"}}>
-            <h3 className='mb-3'>{listing.title}</h3>
-            <Box>
+        <Box sx={{display: "flex", flexDirection: "column"}}>
+          <h3 className='mb-3'>{listing.title}</h3>
+          <Box sx={{height:"300px", display: "flex", justifyContent:"center", alignItems:"center"}}>
+            <Box sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
               <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
               <img src={listing.images[index]} alt='Main' />
               <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
             </Box>
           </Box>
-          <div className='row mx-5'>
-            <div className='left-side-ad col-7 mb-5'>
-              <div className='mb-2'>
-                <strong>Description: </strong>
-              </div>
-              <div className='mx-2 mb-2'>{listing.description}</div>
-              <div>
-                <p className='mb-1'>
-                  <strong>Instrument Type: </strong>
-                  {listing.instrument_type}
-                </p>
-                <p className='mb-1'>
-                  <strong>Brand: </strong>
-                  {listing.brand}
-                </p>
-                <p className='mb-1'>
-                  <strong>Condition: </strong>
-                  {listing.condition}
-                </p>
-              </div>
-              <div className='price-section my-2'>
-                <strong>Price: </strong>
-                <div className='price-section-details mt-1 ms-3'>
-                  <p className='mb-1'>
-                    <strong>Daily:</strong> ${listing.price.daily}
-                  </p>
-                  <p className='mb-1'>
-                    <strong>Weekly:</strong> ${listing.price.weekly}
-                  </p>
-                  <p className='mb-1'>
-                    <strong>Monthly:</strong> ${listing.price.monthly}
-                  </p>
-                </div>
-                <p>
-                  <strong>Security Deposit Required: </strong>$
-                  {listing.security_deposit}
-                </p>
-              </div>
-              <strong>Location: </strong>
-              {listing.address.city}, {listing.address.province}
-            </div>
-            <div className='right-side-ad col-5 my-3 text-center'>
-              <Box
-                sx={{
-                  boxShadow: 3,
-                  width: 'auto',
-                  height: 'auto',
-                  bgcolor: theme =>
-                    theme.palette.mode === 'dark' ? '#101010' : '#fff',
-                  color: theme =>
-                    theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-                  p: 1,
-                  m: 1,
-                  borderRadius: 2,
-                  textAlign: 'center',
-                  fontSize: '0.875rem',
-                  fontWeight: '700',
-                }}
-              >
+          <Box sx={{display:"flex"}}>
+            {/* Description Stuff */}
+            <Box sx={{display:"flex", flexDirection: "column", width:"75%"}}>
+            <strong>Description: </strong>
+            {listing.description}
+            <strong>Instrument Type: </strong>
+            {listing.instrument_type}
+            <strong>Brand: </strong>
+            {listing.brand}
+            <strong>Condition: </strong>
+            {listing.condition}
+            <strong>Price: </strong>
+            <strong>Daily:</strong> ${listing.price.daily}
+            <strong>Weekly:</strong> ${listing.price.weekly}
+            <strong>Security Deposit Required: </strong>$
+            {listing.security_deposit}
+            <strong>Location: </strong>
+            {listing.address.city}, {listing.address.province}
+            </Box>
+            {/* Dates Stuff */}
+            <Box sx={{
+                boxShadow: 3,
+                width: '40%',
+                height: '30%',
+                bgcolor: theme =>
+                  theme.palette.mode === 'dark' ? '#101010' : '#fff',
+                color: theme =>
+                  theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
+                p: 1,
+                m: 1,
+                borderRadius: 2,
+                textAlign: 'center',
+                fontSize: '0.875rem',
+                fontWeight: '700',
+              }}
+            >
                 <Typography
                   sx={{ fontSize: 20 }}
                   color='text.primary'
@@ -237,35 +214,27 @@ const IndividualAd = props => {
                         ${booking.deposit}
                       </div>
                     </div>
-                    <div className='row'>
                       <div className='col-lg-6 text-start ms-5'>Total</div>
                       <div className='col-lg-4'>${booking.total}</div>
-                    </div>
                   </Typography>
                 ) : null}
-              </Box>
-            </div>
-          </div>
-          <hr />
-          <div className=''>
+            </Box>
+          </Box>
+          {/* Hosted By Stuff */}
+          <Box sx={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center"}}>
             <strong>Hosted By: </strong>
-            <br />
-            <br />
             <img className='prof-img' src={listing.host.image} alt='Host' />
-            <br />
-            <br />
             <strong>{listing.host.name}</strong>
-            <br />
             <em>{listing.host.about}</em>
-          </div>
-        </div>
+          </Box>
+        </Box>
       ) : (
         <div>
           <br />
           <h2>No Listing Found.</h2>
         </div>
       )}
-    </div>
+    </Container>
   );
 };
 
