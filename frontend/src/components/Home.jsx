@@ -10,7 +10,8 @@ import Questions from '../components/Questions';
 import AdList from '../components/AdList';
 
 // Import MUI
-import heroImage from '../images/thehitsBW.jpg';
+import heroImage from '../images/thehitsBWDark.jpg';
+import logo from '../images/logoWhite.png';
 import { Box } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
 
@@ -21,7 +22,15 @@ const useStyles = makeStyles({
     backgroundImage: `url(${heroImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    objectFit: "contains"
   },
+  logo: {
+    maxWidth: "15%",
+    height: "auto",
+    }
 });
 
 const Home = props => {
@@ -30,7 +39,12 @@ const Home = props => {
 
   return (
     <div>
-      <Box className={styles.hero} />
+
+          <Box className={styles.hero}>
+          <img src={logo} className={styles.logo}></img>
+
+
+        </Box>
       <Questions />
       <AdList listings={listings}></AdList>
       {/* <AdListings listings={listings} setListings={setListings} user={user} /> */}
