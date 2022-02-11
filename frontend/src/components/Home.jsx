@@ -4,21 +4,29 @@ import React from 'react';
 // Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Import fadeIn
+import FadeInSection from "../helpers/fadeIn"
+
 // Import Custom Components
 import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
 import AdList from '../components/AdList';
+import About from './About'
 
-// Import MUI
+// Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
 import logo from '../images/logoWhite.png';
+import store from '../images/store1.jpg'
+
+// Import MUI
 import { Box } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
+import TabScrollButton from '@mui/material/TabScrollButton';
 
 const useStyles = makeStyles({
   hero: {
     marginTop: 0,
-    height: '75vh',
+    height: '100vh',
     backgroundImage: `url(${heroImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -30,7 +38,17 @@ const useStyles = makeStyles({
   logo: {
     maxWidth: "15%",
     height: "auto",
-    }
+    },
+  store:{
+    backgroundImage: `url(${store})`,
+    height: "100vh",
+    display: "flex",
+    backgroundSize: 'auto',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: "center",
+    alignItems: "center",  
+  }
+
 });
 
 const Home = props => {
@@ -38,16 +56,21 @@ const Home = props => {
   const styles = useStyles();
 
   return (
-    <div>
-
-          <Box className={styles.hero}>
-          <img src={logo} className={styles.logo}></img>
-
-
+    <div sx={{color: "#FF0000"}}>
+      <Box className={styles.main}>
+        <Box className={styles.hero}>
+            <img src={logo} className={styles.logo}></img>
         </Box>
-      <Questions />
-      <AdList listings={listings}></AdList>
-      {/* <AdListings listings={listings} setListings={setListings} user={user} /> */}
+        <Box className={styles.store}>
+          <FadeInSection>
+            <About />
+            <Questions />
+          </FadeInSection>
+        </Box>
+        <FadeInSection>
+          <AdList listings={listings}></AdList>
+        </FadeInSection>
+      </Box>
     </div>
   );
 };
