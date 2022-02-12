@@ -12,18 +12,27 @@ import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
 import AdList from '../components/AdList';
 import About from './About'
+import Filters from './Filters'
 
 // Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
 import logo from '../images/logoWhite.png';
 import store from '../images/store1.jpg'
+import drums from '../images/Drums.jpg'
+import guitar1 from '../images/Guitars.jpg'
+import guitar2 from '../images/Guitars2.jpg'
+import guitar3 from '../images/Guitars3.jpg'
 
 // Import MUI
-import { Box } from '@mui/material/';
+import { Box, Paper } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
 import TabScrollButton from '@mui/material/TabScrollButton';
 
 const useStyles = makeStyles({
+  snapSection: {
+    scrollSnapAlign: "start",
+    position: "relative",
+  },
   hero: {
     marginTop: 0,
     height: '100vh',
@@ -33,7 +42,7 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    objectFit: "contains"
+
   },
   logo: {
     maxWidth: "15%",
@@ -43,10 +52,21 @@ const useStyles = makeStyles({
     backgroundImage: `url(${store})`,
     height: "100vh",
     display: "flex",
-    backgroundSize: 'auto',
+    backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     justifyContent: "center",
     alignItems: "center",  
+
+  },
+  listings:{
+    backgroundImage: `url(${guitar2})`,
+    height: "100vh",
+    display: "flex",
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: "center",
+    alignItems: "center",  
+
   }
 
 });
@@ -56,22 +76,32 @@ const Home = props => {
   const styles = useStyles();
 
   return (
-    <div sx={{color: "#FF0000"}}>
-      <Box className={styles.main}>
+      <Box >
+        {/* View 1 */}
         <Box className={styles.hero}>
             <img src={logo} className={styles.logo}></img>
         </Box>
-        <Box className={styles.store}>
+
+      {/* View 2 */}
+        <Box className={styles.listings}>
           <FadeInSection>
-            <About />
-            <Questions />
+            <Paper>
+            <Filters setListings={setListings}></Filters>
+            <AdList listings={listings}></AdList>
+            </Paper>
           </FadeInSection>
         </Box>
-        <FadeInSection>
-          <AdList listings={listings}></AdList>
-        </FadeInSection>
+
+      {/* View 3 */}
+        <Box className={styles.store}>
+          <FadeInSection>
+            <Paper>
+              <About />
+              <Questions />
+            </Paper>
+          </FadeInSection>
+        </Box>
       </Box>
-    </div>
   );
 };
 
