@@ -72,8 +72,8 @@ const CreateListing = props => {
     images: ['intialStateOverride'],
     user_id: user._id,
     name: `${user.first_name} ${user.last_name}`,
-    user_img: 'https://picsum.photos/id/1025/4951/3301.jpg',
-    user_about: 'Music is my life and I want to share it with all of you!',
+    user_img: user.image,
+    user_about: user.about,
     city: '',
     province: '',
     country: '',
@@ -189,7 +189,10 @@ const CreateListing = props => {
           {submitted ? (
             <div>
               <h4>You submitted successfully!</h4>
-              <Link to={'/'} className='btn btn-lg btn-primary btn-block'>
+              <Link
+                to={'/listings'}
+                className='btn btn-lg btn-primary btn-block'
+              >
                 Back to the Listings
               </Link>
             </div>

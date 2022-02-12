@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 const Booking = props => {
+  const { user } = props;
   const location = useLocation();
   const { booking } = location.state;
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -12,7 +13,7 @@ const Booking = props => {
 
   return (
     <div className='container'>
-      <h2>Review your booking:</h2>
+      <h2>{user.first_name}, review your booking:</h2>
       <div>First Day: {firstDay}</div>
       <div>Last Day: {lastDay}</div>
       <div>Number of Days: {numOfDays}</div>
