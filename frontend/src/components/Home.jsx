@@ -29,10 +29,6 @@ import { makeStyles } from '@mui/styles';
 import TabScrollButton from '@mui/material/TabScrollButton';
 
 const useStyles = makeStyles({
-  snapSection: {
-    scrollSnapAlign: "start",
-    position: "relative",
-  },
   hero: {
     marginTop: 0,
     height: '100vh',
