@@ -7,12 +7,12 @@ import HorizontalListingCard from './HorizontalListingCard';
 import ListingsDataService from '../services/listings';
 
 const UserProfile = props => {
-  const { user } = props;
+  const { user, setUser } = props;
   const [listings, setListings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  const getListing = id => {
-    ListingsDataService.get(id)
+  const getListing = async id => {
+    await ListingsDataService.get(id)
       .then(response => {
         if (!listings.find(({ _id }) => _id === id)) {
           setListings(prev => [...prev, response.data.listing[0]]);
@@ -23,15 +23,27 @@ const UserProfile = props => {
         console.log(e);
       });
   };
-  const findUsersAds = () => {
-    user.listing_ids.map(listing_id => getListing(listing_id));
-  };
 
   useEffect(() => {
-    findUsersAds();
-  }, []);
+    user.listing_ids.map(listing_id => getListing(listing_id));
+    console.log('getting');
+  }, [user.listing_ids]);
 
-  const handleDeleteClick = () => {};
+  const deleteListing = async (listingId, index) => {
+    await ListingsDataService.deleteListing(listingId).then(response => {
+      setUser(prev => {
+        prev.listing_ids.splice(index, 1);
+        return {
+          ...prev,
+        };
+      });
+    });
+  };
+
+  const handleDeleteClick = (id, index) => {
+    console.log(`Delete id #: ${id}`);
+    deleteListing(id, index);
+  };
 
   return (
     <div className='container'>
@@ -59,9 +71,10 @@ const UserProfile = props => {
             {listings.length === 0 ? (
               <h4 className='text-center'>You currently have no ads listed.</h4>
             ) : (
-              listings.map(listing => (
+              listings.map((listing, index) => (
                 <HorizontalListingCard
                   key={listing._id}
+                  index={index}
                   handleDeleteClick={handleDeleteClick}
                   listing={listing}
                 />

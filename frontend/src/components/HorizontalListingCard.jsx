@@ -8,7 +8,7 @@ import './HorizontalListingCard.css';
 import { DeleteOutlineOutlined } from '@mui/icons-material';
 
 const HorizontalListingCard = props => {
-  const { listing, handleDeleteClick } = props;
+  const { listing, handleDeleteClick, index } = props;
 
   const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
   const descLength = listing.description.length;
@@ -71,7 +71,8 @@ const HorizontalListingCard = props => {
             </div>
             <div className='row centerButtons'>
               <Link
-                to={'/listings/' + listing._id}
+                to={'/user'}
+                onClick={() => handleDeleteClick(listing._id, index)}
                 className='btn btn-outline-dark col-lg-5 mx-1 mb-1 deleteButton'
               >
                 <DeleteOutlineOutlined />
