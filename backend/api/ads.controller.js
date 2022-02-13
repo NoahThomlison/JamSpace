@@ -84,8 +84,7 @@ export default class AdsController {
   static async apiDeleteAd(req, res, next) {
     try {
       const adId = req.query.id;
-      const userId = req.body.user_id;
-      const adResponse = await AdsDAO.deleteAd(adId, userId);
+      const adResponse = await AdsDAO.deleteAd(adId);
 
       res.json({ status: 'success' });
     } catch (e) {
