@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Question from "./Question"
-import {Grid, Box, Paper, Button, Container, Typography} from '@mui/material/';
+import {Box, Container, Typography} from '@mui/material/';
 import renterQuestions from '../staticData/renterQuestionsData'
 import lenderQuestions from '../staticData/lenderQuestionsData'
 

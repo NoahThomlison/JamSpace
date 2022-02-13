@@ -1,15 +1,11 @@
 import Ad from './Ad.js';
-import { Paper, Box, Container, Grid, Item, ImageList } from '@mui/material/';
+import { Container, Grid, Item, ImageList } from '@mui/material/';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useState, useEffect } from 'react';
 import '../App.css';
 
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 
 function AdList(props) {
   let adCount = 15;

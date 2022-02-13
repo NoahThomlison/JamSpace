@@ -10,19 +10,14 @@ import ListingsDataService from '../services/listings';
 import './IndividualAd.css';
 
 // Import Material UI
-import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
+import { Container, Typography, Select, Box } from "@mui/material"
 
 //Drag and Drop
 import {useDropzone} from 'react-dropzone'
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
-import Booking from "./Booking"
 
 const IndividualAd = props => {
   //const { user } = props;
