@@ -1,27 +1,65 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useLocation } from 'react-router-dom';
+
+import { Container, Stepper, Step, StepLabel, Typography, Box } from "@mui/material"
+import { makeStyles } from '@mui/styles';
+
+import ReviewBooking from "./ReviewBooking"
+import PaymentBooking from "./PaymentBooking"
+import FinishBooking from "./FinishBooking"
+
+const useStyles = makeStyles({
+  input: {
+    marginTop: "10px",
+  },
+});
 
 const Booking = props => {
   const { user } = props;
   const location = useLocation();
-  const { booking } = location.state;
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const { booking, listing } = location.state;
+  const steps = ["Review", "Payment", "Finish"]
+  const [step, setStep] = useState(0);
+  const [page, setPage] = useState(steps[step])
 
-  const firstDay = booking.minDate.toLocaleDateString('en-US', options);
-  const lastDay = booking.maxDate.toLocaleDateString('en-US', options);
-  const { numOfDays, rentalRate, rental, deposit, total } = booking;
+  const next = () => {
+    setStep(step + 1)
+    setPage(steps[step+1])
+  }
+
+  const back = () => {
+    setStep(step - 1)
+    setPage(steps[step-1])
+  }
+
+  const styles = useStyles();
 
   return (
-    <div className='container'>
-      <h2>{user.first_name}, review your booking:</h2>
-      <div>First Day: {firstDay}</div>
-      <div>Last Day: {lastDay}</div>
-      <div>Number of Days: {numOfDays}</div>
-      <div>Rental Rate: ${rentalRate}</div>
-      <div>Rental Cost: ${rental}</div>
-      <div>Security Deposit: ${deposit}</div>
-      <div>Total: ${total}</div>
-    </div>
+    <Container sx={{display: "flex", flexDirection:"column", height:"100vh", justifyContent: "space-between"}}>
+
+      <Box sx={{display: "flex", paddingTop: "50px", height:"80vh", justifyContent: "space-evenly"}}>
+        <Box sx={{ "display": "flex", flexDirection: "column", justifyContent: "space-evenly"}}>
+          <Typography variant="h5">{listing.title}</Typography>
+          <img src={listing.images[0]} alt='Main' />.
+        </Box>
+        <Box sx={{width: "50%", alignSelf: "center"}}>
+          {page === "Review" ? <ReviewBooking styles={styles} step={step} next={next} back={back}></ReviewBooking>: ""}
+          {page === "Payment" ? <PaymentBooking styles={styles} step={step} next={next} back={back}></PaymentBooking> : ""}
+          {page === "Finish" ? <FinishBooking styles={styles} step={step} next={next} back={back}></FinishBooking> : ""}
+        </Box>
+      </Box>
+
+
+      <Box sx={{display: "flex"}}>
+        <Stepper sx={{width: "100%"}} activeStep={step} alternativeLabel>
+          {steps.map((label) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+            ))}
+        </Stepper>
+      </Box>
+    </Container>
   );
 };
 

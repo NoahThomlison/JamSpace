@@ -7,9 +7,9 @@ import lenderQuestions from '../staticData/lenderQuestionsData'
 function Questions() {
 
   return (
-    <Container sx={{color: "#FFFFFF", backgroundColor: "#808080", borderRadius: "10px"}}>
+    <Container>
       <Box>
-        <Typography variant="h3">How does it work?</Typography>
+        <Typography variant="h3" sx={{paddingBottom: "20px"}}>How does it work?</Typography>
         <Box sx={{display: "flex", justifyContent: "space-between"}}>
           <Box sx={{width: "45%"}}>
             <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Wanna Jam?</Typography>
@@ -24,11 +24,9 @@ function Questions() {
             )}
           </Box>
         </Box>
-        </Box>
+      </Box>
     </Container>
   )
 }
 
 export default Questions;
-
-// sx={{color: "#FFFFFF"}}

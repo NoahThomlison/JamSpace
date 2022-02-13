@@ -1,25 +1,22 @@
 // Import React Component
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import fadeIn
-import FadeInSection from '../helpers/fadeIn';
+import FadeInSection from "../helpers/fadeIn"
 
 // Import Custom Components
 import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
 import AdList from '../components/AdList';
-import About from './About';
-
-// Import Listings Data
-import listingsData from '../helpers/listingsData';
+import About from './About'
 
 // Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
 import logo from '../images/logoWhite.png';
-import store from '../images/store1.jpg';
+import store from '../images/store1.jpg'
 
 // Import MUI
 import { Box } from '@mui/material/';
@@ -33,39 +30,36 @@ const useStyles = makeStyles({
     backgroundImage: `url(${heroImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    objectFit: 'contains',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    objectFit: "contains"
   },
   logo: {
-    maxWidth: '15%',
-    height: 'auto',
-  },
-  store: {
+    maxWidth: "15%",
+    height: "auto",
+    },
+  store:{
     backgroundImage: `url(${store})`,
-    height: '100vh',
-    display: 'flex',
+    height: "100vh",
+    display: "flex",
     backgroundSize: 'auto',
     backgroundRepeat: 'no-repeat',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    justifyContent: "center",
+    alignItems: "center",  
+  }
+
 });
 
 const Home = props => {
   const { listings, setListings, user } = props;
   const styles = useStyles();
 
-  useEffect(() => {
-    listingsData(setListings);
-  }, []);
-
   return (
-    <div sx={{ color: '#FF0000' }}>
+    <div sx={{color: "#FF0000"}}>
       <Box className={styles.main}>
         <Box className={styles.hero}>
-          <img src={logo} className={styles.logo}></img>
+            <img src={logo} className={styles.logo}></img>
         </Box>
         <Box className={styles.store}>
           <FadeInSection>
