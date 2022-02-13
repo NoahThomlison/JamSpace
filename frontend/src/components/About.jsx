@@ -1,11 +1,7 @@
-import { Typography, Container, Paper, Box } from '@mui/material';
+import { Typography, Container, } from '@mui/material';
 import React from 'react';
-import Filters from './Filters';
-import ListingCard from './ListingCard';
 
 const About = props => {
-  const { listings, setListings } = props;
-  // user is also passed through but no needed yet so it was removed from the destructuring of props to eliminate the warning
 
   return (
     <Container sx={{marginBottom: "50px"}}>

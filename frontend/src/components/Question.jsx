@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useState} from "react";
-import {Card, Button, Typography, Grid, Paper, IconButton, Box, Accordion, AccordionSummary, AccordionDetails} from '@mui/material/';
+import { Typography, Accordion, AccordionSummary, AccordionDetails} from '@mui/material/';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 const Question = ( props ) => {
-  const { id, question, answer } = props;
+  const { question, answer } = props;
   const [expanded, setExpanded] = useState(false)
 
   const toggleExpaned = () => {
