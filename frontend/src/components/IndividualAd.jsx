@@ -10,15 +10,8 @@ import ListingsDataService from '../services/listings';
 import './IndividualAd.css';
 
 // Import Material UI
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Divider from '@mui/material/Divider';
 import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
-import { makeStyles } from '@mui/styles';
-import AddIcon from '@mui/icons-material/Add';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 //Drag and Drop
 import {useDropzone} from 'react-dropzone'
 import ImageListItem from '@mui/material/ImageListItem';
@@ -29,6 +22,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+import Booking from "./Booking"
 
 const IndividualAd = props => {
   //const { user } = props;
@@ -186,7 +180,7 @@ const IndividualAd = props => {
                   />
                 </div>
                 <div className='mb-3'>
-                  <Link to={'/listings/book'} state={{ booking }}>
+                  <Link to={'/listings/book'} state={{ booking, listing }} >
                     <button className='btn btn-lg btn-outline-dark btn-block'>
                       Reserve
                     </button>
