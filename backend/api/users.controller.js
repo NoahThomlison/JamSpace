@@ -45,6 +45,8 @@ export default class UsersController {
       const last_name = req.body.last_name;
       const email = req.body.email;
       const password = req.body.password;
+      const image = req.body.image;
+      const about = req.body.about;
       const address = {
         street: req.body.street,
         city: req.body.city,
@@ -61,6 +63,8 @@ export default class UsersController {
           last_name,
           email,
           hash,
+          image,
+          about,
           address,
           host,
           listing_ids,
@@ -80,6 +84,8 @@ export default class UsersController {
       const last_name = req.body.last_name;
       const email = req.body.email;
       const password = req.body.password;
+      const image = req.body.image;
+      const about = req.body.about;
       const address = {
         street: req.body.street,
         city: req.body.city,
@@ -97,6 +103,8 @@ export default class UsersController {
         last_name,
         email,
         password,
+        image,
+        about,
         address,
         host,
         listing_ids,
