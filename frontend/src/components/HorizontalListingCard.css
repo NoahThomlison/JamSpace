@@ -1,0 +1,8 @@
+.centerButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  color: white;
+}

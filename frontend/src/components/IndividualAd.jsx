@@ -14,13 +14,27 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
-import { Container, Typography, MenuItem, Autocomplete, FormHelperText, Select, Box, TextField, FormControl, InputLabel, OutlinedInput, InputAdornment, Button } from "@mui/material"
+import {
+  Container,
+  Typography,
+  MenuItem,
+  Autocomplete,
+  FormHelperText,
+  Select,
+  Box,
+  TextField,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  Button,
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import AddIcon from '@mui/icons-material/Add';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 //Drag and Drop
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import ListSubheader from '@mui/material/ListSubheader';
@@ -28,7 +42,6 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
 
 const IndividualAd = props => {
   //const { user } = props;
@@ -105,57 +118,79 @@ const IndividualAd = props => {
   }
 
   const previous = () => {
-    if(index - 1 < 0){
-     setIndex(listing.images.length - 1)
-    }
-    else(
-    setIndex(index - 1)
-    )
-  }
+    if (index - 1 < 0) {
+      setIndex(listing.images.length - 1);
+    } else setIndex(index - 1);
+  };
 
   const next = () => {
-    if(index + 1 > listing.images.length-1){
-      setIndex(0)
-     }
-     else(
-    setIndex(index + 1)
-    )
-  }
+    if (index + 1 > listing.images.length - 1) {
+      setIndex(0);
+    } else setIndex(index + 1);
+  };
 
   return (
-    <Container sx={{display:"flex"}}>
+    <Container sx={{ display: 'flex' }}>
       {/* If there is a valid listing, show it, otherwise  */}
       {listing ? (
-        <Box sx={{display: "flex", flexDirection: "column"}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <h3 className='mb-3'>{listing.title}</h3>
-          <Box sx={{height:"300px", display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <Box sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-              <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
+          <Box
+            sx={{
+              height: '300px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <IconButton
+                onClick={() => {
+                  previous();
+                }}
+              >
+                <ArrowBackIosIcon color='primary' />
+              </IconButton>
               <img src={listing.images[index]} alt='Main' />
-              <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
+              <IconButton
+                onClick={() => {
+                  next();
+                }}
+              >
+                <ArrowForwardIosIcon color='primary' />
+              </IconButton>
             </Box>
           </Box>
-          <Box sx={{display:"flex"}}>
+          <Box sx={{ display: 'flex' }}>
             {/* Description Stuff */}
-            <Box sx={{display:"flex", flexDirection: "column", width:"75%"}}>
-            <strong>Description: </strong>
-            {listing.description}
-            <strong>Instrument Type: </strong>
-            {listing.instrument_type}
-            <strong>Brand: </strong>
-            {listing.brand}
-            <strong>Condition: </strong>
-            {listing.condition}
-            <strong>Price: </strong>
-            <strong>Daily:</strong> ${listing.price.daily}
-            <strong>Weekly:</strong> ${listing.price.weekly}
-            <strong>Security Deposit Required: </strong>$
-            {listing.security_deposit}
-            <strong>Location: </strong>
-            {listing.address.city}, {listing.address.province}
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', width: '75%' }}
+            >
+              <strong>Description: </strong>
+              {listing.description}
+              <strong>Instrument Type: </strong>
+              {listing.instrument_type}
+              <strong>Brand: </strong>
+              {listing.brand}
+              <strong>Condition: </strong>
+              {listing.condition}
+              <strong>Price: </strong>
+              <strong>Daily:</strong> ${listing.price.daily}
+              <strong>Weekly:</strong> ${listing.price.weekly}
+              <strong>Security Deposit Required: </strong>$
+              {listing.security_deposit}
+              <strong>Location: </strong>
+              {listing.address.city}, {listing.address.province}
             </Box>
             {/* Dates Stuff */}
-            <Box sx={{
+            <Box
+              sx={{
                 boxShadow: 3,
                 width: '40%',
                 height: '30%',
@@ -171,57 +206,64 @@ const IndividualAd = props => {
                 fontWeight: '700',
               }}
             >
-                <Typography
-                  sx={{ fontSize: 20 }}
-                  color='text.primary'
-                  gutterBottom
-                >
-                  Rental Dates
-                </Typography>
-                <div>
-                  <DateRangePicker
-                    defaultColor='#222222'
-                    format='MM-DD-YYYY'
-                    callback={callbackFunction}
-                  />
-                </div>
-                <div className='mb-3'>
-                  <Link to={'/listings/book'} state={{ booking }}>
-                    <button className='btn btn-lg btn-outline-dark btn-block'>
-                      Reserve
-                    </button>
-                  </Link>
-                </div>
-                <Typography sx={{ mb: 1.5, mt: 3 }} color='text.secondary'>
-                  Click to Book This Instrument
-                </Typography>
-                {booking.numOfDays > 0 ? (
-                  <Typography variant='body2'>
-                    <div className='row'>
-                      <div className='col-lg-6 text-start ms-5'>
-                        ${booking.rentalRate} x {booking.numOfDays} days
-                      </div>
-                      <div className='col-lg-4'>${booking.rental}</div>
+              <Typography
+                sx={{ fontSize: 20 }}
+                color='text.primary'
+                gutterBottom
+              >
+                Rental Dates
+              </Typography>
+              <div>
+                <DateRangePicker
+                  defaultColor='#222222'
+                  format='MM-DD-YYYY'
+                  callback={callbackFunction}
+                />
+              </div>
+              <div className='mb-3'>
+                <Link to={'/listings/book'} state={{ booking }}>
+                  <button className='btn btn-lg btn-outline-dark btn-block'>
+                    Reserve
+                  </button>
+                </Link>
+              </div>
+              <Typography sx={{ mb: 1.5, mt: 3 }} color='text.secondary'>
+                Click to Book This Instrument
+              </Typography>
+              {booking.numOfDays > 0 ? (
+                <Typography variant='body2'>
+                  <div className='row'>
+                    <div className='col-lg-6 text-start ms-5'>
+                      ${booking.rentalRate} x {booking.numOfDays} days
                     </div>
-                    <div className='row'>
-                      <div className='col-lg-6 text-start ms-5'>
-                        Security Deposit
-                      </div>
-                      <div
-                        className='col-lg-4'
-                        style={{ textDecoration: 'underline' }}
-                      >
-                        ${booking.deposit}
-                      </div>
+                    <div className='col-lg-4'>${booking.rental}</div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-lg-6 text-start ms-5'>
+                      Security Deposit
                     </div>
-                      <div className='col-lg-6 text-start ms-5'>Total</div>
-                      <div className='col-lg-4'>${booking.total}</div>
-                  </Typography>
-                ) : null}
+                    <div
+                      className='col-lg-4'
+                      style={{ textDecoration: 'underline' }}
+                    >
+                      ${booking.deposit}
+                    </div>
+                  </div>
+                  <div className='col-lg-6 text-start ms-5'>Total</div>
+                  <div className='col-lg-4'>${booking.total}</div>
+                </Typography>
+              ) : null}
             </Box>
           </Box>
           {/* Hosted By Stuff */}
-          <Box sx={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center"}}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <strong>Hosted By: </strong>
             <img className='prof-img' src={listing.host.image} alt='Host' />
             <strong>{listing.host.name}</strong>
@@ -239,4 +281,3 @@ const IndividualAd = props => {
 };
 
 export default IndividualAd;
-

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // Import Custom Components
-import ListingCard from './ListingCard';
+import HorizontalListingCard from './HorizontalListingCard';
 
 // Import Listings Database Calls
 import ListingsDataService from '../services/listings';
@@ -9,12 +9,14 @@ import ListingsDataService from '../services/listings';
 const UserProfile = props => {
   const { user } = props;
   const [listings, setListings] = useState([]);
+  const [bookings, setBookings] = useState([]);
 
   const getListing = id => {
     ListingsDataService.get(id)
       .then(response => {
         if (!listings.find(({ _id }) => _id === id)) {
           setListings(prev => [...prev, response.data.listing[0]]);
+          setBookings(prev => [...prev, response.data.listing[0]]);
         }
       })
       .catch(e => {
@@ -28,6 +30,8 @@ const UserProfile = props => {
   useEffect(() => {
     findUsersAds();
   }, []);
+
+  const handleDeleteClick = () => {};
 
   return (
     <div className='container'>
@@ -49,14 +53,32 @@ const UserProfile = props => {
         <div>
           <em>{user.about}</em>
         </div>
-        <div>
+        <div className='mb-5 mt-4'>
           <h1>My Listings</h1>
-          <div className='row text-center'>
+          <div className='text-center'>
             {listings.length === 0 ? (
               <h4 className='text-center'>You currently have no ads listed.</h4>
             ) : (
               listings.map(listing => (
-                <ListingCard key={listing._id} listing={listing} />
+                <HorizontalListingCard
+                  key={listing._id}
+                  handleDeleteClick={handleDeleteClick}
+                  listing={listing}
+                />
+              ))
+            )}
+          </div>
+        </div>
+        <div>
+          <h1>My Bookings</h1>
+          <div className='text-center'>
+            {bookings.length === 0 ? (
+              <h4 className='text-center'>
+                You currently have no instruments booked.
+              </h4>
+            ) : (
+              bookings.map(listing => (
+                <HorizontalListingCard key={listing._id} listing={listing} />
               ))
             )}
           </div>
