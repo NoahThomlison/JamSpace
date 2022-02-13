@@ -49,7 +49,6 @@ const useStyles = makeStyles({
     height: "100vh",
     display: "flex",
     backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
     justifyContent: "center",
     alignItems: "center",  
 
@@ -59,7 +58,6 @@ const useStyles = makeStyles({
     height: "100vh",
     display: "flex",
     backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
     justifyContent: "center",
     alignItems: "center",  
 
