@@ -12,11 +12,13 @@ import AdListings from '../components/AdListings';
 import Questions from '../components/Questions';
 import AdList from '../components/AdList';
 import About from './About'
+import Map from './Map';
 
 // Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
 import logo from '../images/logoWhite.png';
 import store from '../images/store1.jpg'
+import map from '../images/amps_drums.jpg'
 
 // Import MUI
 import { Box } from '@mui/material/';
@@ -47,6 +49,16 @@ const useStyles = makeStyles({
     backgroundRepeat: 'no-repeat',
     justifyContent: "center",
     alignItems: "center",  
+  },
+  map:{
+    marginTop: 50,
+    backgroundImage: `url(${map})`,
+    height: "50vh",
+    display: "flex",
+    backgroundSize: '100%',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: "center",
+    alignItems: "center",  
   }
 
 });
@@ -70,6 +82,10 @@ const Home = props => {
         <FadeInSection>
           <AdList listings={listings}></AdList>
         </FadeInSection>
+        <Box className={styles.map}>
+          <Map listings={listings}/>
+        </Box>
+        
       </Box>
     </div>
   );
