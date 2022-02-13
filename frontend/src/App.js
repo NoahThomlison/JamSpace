@@ -15,6 +15,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Footer from './components/Footer/Footer';
 import Booking from './components/Booking';
+import UserProfile from './components/UserProfile';
 
 //Import Listing Database Call Helper Function
 import listingsData from './helpers/listingsData';
@@ -81,23 +82,32 @@ function App() {
                 New Listing
               </Link>
             </li>
-            <li className='nav-item'>
-              {/* If a username is set, show Logout, otherwise show the Login Link */}
-              {user.email !== '' ? (
-                <a
-                  onClick={() => logout(setUser, destroyCookie)}
-                  href='/login'
-                  className='nav-link'
-                  style={{ cursor: 'pointer' }}
-                >
-                  Logout {user.first_name}
-                </a>
-              ) : (
+            {/* If a user is set, show Logout and My Profile, otherwise show the Login Link */}
+            {user.email !== '' ? (
+              <>
+                <li className='nav-item'>
+                  <Link to={'/user'} className='nav-link'>
+                    My Profile
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <a
+                    onClick={() => logout(setUser, destroyCookie)}
+                    href='/login'
+                    className='nav-link'
+                    style={{ cursor: 'pointer' }}
+                  >
+                    Logout {user.first_name}
+                  </a>
+                </li>
+              </>
+            ) : (
+              <li className='nav-item'>
                 <Link to={'/login'} className='nav-link'>
                   Login
                 </Link>
-              )}
-            </li>
+              </li>
+            )}
           </div>
         </div>
       </nav>
@@ -134,6 +144,7 @@ function App() {
             }
           />
           <Route path='/listings/book' element={<Booking user={user} />} />
+          <Route path='/user' element={<UserProfile user={user} />} />
         </Routes>
       </div>
       <Footer />

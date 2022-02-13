@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import listingsData from '../helpers/listingsData';
 import Filters from './Filters';
 import ListingCard from './ListingCard';
 
 const AdListings = props => {
   const { listings, setListings } = props;
   // user is also passed through but no needed yet so it was removed from the destructuring of props to eliminate the warning
+
+  useEffect(() => {
+    listingsData(setListings);
+  }, []);
 
   return (
     <div className='container'>
