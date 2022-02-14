@@ -1,3 +1,4 @@
+
 // Import React Component
 import React from 'react';
 // Import Styles
@@ -11,6 +12,8 @@ import Questions from '../components/Questions';
 import AdList from '../components/AdList';
 import About from './About'
 import Filters from './Filters'
+import Map from './Map';
+
 
 // Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
@@ -20,6 +23,8 @@ import drums from '../images/Drums.jpg'
 import guitar1 from '../images/Guitars.jpg'
 import guitar2 from '../images/Guitars2.jpg'
 import guitar3 from '../images/Guitars3.jpg'
+import map from '../images/amps_drums.jpg'
+
 
 // Import MUI
 import { Box, Paper } from '@mui/material/';
@@ -57,7 +62,17 @@ const useStyles = makeStyles({
     backgroundSize: 'cover',
     justifyContent: "center",
     alignItems: "center",  
-  }
+  },
+  map:{
+    marginTop: 50,
+    backgroundImage: `url(${map})`,
+    height: "50vh",
+    display: "flex",
+    backgroundSize: '100%',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: "center",
+    alignItems: "center",   
+  },
 });
 
 const Home = props => {
@@ -91,8 +106,9 @@ const Home = props => {
             </Paper>
           </FadeInSection>
         </Box>
-
-
+        <Box className={styles.map}>
+          <Map listings={listings}/>
+        </Box>
 
     </Box>
   );
