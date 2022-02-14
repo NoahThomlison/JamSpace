@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ListingsDataService from '../services/listings';
 import { Link } from 'react-router-dom';
 import { brands, instruments } from '../staticData/filterDropdownData';
+import axios from 'axios';
+
 
 //MUI
 import {
@@ -88,6 +90,8 @@ const CreateListing = props => {
   const [formComplete, setFormComplete] = useState(false);
   const [listing, setListing] = useState(initialListingState);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState()
+	const [loading, setLoading] = useState()
 
   //check if form is filled out completely
   useEffect(() => {
@@ -130,47 +134,79 @@ const CreateListing = props => {
     setDeposit(value);
   };
 
-  const saveListing = () => {
-    let data = {
-      title: listing.title,
-      description: listing.description,
-      instrument_type: listing.instrument_type,
-      brand: listing.brand,
-      condition: listing.condition,
-      daily: listing.daily,
-      weekly: listing.weekly,
-      monthly: listing.monthly,
-      deposit: listing.deposit,
-      images: listing.images,
-      user_id: listing.user_id,
-      name: listing.name,
-      user_img: listing.user_img,
-      user_about: listing.user_about,
-      city: listing.city,
-      province: listing.province,
-      country: listing.country,
-      postal_code: listing.postal_code,
-    };
+  // useEffect(() => {
+  //   axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${listing.postalCode}&key=AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I`)
+  //   .then(response => {
+  //     setListing({ ...listing, coordinates: response.data.results[0].geometry.location })
+  //     console.log(listing)
+  //   })
+  //   .catch(error => {
+  //     console.log("error fetching: ", error)
+  //     setError(console.error())
+  //   })
+  //   .finally(() => {
+  //     setLoading(false)
+  //   })
+  // }, []);
+  const saveListing = async () => {
+    await axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${listing.postal_code}&key=AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I`)
+    .then(response => {
+      // let coords = response.data.results[0].geometry.location
 
-    if (editing) {
-      data.listing_id = props.location.state.currentListing._id;
-      ListingsDataService.updateListing(data)
-        .then(response => {
-          setSubmitted(true);
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    } else {
-      ListingsDataService.createListing(data)
-        .then(response => {
-          setSubmitted(true);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
+      // setListing({ ...listing, coordinates: coords})
+      let data = {
+        title: listing.title,
+        description: listing.description,
+        instrument_type: listing.instrument_type,
+        brand: listing.brand,
+        condition: listing.condition,
+        daily: listing.daily,
+        weekly: listing.weekly,
+        monthly: listing.monthly,
+        deposit: listing.deposit,
+        images: listing.images,
+        user_id: listing.user_id,
+        name: listing.name,
+        user_img: listing.user_img,
+        user_about: listing.user_about,
+        city: listing.city,
+        province: listing.province,
+        country: listing.country,
+        postal_code: listing.postal_code,
+        coordinates: response.data.results[0].geometry.location
+      };
+      console.log(data)
+      if (editing) {
+        data.listing_id = props.location.state.currentListing._id;
+        ListingsDataService.updateListing(data)
+          .then(response => {
+            setSubmitted(true);
+            console.log(response.data);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      } else {
+        ListingsDataService.createListing(data)
+          .then(response => {
+            setSubmitted(true);
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
+
+    })
+    .catch(error => {
+      console.log("error fetching: ", error)
+      setError(console.error())
+    })
+    .finally(() => {
+      setLoading(false)
+    })
+    
+
+    
   };
 
   //Drag and Drop functionality
