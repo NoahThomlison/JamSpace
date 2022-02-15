@@ -8,8 +8,10 @@ import {
 	ScriptLoaded,
 } from "@react-google-maps/api";
 
+import { Container, Typography, Select, Box } from "@mui/material"
+
 const containerStyle = {
-	width: "75%",
+	width: "100%",
 	height: "400px",
 };
 
@@ -52,46 +54,48 @@ const onClick = () => {
 };
 
 	return (
-		<LoadScript
-			googleMapsApiKey="AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I"
-			// width= "100%"
-		>
-			<GoogleMap
-				mapContainerStyle={containerStyle}
-				center={center}
-				zoom={3.5}
-        id='marker-example'
+		<Container>
+			<LoadScript
+				googleMapsApiKey="AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I"
+				// width= "100%"
 			>
-				{/* Child components, such as markers, info windows, etc. */}
-				<></>
-        <MarkerClusterer options={options}>
-          {(clusterer) =>
-					listings.map((listing) => 
-             (
-              <Marker 
-							// key={createKey(listing.address.coordinates)} 
-							position={listing.address.coordinates} 
-							clusterer={clusterer} 
-							onClick={onClick}	/>
-				// 			<OverlayView
-				// 	position={center}
-				// 	mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-				// 	key={createKey(listing.address.coordinates)} 
-				// 	position={listing.address.coordinates} 
-				// 	clusterer={clusterer} 
-				// 	onClick={onClick}
-				// >
-				// 	<div style={divStyle}>
-				// 		<h1>OverlayView</h1>
+				<GoogleMap
+					mapContainerStyle={containerStyle}
+					center={center}
+					zoom={3.5}
+    	    id='marker-example'
+				>
+					{/* Child components, such as markers, info windows, etc. */}
+					<></>
+    	    <MarkerClusterer options={options}>
+    	      {(clusterer) =>
+						listings.map((listing) => 
+    	         (
+    	          <Marker 
+								// key={createKey(listing.address.coordinates)} 
+								position={listing.address.coordinates} 
+								clusterer={clusterer} 
+								onClick={onClick}	/>
+					// 			<OverlayView
+					// 	position={center}
+					// 	mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+					// 	key={createKey(listing.address.coordinates)} 
+					// 	position={listing.address.coordinates} 
+					// 	clusterer={clusterer} 
+					// 	onClick={onClick}
+					// >
+					// 	<div style={divStyle}>
+					// 		<h1>OverlayView</h1>
 
-				// 	</div>
-				// </OverlayView>
-            ))
-          }
-        </MarkerClusterer>
+					// 	</div>
+					// </OverlayView>
+    	        ))
+    	      }
+    	    </MarkerClusterer>
 
-			</GoogleMap>
-		</LoadScript>
+				</GoogleMap>
+			</LoadScript>
+		</Container>
 	);
 }
 
