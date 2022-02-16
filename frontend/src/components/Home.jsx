@@ -1,3 +1,4 @@
+
 // Import React Component
 import React from 'react';
 // Import Styles
@@ -11,6 +12,8 @@ import Questions from '../components/Questions';
 import AdList from '../components/AdList';
 import About from './About'
 import Filters from './Filters'
+import Map from './Map';
+
 
 // Import Images
 import heroImage from '../images/thehitsBWDark.jpg';
@@ -20,6 +23,8 @@ import drums from '../images/Drums.jpg'
 import guitar1 from '../images/Guitars.jpg'
 import guitar2 from '../images/Guitars2.jpg'
 import guitar3 from '../images/Guitars3.jpg'
+import map from '../images/amps_drums.jpg'
+
 
 // Import MUI
 import { Box, Paper } from '@mui/material/';
@@ -57,7 +62,17 @@ const useStyles = makeStyles({
     backgroundSize: 'cover',
     justifyContent: "center",
     alignItems: "center",  
-  }
+  },
+  map:{
+    marginTop: "0",
+    backgroundImage: `url(${map})`,
+    height: "50vh",
+    display: "flex",
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: "center",
+    alignItems: "center",   
+  },
 });
 
 const Home = props => {
@@ -68,32 +83,32 @@ const Home = props => {
     <Box >
       {/* View 1 */}
       <Box className={styles.hero}>
-            <img src={logo} className={styles.logo}></img>
-        </Box>
+        <img src={logo} className={styles.logo}></img>
+      </Box>
+
       {/* View 2 */}
       <Box className={styles.listings}>
-          <FadeInSection>
-            <Paper>
+        <FadeInSection>
+          <Paper sx={{opacity: "97%"}}>
             <Filters setListings={setListings}></Filters>
             <AdList listings={listings}></AdList>
-            </Paper>
-          </FadeInSection>
-        </Box>
+          </Paper>
+        </FadeInSection>
+      </Box>
 
       {/* View 3 */}
-
       <Box className={styles.store}>
-
-      <FadeInSection>
-      <Paper>
+        <FadeInSection>
+          <Paper sx={{opacity: "97%"}}>
               <About />
               <Questions />
-            </Paper>
-          </FadeInSection>
-        </Box>
-
-
-
+          </Paper>
+        </FadeInSection>
+      </Box>
+      
+      <Box className={styles.map}>
+        <Map listings={listings}/>
+      </Box>
     </Box>
   );
 };
