@@ -64,11 +64,11 @@ const useStyles = makeStyles({
     alignItems: "center",  
   },
   map:{
-    marginTop: 50,
+    marginTop: "0",
     backgroundImage: `url(${map})`,
     height: "50vh",
     display: "flex",
-    backgroundSize: '100%',
+    backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     justifyContent: "center",
     alignItems: "center",   
@@ -83,33 +83,32 @@ const Home = props => {
     <Box >
       {/* View 1 */}
       <Box className={styles.hero}>
-            <img src={logo} className={styles.logo}></img>
-        </Box>
+        <img src={logo} className={styles.logo}></img>
+      </Box>
+
       {/* View 2 */}
       <Box className={styles.listings}>
-          <FadeInSection>
-            <Paper>
+        <FadeInSection>
+          <Paper sx={{opacity: "97%"}}>
             <Filters setListings={setListings}></Filters>
             <AdList listings={listings}></AdList>
-            </Paper>
-          </FadeInSection>
-        </Box>
+          </Paper>
+        </FadeInSection>
+      </Box>
 
       {/* View 3 */}
-
       <Box className={styles.store}>
-
-      <FadeInSection>
-      <Paper>
+        <FadeInSection>
+          <Paper sx={{opacity: "97%"}}>
               <About />
               <Questions />
-            </Paper>
-          </FadeInSection>
-        </Box>
-        <Box className={styles.map}>
-          <Map listings={listings}/>
-        </Box>
-
+          </Paper>
+        </FadeInSection>
+      </Box>
+      
+      <Box className={styles.map}>
+        <Map listings={listings}/>
+      </Box>
     </Box>
   );
 };

@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { DateRangePicker } from 'dates-picker';
+import Reserve from './Reserve';
+import IndividualAdDescription from './IndividualAdDescription';
+
+import Map from './Map';
 
 // Import Listings Database Calls
 import ListingsDataService from '../services/listings';
@@ -11,17 +15,37 @@ import './IndividualAd.css';
 
 // Import Material UI
 import { Container, Typography, Select, Box } from "@mui/material"
+import { makeStyles } from '@mui/styles';
 
 //Drag and Drop
 import {useDropzone} from 'react-dropzone'
-import ImageListItem from '@mui/material/ImageListItem';
+import {ImageListItem, TextField, Paper} from '@mui/material/';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import drums from '../images/Drums.jpg'
+import guitar2 from '../images/Guitars2.jpg'
+import guitar3 from '../images/Guitars3.jpg'
+import guitar4 from '../images/Guitars4.jpg'
+import guitar5 from '../images/Guitars5.jpg'
+
+const useStyles = makeStyles({
+  background: {
+    marginTop: 0,
+    height: 'auto',
+    backgroundImage: `url(${guitar2})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 const IndividualAd = props => {
-  //const { user } = props;
   const id = useParams().id;
+  const maxLength = 500;
 
   // Initialize Listing State
   const initialListingState = {
@@ -50,11 +74,15 @@ const IndividualAd = props => {
     total: 0,
   };
 
+
   // State Variables
   const [listing, setListing] = useState(initialListingState);
   const [booking, setBooking] = useState(initialDateState);
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true)
 
+
+  const styles = useStyles();
   const getListing = id => {
     ListingsDataService.get(id)
       .then(response => {
@@ -67,6 +95,7 @@ const IndividualAd = props => {
 
   useEffect(() => {
     getListing(id);
+    setLoading(false)
   }, [id]);
 
   function callbackFunction(dates) {
@@ -112,120 +141,56 @@ const IndividualAd = props => {
   }
 
   return (
-    <Container sx={{display:"flex"}}>
-      {/* If there is a valid listing, show it, otherwise  */}
-      {listing ? (
-        <Box sx={{display: "flex", flexDirection: "column"}}>
-          <h3 className='mb-3'>{listing.title}</h3>
-          <Box sx={{height:"300px", display: "flex", justifyContent:"center", alignItems:"center"}}>
-            <Box sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
-              <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
-              <img src={listing.images[index]} alt='Main' />
-              <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
+    <Box className={styles.background}>
+      <Container sx={{display:"flex", paddingTop: "50px", paddingBottom: "50px", opacity: "97%"}}>
+        <Paper sx={{width:"100%", display: "flex"}}>
+          {/* If there is a valid listing, show it, otherwise  */}
+          {listing ? (
+          <Box sx={{display: "flex", flexDirection: "column", width:"100%"}}>
+            <Typography variant="h4" sx={{ textAlign: "center"}}>{listing.title}</Typography>
+            <Box sx={{display:"flex", justifyContent:"space-around"}}>
+
+              {/* Image Container */}
+              <Paper sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
+                <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
+                <img src={listing.images[index]} alt='Main' />
+                <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
+              </Paper>
+
+              {/* Description and Reservation Container */}
+              <Paper sx={{display:"flex", flexDirection:"column"}}>
+                <IndividualAdDescription listing={listing}></IndividualAdDescription>
+                <Reserve listing={listing} booking={booking} callbackFunction={callbackFunction}></Reserve>
+              </Paper>
+            </Box>
+
+            {/* Map */}
+            <Paper>
+              {!loading ? <Map sx={{width: "100%"}} listings={[listing]}/> : "loading"}
+            </Paper>
+            {/* Hosted By */}
+            <Box sx={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center", marginTop:"auto"}}>
+              <strong>Hosted By: </strong>
+              <img className='prof-img' src={listing.host.image} alt='Host' />
+              <strong>{listing.host.name}</strong>
+              <em>{listing.host.about}</em>
             </Box>
           </Box>
-          <Box sx={{display:"flex"}}>
-            {/* Description Stuff */}
-            <Box sx={{display:"flex", flexDirection: "column", width:"75%"}}>
-            <strong>Description: </strong>
-            {listing.description}
-            <strong>Instrument Type: </strong>
-            {listing.instrument_type}
-            <strong>Brand: </strong>
-            {listing.brand}
-            <strong>Condition: </strong>
-            {listing.condition}
-            <strong>Price: </strong>
-            <strong>Daily:</strong> ${listing.price.daily}
-            <strong>Weekly:</strong> ${listing.price.weekly}
-            <strong>Security Deposit Required: </strong>$
-            {listing.security_deposit}
-            <strong>Location: </strong>
-            {listing.address.city}, {listing.address.province}
-            </Box>
-            {/* Dates Stuff */}
-            <Box sx={{
-                boxShadow: 3,
-                width: '40%',
-                height: '30%',
-                bgcolor: theme =>
-                  theme.palette.mode === 'dark' ? '#101010' : '#fff',
-                color: theme =>
-                  theme.palette.mode === 'dark' ? 'grey.300' : 'grey.800',
-                p: 1,
-                m: 1,
-                borderRadius: 2,
-                textAlign: 'center',
-                fontSize: '0.875rem',
-                fontWeight: '700',
-              }}
-            >
-                <Typography
-                  sx={{ fontSize: 20 }}
-                  color='text.primary'
-                  gutterBottom
-                >
-                  Rental Dates
-                </Typography>
-                <div>
-                  <DateRangePicker
-                    defaultColor='#222222'
-                    format='MM-DD-YYYY'
-                    callback={callbackFunction}
-                  />
-                </div>
-                <div className='mb-3'>
-                  <Link to={'/listings/book'} state={{ booking, listing }} >
-                    <button className='btn btn-lg btn-outline-dark btn-block'>
-                      Reserve
-                    </button>
-                  </Link>
-                </div>
-                <Typography sx={{ mb: 1.5, mt: 3 }} color='text.secondary'>
-                  Click to Book This Instrument
-                </Typography>
-                {booking.numOfDays > 0 ? (
-                  <Typography variant='body2'>
-                    <div className='row'>
-                      <div className='col-lg-6 text-start ms-5'>
-                        ${booking.rentalRate} x {booking.numOfDays} days
-                      </div>
-                      <div className='col-lg-4'>${booking.rental}</div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-lg-6 text-start ms-5'>
-                        Security Deposit
-                      </div>
-                      <div
-                        className='col-lg-4'
-                        style={{ textDecoration: 'underline' }}
-                      >
-                        ${booking.deposit}
-                      </div>
-                    </div>
-                      <div className='col-lg-6 text-start ms-5'>Total</div>
-                      <div className='col-lg-4'>${booking.total}</div>
-                  </Typography>
-                ) : null}
-            </Box>
-          </Box>
-          {/* Hosted By Stuff */}
-          <Box sx={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center"}}>
-            <strong>Hosted By: </strong>
-            <img className='prof-img' src={listing.host.image} alt='Host' />
-            <strong>{listing.host.name}</strong>
-            <em>{listing.host.about}</em>
-          </Box>
-        </Box>
-      ) : (
-        <div>
-          <br />
-          <h2>No Listing Found.</h2>
-        </div>
-      )}
-    </Container>
+        ) : (
+          <div>
+            <br />
+            <h2>No Listing Found.</h2>
+          </div>
+        )}
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 
 export default IndividualAd;
+
+
+
+
 
