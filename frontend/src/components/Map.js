@@ -16,11 +16,6 @@ const containerStyle = {
 	height: "400px",
 };
 
-const center = {
-	lat: 60,
-	lng: -90,
-};
-
 const divStyle = {
 	background: "white",
 	border: "1px solid #ccc",
@@ -39,6 +34,8 @@ function Map(props) {
 	function createKey(location) {
 		return location.lat + location.lng;
 	}
+	const singleAd = listings.length === 1;
+	const center = (singleAd ? listings[0].address.coordinates : { lat: 50, lng: -90 })
  
 const onClick = () => {
 	console.info("I have been clicked!");
@@ -63,7 +60,7 @@ const onClick = () => {
 				<GoogleMap
 					mapContainerStyle={containerStyle}
 					center={center}
-					zoom={3.5}
+					zoom={singleAd ? 10 : 4}
     	    id='marker-example'
 				>
 					{/* Child components, such as markers, info windows, etc. */}
