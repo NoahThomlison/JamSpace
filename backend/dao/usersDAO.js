@@ -126,7 +126,6 @@ export default class UsersDAO {
     }
   }
 
-  // This may not work correctly
   // Update a users information
   static async updateUser(
     user_id,
@@ -142,6 +141,7 @@ export default class UsersDAO {
     date
   ) {
     try {
+      const listingIds = listing_ids.map(id => new ObjectId(id));
       const updateResponse = await users.updateOne(
         {
           _id: ObjectId(user_id),
@@ -156,7 +156,7 @@ export default class UsersDAO {
             about: about,
             address: address,
             host: host,
-            listing_ads: listing_ids,
+            listing_ids: listingIds,
             updated_on: date,
           },
         }

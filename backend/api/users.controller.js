@@ -78,8 +78,9 @@ export default class UsersController {
   }
 
   static async apiUpdateUser(req, res, next) {
+    console.log(req.body);
     try {
-      const user_id = req.body.user_id;
+      const user_id = req.body._id;
       const first_name = req.body.first_name;
       const last_name = req.body.last_name;
       const email = req.body.email;
@@ -93,8 +94,8 @@ export default class UsersController {
         country: req.body.country,
         postal_code: req.body.postal_code,
       };
-      const host = null;
-      const listing_ids = [];
+      const host = req.body.listing_ids.length > 0 ? true : false;
+      const listing_ids = req.body.listing_ids;
       const date = new Date();
 
       const adResponse = await UsersDAO.updateUser(

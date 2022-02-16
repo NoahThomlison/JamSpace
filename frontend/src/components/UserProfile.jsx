@@ -6,6 +6,9 @@ import HorizontalListingCard from './HorizontalListingCard';
 // Import Listings Database Calls
 import ListingsDataService from '../services/listings';
 
+// Import Users Database Calls
+import UsersDataService from '../services/users';
+
 const UserProfile = props => {
   const { user, setUser } = props;
   const [listings, setListings] = useState([]);
@@ -26,23 +29,75 @@ const UserProfile = props => {
 
   useEffect(() => {
     user.listing_ids.map(listing_id => getListing(listing_id));
-    console.log('getting');
   }, [user.listing_ids]);
 
-  const deleteListing = async (listingId, index) => {
+  const deleteListing = async listingId => {
     await ListingsDataService.deleteListing(listingId).then(response => {
-      setUser(prev => {
-        prev.listing_ids.splice(index, 1);
-        return {
-          ...prev,
-        };
-      });
+      const index = user.listing_ids.indexOf(listingId);
+      console.log('index = ' + index);
+      return Promise.resolve(
+        setUser(prev => {
+          console.log(`user before splice: ${prev.listing_ids}`);
+          prev.listing_ids.splice(index, 1);
+          console.log(`user after splice: ${prev.listing_ids}`);
+          return {
+            ...prev,
+          };
+        })
+      )
+        .then(() => {
+          updateUser(user);
+          console.log(user.listing_ids);
+        })
+        .catch(e => {
+          console.log(e);
+        });
     });
   };
 
-  const handleDeleteClick = (id, index) => {
-    console.log(`Delete id #: ${id}`);
-    deleteListing(id, index);
+  const updateUser = async userData => {
+    await UsersDataService.updateUser(userData)
+      .then(() => {
+        console.log(`Edited User ID #${userData._id}`);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  // const deleteListing = async listingId => {
+  //   const index = user.listing_ids.indexOf(listingId);
+  //   return Promise.resolve(
+  //     setUser(prev => {
+  //       prev.listing_ids.splice(index, 1);
+  //       return {
+  //         ...prev,
+  //       };
+  //     })
+  //   )
+  //     .then(async () => {
+  //       await ListingsDataService.deleteListing(listingId);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // };
+
+  // const updateUser = async (userData, listingId) => {
+  //   await UsersDataService.updateUser(userData)
+  //     .then(() => {
+  //       deleteListing(listingId);
+  //       console.log(`Edited User ID #${userData._id}`);
+  //     })
+  //     .catch(e => {
+  //       console.log(e);
+  //     });
+  // };
+
+  const handleDeleteClick = id => {
+    deleteListing(id);
+    // updateUser(user);
+    // updateUser(user, id);
   };
 
   return (
@@ -65,23 +120,26 @@ const UserProfile = props => {
         <div>
           <em>{user.about}</em>
         </div>
-        <div className='mb-5 mt-4'>
-          <h1>My Listings</h1>
-          <div className='text-center'>
-            {listings.length === 0 ? (
-              <h4 className='text-center'>You currently have no ads listed.</h4>
-            ) : (
-              listings.map((listing, index) => (
-                <HorizontalListingCard
-                  key={listing._id}
-                  index={index}
-                  handleDeleteClick={handleDeleteClick}
-                  listing={listing}
-                />
-              ))
-            )}
+        {user.host ? (
+          <div className='mb-5 mt-4'>
+            <h1>My Listings</h1>
+            <div className='text-center'>
+              {listings.length === 0 ? (
+                <h4 className='text-center'>
+                  You currently have no ads listed.
+                </h4>
+              ) : (
+                listings.map(listing => (
+                  <HorizontalListingCard
+                    key={listing._id}
+                    handleDeleteClick={handleDeleteClick}
+                    listing={listing}
+                  />
+                ))
+              )}
+            </div>
           </div>
-        </div>
+        ) : null}
         <div>
           <h1>My Bookings</h1>
           <div className='text-center'>
