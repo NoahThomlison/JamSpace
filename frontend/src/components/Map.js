@@ -6,6 +6,7 @@ import {
 	MarkerClusterer,
 	Marker,
 	ScriptLoaded,
+	Circle
 } from "@react-google-maps/api";
 
 const containerStyle = {
