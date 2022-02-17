@@ -25,3 +25,21 @@ a.social:hover {
   display: flex;
   justify-content: space-between;
 }
+
+.footer{
+  color: white;
+}
+
+.footerRound{
+  background-color: white;
+  border-radius: 010px;
+}
+
+.mb-3 space{
+  margin-bottom: 0px;
+}
+
+.footerContainer{
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
