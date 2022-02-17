@@ -1,8 +1,10 @@
 
 // Import React Component
 import React from 'react';
+
 // Import Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 // Import fadeIn
 import FadeInSection from "../helpers/fadeIn"
 
