@@ -16,13 +16,13 @@ const FinishingBooking = props => {
 
   return (
     <Container>
-      <Paper sx={{display:"flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
+      <Paper>
         {loading ? 
-        <Box sx={{display:"flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
-        <CircularProgress sx={{ fontSize: 100 }}></CircularProgress>
+        <Box sx={{display:"flex", flexDirection: "column", justifyContent:"center", alignItems:"center"}}>
+        <CircularProgress></CircularProgress>
         </Box> : (
-          <Box sx={{display:"flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
-            <CheckCircleOutlineIcon color="success" sx={{ fontSize: 100 }}></CheckCircleOutlineIcon>
+          <Box  sx={{display:"flex", flexDirection: "column", justifyContent:"center", alignItems:"center"}}>
+            <CheckCircleOutlineIcon color="success" sx={{fontSize:"100px"}}></CheckCircleOutlineIcon>
             <Typography variant="h5">Order Placed!</Typography>
             <Typography>Thank you for jamming with us!</Typography>
           </Box>)}
