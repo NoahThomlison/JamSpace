@@ -17,6 +17,9 @@ import Footer from './components/Footer/Footer';
 import Booking from './components/Booking';
 import UserProfile from './components/UserProfile';
 
+// Import Images
+import logoWhiteHorizontal from "./images/logoWhiteHorizontal.png"
+
 //Import Listing Database Call Helper Function
 import listingsData from './helpers/listingsData';
 
@@ -69,9 +72,9 @@ function App() {
       <nav className='navbar sticky-top navbar-expand navbar-dark bg-dark'>
         <div className='container-fluid'>
           <Link to={'/'} className='nav-link'>
-            <div className='navbar-brand'>JamSpace</div>
+            <div className='navbar-brand'><img className="logo" src={logoWhiteHorizontal}></img></div>
           </Link>
-          <div className='navbar-nav mr-auto'>
+          <div className='navbar-nav mr-auto left'>
             <li className='nav-item'>
               <Link to={'/listings'} className='nav-link'>
                 Listings

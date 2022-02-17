@@ -29,6 +29,7 @@ import guitar3 from '../images/Guitars3.jpg'
 import guitar4 from '../images/Guitars4.jpg'
 import guitar5 from '../images/Guitars5.jpg'
 
+
 const useStyles = makeStyles({
   background: {
     marginTop: 0,
@@ -142,8 +143,8 @@ const IndividualAd = props => {
 
   return (
     <Box className={styles.background}>
-      <Container sx={{display:"flex", paddingTop: "50px", paddingBottom: "50px", opacity: "97%"}}>
-        <Paper sx={{width:"100%", display: "flex"}}>
+      <Container sx={{display:"flex", opacity: "97%", paddingTop: "50px", paddingBottom:"50px"}}>
+        <Paper sx={{width:"100%", display: "flex" , padding: "20px"}}>
           {/* If there is a valid listing, show it, otherwise  */}
           {listing ? (
           <Box sx={{display: "flex", flexDirection: "column", width:"100%"}}>
@@ -151,14 +152,14 @@ const IndividualAd = props => {
             <Box sx={{display:"flex", justifyContent:"space-around"}}>
 
               {/* Image Container */}
-              <Paper sx={{display: "flex", justifyContent:"center", alignItems:"center"}}>
+              <Paper sx={{display: "flex", justifyContent:"center", alignItems:"center", width:"100%"}}>
                 <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
                 <img src={listing.images[index]} alt='Main' />
                 <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
               </Paper>
 
               {/* Description and Reservation Container */}
-              <Paper sx={{display:"flex", flexDirection:"column"}}>
+              <Paper sx={{display:"flex", flexDirection:"column", width: "100%"}}>
                 <IndividualAdDescription listing={listing}></IndividualAdDescription>
                 <Reserve listing={listing} booking={booking} callbackFunction={callbackFunction}></Reserve>
               </Paper>
