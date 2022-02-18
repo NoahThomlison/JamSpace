@@ -1,17 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Box, Paper, Container } from '@mui/material/';
+import { useNavigate } from 'react-router-dom';
 
 const ListingCard = props => {
   const { listing } = props;
+  const navigate = useNavigate();
 
   const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
   const descLength = listing.description.length;
   const maxLength = 250;
 
+  const navigateToAd = (listing) => {
+    navigate('/listings/' + listing._id)
+  }
+
   return (
-    <div className='col-lg-4 pb-1'>
-      <div className='card'>
-        <div className='card-body'>
+      <Paper className='card'>
+        <div className='card-body' onClick={() => navigateToAd(listing)}>
           <h5 className='card-title'>{listing.title}</h5>
           <img
             src={listing.images[0]}
@@ -36,23 +42,8 @@ const ListingCard = props => {
             <strong>Address: </strong>
             {address}
           </p>
-          <div className='row'>
-            <Link
-              to={'/listings/' + listing._id}
-              className='btn btn-primary col-lg-5 mx-1 mb-1'
-            >
-              View Ad
-            </Link>
-            <a
-              href={'https://www.google.com/maps/place/' + address}
-              className='btn btn-primary col-lg-5 mx-1 mb-1'
-            >
-              View Map
-            </a>
-          </div>
         </div>
-      </div>
-    </div>
+      </Paper>
   );
 };
 
