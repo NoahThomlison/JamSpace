@@ -22,6 +22,7 @@
     "dates-picker": "^1.0.18",
     "fast-equals": "^2.0.4",
     "google-map-react": "^2.1.10",
+    "overlapping-marker-spiderfier": "^1.1.4",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
