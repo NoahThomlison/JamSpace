@@ -10,53 +10,37 @@ import ListingsDataService from '../services/listings';
 import UsersDataService from '../services/users';
 
 const UserProfile = props => {
-  const { user, setUser } = props;
-  const [listings, setListings] = useState([]);
+  const { user, setUser, listings } = props;
+  let listingIds = user.listing_ids;
+  // const [listingIds, setListingIds] = useState(user.listing_ids);
+  //const [bookingIds, setBookingIds] = useState(user.booking_ids);
+  const [usersListings, setUsersListings] = useState([]);
   const [bookings, setBookings] = useState([]);
 
-  const getListing = async id => {
-    await ListingsDataService.get(id)
-      .then(response => {
-        if (!listings.find(({ _id }) => _id === id)) {
-          setListings(prev => [...prev, response.data.listing[0]]);
-          setBookings(prev => [...prev, response.data.listing[0]]);
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
   useEffect(() => {
-    user.listing_ids.map(listing_id => getListing(listing_id));
-  }, [user.listing_ids]);
-
-  const deleteListing = async listingId => {
-    await ListingsDataService.deleteListing(listingId).then(response => {
-      const index = user.listing_ids.indexOf(listingId);
-      console.log('index = ' + index);
-      return Promise.resolve(
-        setUser(prev => {
-          console.log(`user before splice: ${prev.listing_ids}`);
-          prev.listing_ids.splice(index, 1);
-          console.log(`user after splice: ${prev.listing_ids}`);
-          return {
-            ...prev,
-          };
-        })
-      )
-        .then(() => {
-          updateUser(user);
-          console.log(user.listing_ids);
-        })
-        .catch(e => {
-          console.log(e);
-        });
+    console.log(listings);
+    if (usersListings.length === 0) {
+      setUsersListings([]);
+      console.log('Here');
+    }
+    console.log('Listing Ids: ' + listingIds.length);
+    console.log(usersListings.length);
+    const tempListings = [];
+    listingIds.forEach(listingId => {
+      console.log('In the for loop');
+      console.log(listingId);
+      const index = listings.findIndex(listing => {
+        return listing._id === listingId;
+      });
+      console.log(index);
+      console.log(listings[index]);
+      tempListings.push(listings[index]);
     });
-  };
+    setUsersListings(tempListings);
+  }, [listingIds]);
 
-  const updateUser = async userData => {
-    await UsersDataService.updateUser(userData)
+  const updateUser = async (userData, updatedListings, type) => {
+    await UsersDataService.updateUser(userData, updatedListings, type)
       .then(() => {
         console.log(`Edited User ID #${userData._id}`);
       })
@@ -65,39 +49,30 @@ const UserProfile = props => {
       });
   };
 
-  // const deleteListing = async listingId => {
-  //   const index = user.listing_ids.indexOf(listingId);
-  //   return Promise.resolve(
-  //     setUser(prev => {
-  //       prev.listing_ids.splice(index, 1);
-  //       return {
-  //         ...prev,
-  //       };
-  //     })
-  //   )
-  //     .then(async () => {
-  //       await ListingsDataService.deleteListing(listingId);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // };
-
-  // const updateUser = async (userData, listingId) => {
-  //   await UsersDataService.updateUser(userData)
-  //     .then(() => {
-  //       deleteListing(listingId);
-  //       console.log(`Edited User ID #${userData._id}`);
-  //     })
-  //     .catch(e => {
-  //       console.log(e);
-  //     });
-  // };
+  const deleteListing = async listingId => {
+    // const index = user.listing_ids.indexOf(listingId);
+    // const updatedListings = user.listing_ids.filter(listing => {
+    //   return listing !== listingId;
+    // });
+    listingIds = listingIds.filter(listing => {
+      return listing !== listingId;
+    });
+    await Promise.resolve(
+      // setUser(prev => ({ ...prev, listing_ids: updatedListings }))
+      setUser(prev => ({ ...prev, listing_ids: listingIds }))
+    );
+    await ListingsDataService.deleteListing(listingId).then(response => {
+      return Promise.resolve(
+        // updateUser(user, updatedListings, 'listings')
+        updateUser(user, listingIds, 'listings')
+      ).catch(e => {
+        console.log(e);
+      });
+    });
+  };
 
   const handleDeleteClick = id => {
     deleteListing(id);
-    // updateUser(user);
-    // updateUser(user, id);
   };
 
   return (
@@ -124,12 +99,12 @@ const UserProfile = props => {
           <div className='mb-5 mt-4'>
             <h1>My Listings</h1>
             <div className='text-center'>
-              {listings.length === 0 ? (
+              {usersListings.length === 0 ? (
                 <h4 className='text-center'>
                   You currently have no ads listed.
                 </h4>
               ) : (
-                listings.map(listing => (
+                usersListings.map(listing => (
                   <HorizontalListingCard
                     key={listing._id}
                     handleDeleteClick={handleDeleteClick}
