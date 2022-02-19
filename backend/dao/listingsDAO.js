@@ -21,7 +21,7 @@ export default class ListingsDAO {
   static async getListings({
     filters = null,
     page = 0,
-    listingsPerPage = 30,
+    listingsPerPage = 100,
   } = {}) {
     let query;
     if (filters) {
