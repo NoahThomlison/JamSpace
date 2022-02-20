@@ -8,8 +8,6 @@ import {
 } from "@react-google-maps/api";
 import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Select, Box } from "@mui/material"
-import Spiderfier from "./Spiderfier";
-
 
 import drums from "./icons/drums.jpg"
 import keyboard from "./icons/keyboard.jpg"
@@ -37,12 +35,10 @@ const icons = {
 }
 
 function Map(props) {
-	const { listings, setListings } = props;
-	const spiderfy = Spiderfier(props)
-	console.log(spiderfy)
+	const listings = props;
 
 	const options = {
-		imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+		// imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
 	};
 	function createKey(location) {
 		return location.lat + location.lng;
