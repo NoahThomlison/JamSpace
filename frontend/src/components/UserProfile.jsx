@@ -9,13 +9,20 @@ import ListingsDataService from '../services/listings';
 // Import Users Database Calls
 import UsersDataService from '../services/users';
 
+// Import ListingsData Request to Get Listings
+import listingsData from '../helpers/listingsData';
+
 const UserProfile = props => {
-  const { user, setUser, listings } = props;
+  const { user, setUser, setListings, listings } = props;
   let listingIds = user.listing_ids;
   // const [listingIds, setListingIds] = useState(user.listing_ids);
   //const [bookingIds, setBookingIds] = useState(user.booking_ids);
   const [usersListings, setUsersListings] = useState([]);
   const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    listingsData(setListings);
+  }, []);
 
   useEffect(() => {
     console.log(listings);
@@ -26,18 +33,22 @@ const UserProfile = props => {
     console.log('Listing Ids: ' + listingIds.length);
     console.log(usersListings.length);
     const tempListings = [];
-    listingIds.forEach(listingId => {
-      console.log('In the for loop');
-      console.log(listingId);
-      const index = listings.findIndex(listing => {
-        return listing._id === listingId;
+
+    console.log(!listings[0]);
+    if (listings[0]) {
+      listingIds.forEach(listingId => {
+        console.log('In the for loop');
+        console.log(listingId);
+        const index = listings.findIndex(listing => {
+          return listing._id === listingId;
+        });
+        console.log(index);
+        console.log(listings[index]);
+        tempListings.push(listings[index]);
       });
-      console.log(index);
-      console.log(listings[index]);
-      tempListings.push(listings[index]);
-    });
-    setUsersListings(tempListings);
-  }, [listingIds]);
+      setUsersListings(tempListings);
+    }
+  }, [listingIds, listings]);
 
   const updateUser = async (userData, updatedListings, type) => {
     await UsersDataService.updateUser(userData, updatedListings, type)
