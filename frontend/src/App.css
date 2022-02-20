@@ -1,3 +1,13 @@
+
+@import url(//db.onlinewebfonts.com/c/cfdc7772d1426068d6cc35816bdb06f8?family=Visby+CF+Bold);
+
+@font-face {font-family: "Visby CF Bold"; src: url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.eot"); src: url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.woff") format("woff"), url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/cfdc7772d1426068d6cc35816bdb06f8.svg#Visby CF Bold") format("svg"); }
+
+*{
+  font-family: "Visby CF Bold" !important;
+}
+
+
 .prof-img {
   border-radius: 50%;
   max-width: 300px;
@@ -5,4 +15,63 @@
 
 .create-listing-label {
   text-align: right;
+}
+
+
+.logo{
+  width: 12%;
+}
+
+.left{
+  width: 50%
+}
+
+.navbar-nav{
+  display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    justify-content: flex-end;
+}
+
+/* Masonry */
+.my-masonry-grid {
+  display: -webkit-box; 
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: -30px; 
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; 
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column > div {
+  margin-bottom: 30px;
+}
+
+/* MUI root modifications */
+.MuiPaper-root{
+  border-radius: 20px !important;
+  opacity: 90% !important;
+  transition: all .2s ease-in-out !important; 
+}
+
+.MuiPaper-root:hover{
+opacity: 100% !important;
+}
+
+.Mui{
+border-radius: 100px;
+}
+
+/* BootStrap Modifications */
+.card:hover{
+transition: all .2s ease-in-out; 
+}
+
+.card:hover{
+transform: scale(1.01); 
 }

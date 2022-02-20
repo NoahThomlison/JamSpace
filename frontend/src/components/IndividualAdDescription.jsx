@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, Select, Box, Button, TextField, Paper} from "@mui/material"
 
 const IndividualAdDescription = props => {
-  const maxLength = 500;
+  const maxLength = 2000;
   const {listing} = (props);
 
   return (
@@ -25,10 +25,10 @@ const IndividualAdDescription = props => {
           <TextField variant="standard" label="Location" value={`${listing.address.city}, ${listing.address.province}`}/> 
         </Box>
         <Box sx={{display:"flex", justifyContent: "space-between",}}>
-          <TextField variant="standard" label="Daily Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={listing.price.daily}/>              
-          <TextField variant="standard" label="Weekly Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={listing.price.weekly}/>       
-          <TextField variant="standard" label="Montly Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={listing.price.monthly}/> 
-          <TextField variant="standard" label="Deposit" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={listing.security_deposit}/> 
+          <TextField variant="standard" label="Daily Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={`$${listing.price.daily}`}/>              
+          <TextField variant="standard" label="Weekly Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={`$${listing.price.weekly}`}/>       
+          <TextField variant="standard" label="Montly Price" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={`$${listing.price.monthly}`}/> 
+          <TextField variant="standard" label="Deposit" InputLabelProps={{shrink: true}} InputProps={{readOnly: true}} value={`$${listing.security_deposit}`}/> 
         </Box>
       </Box> 
     </Box>

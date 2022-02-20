@@ -9,16 +9,17 @@ function Questions() {
   return (
     <Container>
       <Box>
-        <Typography variant="h3" sx={{paddingBottom: "20px"}}>How does it work?</Typography>
+        <Typography variant="h3" sx={{paddingBottom: "20px", fontWeight: "800"}}>How does it work?</Typography>
+        <hr></hr>
         <Box sx={{display: "flex", justifyContent: "space-between"}}>
           <Box sx={{width: "45%"}}>
-            <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Wanna Jam?</Typography>
+            <Typography variant="h5" sx={{textAlign: "center"}}>Wanna Jam?</Typography>
             {renterQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}
           </Box>
           <Box sx={{width: "45%"}}>
-          <Typography variant="h5" sx={{textAlign: "center",  textDecoration: "underline"}}>Want some Space?</Typography>
+          <Typography variant="h5" sx={{textAlign: "center"}}>Want some Space?</Typography>
             {lenderQuestions.map(question => 
             <Question key={question.id} {...question}/>
             )}

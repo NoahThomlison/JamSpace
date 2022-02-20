@@ -137,12 +137,12 @@ const IndividualAd = props => {
       <Container
         sx={{
           display: 'flex',
+          opacity: '97%',
           paddingTop: '50px',
           paddingBottom: '50px',
-          opacity: '97%',
         }}
       >
-        <Paper sx={{ width: '100%', display: 'flex' }}>
+        <Paper sx={{ width: '100%', display: 'flex', padding: '20px' }}>
           {/* If there is a valid listing, show it, otherwise  */}
           {listing ? (
             <Box
@@ -158,6 +158,7 @@ const IndividualAd = props => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
+                    width: '100%',
                   }}
                 >
                   <IconButton
@@ -178,7 +179,13 @@ const IndividualAd = props => {
                 </Paper>
 
                 {/* Description and Reservation Container */}
-                <Paper sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Paper
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}
+                >
                   <IndividualAdDescription
                     listing={listing}
                   ></IndividualAdDescription>
