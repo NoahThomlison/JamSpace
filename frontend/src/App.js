@@ -18,7 +18,7 @@ import Booking from './components/Booking';
 import UserProfile from './components/UserProfile';
 
 // Import Images
-import logoWhiteHorizontal from "./images/logoWhiteHorizontal.png"
+import logoWhiteHorizontal from './images/logoWhiteHorizontal.png';
 
 //Import Listing Database Call Helper Function
 import listingsData from './helpers/listingsData';
@@ -72,7 +72,9 @@ function App() {
       <nav className='navbar sticky-top navbar-expand navbar-dark bg-dark'>
         <div className='container-fluid'>
           <Link to={'/'} className='nav-link'>
-            <div className='navbar-brand'><img className="logo" src={logoWhiteHorizontal}></img></div>
+            <div className='navbar-brand'>
+              <img className='logo' src={logoWhiteHorizontal}></img>
+            </div>
           </Link>
           <div className='navbar-nav mr-auto left'>
             <li className='nav-item'>
@@ -150,7 +152,12 @@ function App() {
           <Route
             path='/user'
             element={
-              <UserProfile user={user} listings={listings} setUser={setUser} />
+              <UserProfile
+                user={user}
+                listings={listings}
+                setListings={setListings}
+                setUser={setUser}
+              />
             }
           />
         </Routes>
