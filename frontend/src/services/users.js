@@ -28,6 +28,23 @@ class UsersDataService {
     return http.put('/user', data);
   }
 
+  updateUserBookings(user, newBooking) {
+    const data = {
+      userId: user._id,
+      bookings: user.booking_ids,
+      newBooking: newBooking,
+    };
+    return http.put('/bookings', data);
+  }
+
+  removeUserBooking(user, newBookings) {
+    const data = {
+      userId: user._id,
+      newBookings: newBookings,
+    };
+    return http.put('/deletebooking', data);
+  }
+
   deleteUser(id) {
     return http.delete(`/user?id=${id}`);
   }

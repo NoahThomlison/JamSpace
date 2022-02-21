@@ -13,7 +13,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DeleteOutlineOutlined } from '@mui/icons-material';
 
 const HorizontalBookingCard = props => {
-  const { booking, handleDeleteClick } = props;
+  const { booking, handleDeleteBooking } = props;
 
   const [open, setOpen] = useState(false);
 
@@ -144,8 +144,8 @@ const HorizontalBookingCard = props => {
                   </button>
                   <button
                     className='btn btn-danger'
-                    // onClick={() => handleDeleteClick(listing._id)}
-                    onClick={handleModalClose}
+                    onClick={() => handleDeleteBooking(booking.booking)}
+                    // onClick={handleModalClose}
                   >
                     Delete
                   </button>
