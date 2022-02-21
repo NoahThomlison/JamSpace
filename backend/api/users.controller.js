@@ -56,6 +56,7 @@ export default class UsersController {
       };
       const host = false;
       const listing_ids = [];
+      const booking_ids = [];
       const date = new Date();
       const adResponse = bcrypt.hash(password, 10, function (err, hash) {
         UsersDAO.addUser(
@@ -68,6 +69,7 @@ export default class UsersController {
           address,
           host,
           listing_ids,
+          booking_ids,
           date
         );
       });
@@ -89,6 +91,37 @@ export default class UsersController {
       const adResponse = await UsersDAO.updateUser(
         user_id,
         host,
+        listings,
+        type,
+        date
+      );
+
+      var { error } = adResponse;
+      if (error) {
+        res.status(400).json({ error });
+      }
+
+      if (adResponse.modifiedCount === 0) {
+        throw new Error(
+          'unable to update user - current user may not be original user'
+        );
+      }
+
+      res.json({ status: 'success' });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+
+  static async apiUpdateBookings(req, res, next) {
+    try {
+      const user_id = req.body.userId;
+      const listings = req.body.listings;
+      const type = req.body.type;
+      const date = new Date();
+
+      const adResponse = await UsersDAO.updateUserBookings(
+        user_id,
         listings,
         type,
         date

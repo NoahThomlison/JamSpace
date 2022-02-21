@@ -103,6 +103,7 @@ export default class UsersDAO {
     address,
     host,
     listing_ids,
+    booking_ids,
     date
   ) {
     try {
@@ -116,6 +117,7 @@ export default class UsersDAO {
         address: address,
         host: host,
         listing_ids: listing_ids,
+        booking_ids: booking_ids,
         created_on: date,
         updated_on: date,
       };
@@ -138,6 +140,29 @@ export default class UsersDAO {
           $set: {
             host: host,
             listing_ids: listingIds,
+            updated_on: date,
+          },
+        }
+      );
+
+      return updateResponse;
+    } catch (e) {
+      console.error(`Unable to update ad: ${e}`);
+      return { error: e };
+    }
+  }
+
+  // Update a users information
+  static async updateUserBookings(user_id, booking_ids, type, date) {
+    const bookingIds = booking_ids.map(id => new ObjectId(id));
+    try {
+      const updateResponse = await users.updateOne(
+        {
+          _id: new ObjectId(user_id),
+        },
+        {
+          $set: {
+            booking_ids: bookingIds,
             updated_on: date,
           },
         }
