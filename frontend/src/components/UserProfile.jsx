@@ -17,6 +17,30 @@ import { userData } from '../helpers/usersData';
 // Import ListingsData Request to Get Listings
 import listingsData from '../helpers/listingsData';
 
+// Import Images
+import header from '../images/amps_drums.jpg';
+
+// Import MUI
+import { Box } from '@mui/material/';
+import { makeStyles, withThemeCreator } from '@mui/styles';
+
+const useStyles = makeStyles({
+  profileHeader: {
+    marginLeft: '0',
+    marginRight: '0',
+    color: 'white',
+    opacity: '0.9',
+    backgroundImage: `url(${header})`,
+    height: '28rem',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
 const UserProfile = props => {
   const [cookies, setCookies, removeCookie] = useCookies(['id']);
 
@@ -32,6 +56,7 @@ const UserProfile = props => {
     listing_ids: [],
   };
 
+  const styles = useStyles();
   const [user, setUser] = useState(initialUserState);
 
   useEffect(() => {
@@ -128,30 +153,44 @@ const UserProfile = props => {
   };
 
   return (
-    <div className='container'>
-      <div className='text-center'>
-        {console.log(user)}
-        <h1>
-          {user.first_name} {user.last_name}
-        </h1>
-        <div>
-          <img
+    <div className='container mb-5 px-0' style={{ maxWidth: '100%' }}>
+      <div className='text-center '>
+        <Box className={styles.profileHeader}>
+          <div
             style={{
-              maxWidth: '15rem',
-              maxHeight: 'auto',
-              borderRadius: '50%',
+              backgroundColor: 'black',
+              display: 'block',
+              maxWidth: '50%',
+              borderRadius: '10px',
+              border: '3px solid white',
             }}
-            src={user.image}
-            alt='profile'
-          />
-        </div>
-        <div>
-          <em>{user.about}</em>
-        </div>
+          >
+            <h1 style={{ fontSize: '400%', margin: '0.5rem 1rem' }}>
+              {user.first_name} {user.last_name}
+            </h1>
+          </div>
+          <div className='mt-4'>
+            <img
+              style={{
+                maxWidth: '15rem',
+                maxHeight: '10rem',
+                borderRadius: '50%',
+                border: '3px solid white',
+              }}
+              src={user.image}
+              alt='profile'
+            />
+          </div>
+          <div className='mt-4'>
+            <h5>
+              <em>{user.about}</em>
+            </h5>
+          </div>
+        </Box>
         {user.host ? (
-          <div className='mb-5 mt-4'>
-            <h1>My Listings</h1>
-            <div className='text-center mt-4'>
+          <div className='mb-5 mt-4 mx-5'>
+            <h1>My Listings:</h1>
+            <div className='text-center mt-4 mx-5'>
               {usersListings.length === 0 ? (
                 <h4 className='text-center'>
                   You currently have no ads listed.
@@ -168,9 +207,9 @@ const UserProfile = props => {
             </div>
           </div>
         ) : null}
-        <div>
-          <h1>My Bookings</h1>
-          <div className='text-center mb-5 mt-4'>
+        <div className='mb-5 mt-4 mx-5'>
+          <h1>My Bookings:</h1>
+          <div className='text-center mb-5 mt-4 mx-5'>
             {bookings && bookings.length === 0 ? (
               <h4 className='text-center'>
                 You currently have no instruments booked.

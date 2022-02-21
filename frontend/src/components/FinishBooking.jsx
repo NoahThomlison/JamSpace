@@ -75,11 +75,11 @@ const FinishingBooking = props => {
             <Typography variant='h5'>Order Placed!</Typography>
             <Typography>Thank you for jamming with us!</Typography>
             <Link
-              to={'/user'}
+              to={'/'}
               onClick={finalizeBooking}
               className='btn btn-outline-dark col-lg-5 mt-4 mb-2'
             >
-              Go To My Bookings
+              Complete
             </Link>
           </Box>
         )}
