@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { brands, instruments } from '../staticData/filterDropdownData';
 import axios from 'axios';
 
+// Import Users Database Calls
+import UsersDataService from '../services/users';
 
 //MUI
 import {
@@ -25,6 +27,7 @@ import { makeStyles } from '@mui/styles';
 import AddIcon from '@mui/icons-material/Add';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+
 //Drag and Drop
 import { useDropzone } from 'react-dropzone';
 
@@ -58,9 +61,8 @@ const useStyles = makeStyles({
 });
 
 const CreateListing = props => {
-  const { user } = props;
+  const { user, setUser } = props;
 
-  // HARDCODED USER IMG AND ABOUT UNTIL USER DB SET UP AND CONNECTED
   const initialListingState = {
     title: '',
     description: '',
@@ -71,7 +73,9 @@ const CreateListing = props => {
     weekly: null,
     monthly: null,
     deposit: null,
-    images: ['intialStateOverride'],
+    images: [
+      'https://www.long-mcquade.com/files/93525/md_807427acf19e77c2ee3cd7b809a479f9.png',
+    ],
     user_id: user._id,
     name: `${user.first_name} ${user.last_name}`,
     user_img: user.image,
@@ -90,8 +94,8 @@ const CreateListing = props => {
   const [formComplete, setFormComplete] = useState(false);
   const [listing, setListing] = useState(initialListingState);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState()
-	const [loading, setLoading] = useState()
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState();
 
   //check if form is filled out completely
   useEffect(() => {
@@ -104,13 +108,6 @@ const CreateListing = props => {
 
   let editing = false;
 
-  // EDITING STILL NEEDS TO BE IMPLEMENTED
-
-  // if (props.location.state && props.location.state.currentListing) {
-  //   editing = true;
-  //   initialListingState = props.location.state.currentListing.text;
-  // }
-
   const handleInputChange = event => {
     const { name, value } = event.target;
     setListing({ ...listing, [name]: value });
@@ -118,20 +115,31 @@ const CreateListing = props => {
 
   const priceCalculator = event => {
     const { value } = event.target;
-    const dailyRateCalc = value * 0.005;
-    const weeklyRateCalc = dailyRateCalc * 4;
-    const monthlyRateCalc = weeklyRateCalc * 3.5;
+    const dailyRateCalc = Math.round(value * 0.005 * 100) / 100;
+    const weeklyRateCalc = Math.round(dailyRateCalc * 4 * 100) / 100;
+    const monthlyRateCalc = Math.round(weeklyRateCalc * 3.5 * 100) / 100;
     setListing({
       ...listing,
-      ['daily']: dailyRateCalc,
-      ['weekly']: weeklyRateCalc,
-      ['monthly']: monthlyRateCalc,
-      ['deposit']: value,
+      daily: dailyRateCalc,
+      weekly: weeklyRateCalc,
+      monthly: monthlyRateCalc,
+      deposit: value,
     });
     setDailyRate(dailyRateCalc);
     setWeeklyRate(weeklyRateCalc);
     setMonthlyRate(monthlyRateCalc);
     setDeposit(value);
+  };
+
+  // need to remove reference to "type" everywhere
+  const updateUser = async (userData, updatedListings, type) => {
+    await UsersDataService.updateUser(userData, updatedListings, type)
+      .then(() => {
+        console.log(`Edited User ID #${userData._id}`);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   // useEffect(() => {
@@ -149,64 +157,67 @@ const CreateListing = props => {
   //   })
   // }, []);
   const saveListing = async () => {
-    await axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${listing.postal_code}&key=AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I`)
-    .then(response => {
-      // let coords = response.data.results[0].geometry.location
+    await axios(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${listing.postal_code}&key=AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I`
+    )
+      .then(response => {
+        // let coords = response.data.results[0].geometry.location
 
-      // setListing({ ...listing, coordinates: coords})
-      let data = {
-        title: listing.title,
-        description: listing.description,
-        instrument_type: listing.instrument_type,
-        brand: listing.brand,
-        condition: listing.condition,
-        daily: listing.daily,
-        weekly: listing.weekly,
-        monthly: listing.monthly,
-        deposit: listing.deposit,
-        images: listing.images,
-        user_id: listing.user_id,
-        name: listing.name,
-        user_img: listing.user_img,
-        user_about: listing.user_about,
-        city: listing.city,
-        province: listing.province,
-        country: listing.country,
-        postal_code: listing.postal_code,
-        coordinates: response.data.results[0].geometry.location
-      };
-      console.log(data)
-      if (editing) {
-        data.listing_id = props.location.state.currentListing._id;
-        ListingsDataService.updateListing(data)
-          .then(response => {
-            setSubmitted(true);
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } else {
-        ListingsDataService.createListing(data)
-          .then(response => {
-            setSubmitted(true);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }
-
-    })
-    .catch(error => {
-      console.log("error fetching: ", error)
-      setError(console.error())
-    })
-    .finally(() => {
-      setLoading(false)
-    })
-    
-
-    
+        // setListing({ ...listing, coordinates: coords})
+        let data = {
+          title: listing.title,
+          description: listing.description,
+          instrument_type: listing.instrument_type,
+          brand: listing.brand,
+          condition: listing.condition,
+          daily: listing.daily,
+          weekly: listing.weekly,
+          monthly: listing.monthly,
+          deposit: listing.deposit,
+          images: listing.images,
+          user_id: listing.user_id,
+          name: listing.name,
+          user_img: listing.user_img,
+          user_about: listing.user_about,
+          city: listing.city,
+          province: listing.province,
+          country: listing.country,
+          postal_code: listing.postal_code,
+          coordinates: response.data.results[0].geometry.location,
+        };
+        if (editing) {
+          data.listing_id = props.location.state.currentListing._id;
+          ListingsDataService.updateListing(data)
+            .then(response => {
+              setSubmitted(true);
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        } else {
+          ListingsDataService.createListing(data)
+            .then(async response => {
+              setSubmitted(true);
+              const newListingId = response.data.adResponse.insertedId;
+              const updatedListingIds = [...user.listing_ids, newListingId];
+              await Promise.resolve(
+                setUser(prev => ({ ...prev, listing_ids: updatedListingIds }))
+              ).then(res => {
+                updateUser(user, updatedListingIds, 'listings');
+              });
+            })
+            .catch(e => {
+              console.log(e);
+            });
+        }
+      })
+      .catch(error => {
+        console.log('error fetching: ', error);
+        setError(console.error());
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   //Drag and Drop functionality
@@ -223,17 +234,17 @@ const CreateListing = props => {
       {user.first_name !== '' || user === null ? (
         <div className='submit-form mb-5'>
           {submitted ? (
-            <div>
-              <h4>You submitted successfully!</h4>
+            <div className='text-center my-5'>
+              <h4>You have created a new listing successfully!</h4>
               <Link
-                to={'/listings'}
-                className='btn btn-lg btn-primary btn-block'
+                to={'/'}
+                className='btn btn-lg btn-outline-dark btn-block mt-5'
               >
-                Back to the Listings
+                Complete
               </Link>
             </div>
           ) : (
-            <div>
+            <div className='mt-5'>
               <Container
                 sx={{
                   display: 'flex',
@@ -242,7 +253,7 @@ const CreateListing = props => {
                 }}
               >
                 <h3 className='mb-4'>
-                  {editing ? 'Edit' : 'Create'} Listing:{' '}
+                  {editing ? 'Edit' : 'Create'} Your Listing:{' '}
                 </h3>
                 <Container sx={{ display: 'flex' }}>
                   <Container
@@ -450,32 +461,31 @@ const CreateListing = props => {
                   </Container>
                 </Container>
                 {formComplete ? (
-                  <Button
+                  <button
                     onClick={saveListing}
-                    sx={{ width: '200px', marginTop: '20px' }}
-                    variant='contained'
+                    className='btn btn-lg btn-outline-dark mt-4'
                   >
                     Submit
-                  </Button>
+                  </button>
                 ) : (
-                  <Button
+                  <button
                     onClick={saveListing}
-                    sx={{ width: '200px', marginTop: '20px' }}
-                    variant='disabled'
+                    className='btn btn-lg btn-outline-dark mt-4'
+                    disabled
                   >
                     Submit
-                  </Button>
+                  </button>
                 )}
               </Container>
             </div>
           )}
         </div>
       ) : (
-        <div className='text-center mt-5'>
+        <div className='text-center my-5'>
           <h2>Please Log In To Create A Listing.</h2>
           <Link
             to={'/login'}
-            className='btn btn-lg btn-outline-dark btn-block mt-4'
+            className='btn btn-lg btn-outline-dark btn-block my-5'
           >
             Click Here To Login
           </Link>

@@ -135,7 +135,10 @@ function App() {
               />
             }
           />
-          <Route path='/listings/new' element={<CreateListing user={user} />} />
+          <Route
+            path='/listings/new'
+            element={<CreateListing user={user} setUser={setUser} />}
+          />
           <Route path='/listings/:id' element={<IndividualAd user={user} />} />
           <Route
             path='/login'

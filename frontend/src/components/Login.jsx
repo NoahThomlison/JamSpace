@@ -27,10 +27,10 @@ const Login = props => {
   };
 
   return (
-    <div className='submit-form d-flex justify-content-center'>
-      <div className='text-center'>
+    <div className='submit-form d-flex justify-content-center my-5'>
+      <div className='text-center my-5'>
         <div className='form-group mb-3'>
-          <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
+          <h1 className='h3 mb-3 font-weight-normal'>Please Sign In</h1>
           <label htmlFor='email'>Email</label>
           <input
             type='text'
@@ -57,7 +57,7 @@ const Login = props => {
           />
         </div>
 
-        <Link to='/'>
+        <Link to='/user'>
           <button
             onClick={handleOnClick}
             className='btn btn-lg btn-outline-dark btn-block'
