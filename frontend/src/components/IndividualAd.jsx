@@ -1,5 +1,5 @@
 // Import React Components/Hooks
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { DateRangePicker } from 'dates-picker';
 import Reserve from './Reserve';
@@ -90,11 +90,18 @@ const IndividualAd = props => {
         console.log(e);
       });
   };
-
+const isInitialMount = useRef(true);
   useEffect(() => {
     getListing(id);
-    setLoading(false);
   }, [id]);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      setLoading(false);
+    }
+  })
 
   function callbackFunction(dates) {
     // Need to calculate the rate based on days rented.  eg 10 days is a week and 3 days
