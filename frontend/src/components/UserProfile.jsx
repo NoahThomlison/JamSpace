@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // Import Custom Components
 import HorizontalListingCard from './HorizontalListingCard';
+import HorizontalBookingCard from './HorizontalBookingCard';
 
 // Import Listings Database Calls
 import ListingsDataService from '../services/listings';
@@ -18,7 +19,7 @@ const UserProfile = props => {
   // const [listingIds, setListingIds] = useState(user.listing_ids);
   //const [bookingIds, setBookingIds] = useState(user.booking_ids);
   const [usersListings, setUsersListings] = useState([]);
-  const [bookings, setBookings] = useState([]);
+  const bookings = user.booking_ids;
 
   useEffect(() => {
     listingsData(setListings);
@@ -89,6 +90,7 @@ const UserProfile = props => {
   return (
     <div className='container'>
       <div className='text-center'>
+        {console.log(user)}
         <h1>
           {user.first_name} {user.last_name}
         </h1>
@@ -128,14 +130,17 @@ const UserProfile = props => {
         ) : null}
         <div>
           <h1>My Bookings</h1>
-          <div className='text-center'>
+          <div className='text-center mb-5 mt-4'>
             {bookings.length === 0 ? (
               <h4 className='text-center'>
                 You currently have no instruments booked.
               </h4>
             ) : (
-              bookings.map(listing => (
-                <HorizontalListingCard key={listing._id} listing={listing} />
+              bookings.map(booking => (
+                <HorizontalBookingCard
+                  key={booking.booking}
+                  booking={booking}
+                />
               ))
             )}
           </div>
