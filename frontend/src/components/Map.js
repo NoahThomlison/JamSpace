@@ -46,7 +46,7 @@ function Map(props) {
 	}
 	const singleAd = listings.length === 1;
 
-	const center =  singleAd ? listings[0].address.coordinates : user ? user.address.coordinates : { lat: 50, lng: -90 }
+	const center =  singleAd ? listings[0].address.coordinates : user.address.coordinates ? user.address.coordinates : { lat: 50, lng: -90 }
   
 	const navigate = useNavigate();
 	const toListing = (listing) => {
@@ -89,7 +89,7 @@ function Map(props) {
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={center}
-				zoom={singleAd ? 10 : user ? 8 : 4}
+				zoom={singleAd ? 10 : user.address.coordinates ? 8 : 4}
 				id="marker-example"
 			>
 				<MarkerClusterer options={options}>
