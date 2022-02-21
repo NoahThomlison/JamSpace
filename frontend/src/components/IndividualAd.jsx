@@ -191,12 +191,14 @@ const isInitialMount = useRef(true);
                     display: 'flex',
                     flexDirection: 'column',
                     width: '100%',
+                    zIndex: "10"
                   }}
                 >
                   <IndividualAdDescription
                     listing={listing}
                   ></IndividualAdDescription>
                   <Reserve
+                  sx={{zIndex: "10"}}
                     listing={listing}
                     booking={booking}
                     callbackFunction={callbackFunction}
@@ -209,7 +211,7 @@ const isInitialMount = useRef(true);
                 {!loading ? (
                   <Map sx={{ width: '100%' }} listings={[listing]} />
                 ) : (
-                  'loading'
+                'loading'
                 )}
               </Paper>
               {/* Hosted By */}
