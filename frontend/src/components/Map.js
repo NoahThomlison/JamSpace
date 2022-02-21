@@ -11,7 +11,7 @@ import { Container } from "@mui/material";
 import drums from "./icons/drums.jpg";
 import keyboard from "./icons/keyboard.jpg";
 import bass from "./icons/bass.jpg";
-import acoustic from "./icons/acoustic.jpg";
+import acoustic from "./icons/acoustic.png";
 import electric from "./icons/electric.jpg";
 import Ad from "./Ad.js";
 
