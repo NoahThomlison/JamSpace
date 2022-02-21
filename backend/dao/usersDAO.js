@@ -126,37 +126,18 @@ export default class UsersDAO {
     }
   }
 
-  // This may not work correctly
   // Update a users information
-  static async updateUser(
-    user_id,
-    first_name,
-    last_name,
-    email,
-    password,
-    image,
-    about,
-    address,
-    host,
-    listing_ids,
-    date
-  ) {
+  static async updateUser(user_id, host, listing_ids, type, date) {
+    const listingIds = listing_ids.map(id => new ObjectId(id));
     try {
       const updateResponse = await users.updateOne(
         {
-          _id: ObjectId(user_id),
+          _id: new ObjectId(user_id),
         },
         {
           $set: {
-            first_name: first_name,
-            last_name: last_name,
-            email: email,
-            password: password,
-            image: image,
-            about: about,
-            address: address,
             host: host,
-            listing_ads: listing_ids,
+            listing_ids: listingIds,
             updated_on: date,
           },
         }

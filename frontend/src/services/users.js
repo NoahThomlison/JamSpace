@@ -18,7 +18,13 @@ class UsersDataService {
     return http.post('/user', data);
   }
 
-  updateUser(data) {
+  updateUser(user, newListings, type) {
+    const data = {
+      userId: user._id,
+      host: user.host,
+      listings: newListings,
+      type: type,
+    };
     return http.put('/user', data);
   }
 

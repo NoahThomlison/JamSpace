@@ -79,35 +79,18 @@ export default class UsersController {
 
   static async apiUpdateUser(req, res, next) {
     try {
-      const user_id = req.body.user_id;
-      const first_name = req.body.first_name;
-      const last_name = req.body.last_name;
-      const email = req.body.email;
-      const password = req.body.password;
-      const image = req.body.image;
-      const about = req.body.about;
-      const address = {
-        street: req.body.street,
-        city: req.body.city,
-        province: req.body.province,
-        country: req.body.country,
-        postal_code: req.body.postal_code,
-      };
-      const host = null;
-      const listing_ids = [];
+      const user_id = req.body.userId;
+      // const host = req.body.listings.length > 0 ? true : false;
+      const host = req.body.host;
+      const listings = req.body.listings;
+      const type = req.body.type;
       const date = new Date();
 
       const adResponse = await UsersDAO.updateUser(
         user_id,
-        first_name,
-        last_name,
-        email,
-        password,
-        image,
-        about,
-        address,
         host,
-        listing_ids,
+        listings,
+        type,
         date
       );
 

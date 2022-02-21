@@ -75,11 +75,10 @@ export default class AdsDAO {
     }
   }
 
-  static async deleteAd(adId, userId) {
+  static async deleteAd(adId) {
     try {
       const deleteResponse = await ads.deleteOne({
         _id: ObjectId(adId),
-        host_id: userId,
       });
 
       return deleteResponse;

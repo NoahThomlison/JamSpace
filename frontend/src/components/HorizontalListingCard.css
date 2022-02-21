@@ -1,0 +1,27 @@
+.centerButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.deleteButton:hover {
+  color: white;
+}
+
+.image-box {
+  height: 8rem;
+}
+
+.image-modal {
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.delete-modal {
+  text-align: center;
+}
+
+.horiz-image {
+  max-width: 100%;
+  max-height: 100%;
+}

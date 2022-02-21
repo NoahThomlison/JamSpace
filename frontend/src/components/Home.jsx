@@ -109,7 +109,7 @@ const Home = props => {
       </Box>
       
       <Box className={styles.map}>
-        <Map listings={listings}/>
+        <Map listings={listings} user={user}/>
       </Box>
     </Box>
   );

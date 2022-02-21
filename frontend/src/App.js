@@ -147,7 +147,12 @@ function App() {
             }
           />
           <Route path='/listings/book' element={<Booking user={user} />} />
-          <Route path='/user' element={<UserProfile user={user} />} />
+          <Route
+            path='/user'
+            element={
+              <UserProfile user={user} listings={listings} setUser={setUser} />
+            }
+          />
         </Routes>
       </div>
       <Footer />

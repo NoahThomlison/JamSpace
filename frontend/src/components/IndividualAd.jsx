@@ -1,5 +1,5 @@
 // Import React Components/Hooks
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { DateRangePicker } from 'dates-picker';
 import Reserve from './Reserve';
@@ -14,21 +14,20 @@ import ListingsDataService from '../services/listings';
 import './IndividualAd.css';
 
 // Import Material UI
-import { Container, Typography, Select, Box } from "@mui/material"
+import { Container, Typography, Select, Box } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 //Drag and Drop
-import {useDropzone} from 'react-dropzone'
-import {ImageListItem, TextField, Paper} from '@mui/material/';
+import { useDropzone } from 'react-dropzone';
+import { ImageListItem, TextField, Paper } from '@mui/material/';
 import IconButton from '@mui/material/IconButton';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import drums from '../images/Drums.jpg'
-import guitar2 from '../images/Guitars2.jpg'
-import guitar3 from '../images/Guitars3.jpg'
-import guitar4 from '../images/Guitars4.jpg'
-import guitar5 from '../images/Guitars5.jpg'
-
+import drums from '../images/Drums.jpg';
+import guitar2 from '../images/Guitars2.jpg';
+import guitar3 from '../images/Guitars3.jpg';
+import guitar4 from '../images/Guitars4.jpg';
+import guitar5 from '../images/Guitars5.jpg';
 
 const useStyles = makeStyles({
   background: {
@@ -36,11 +35,11 @@ const useStyles = makeStyles({
     height: 'auto',
     backgroundImage: `url(${guitar2})`,
     backgroundSize: 'cover',
-    backgroundRepeat: "no-repeat",
+    backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -75,13 +74,11 @@ const IndividualAd = props => {
     total: 0,
   };
 
-
   // State Variables
   const [listing, setListing] = useState(initialListingState);
   const [booking, setBooking] = useState(initialDateState);
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true)
-
+  const [loading, setLoading] = useState(true);
 
   const styles = useStyles();
   const getListing = id => {
@@ -93,11 +90,18 @@ const IndividualAd = props => {
         console.log(e);
       });
   };
-
+const isInitialMount = useRef(true);
   useEffect(() => {
     getListing(id);
-    setLoading(false)
   }, [id]);
+
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      setLoading(false);
+    }
+  })
 
   function callbackFunction(dates) {
     // Need to calculate the rate based on days rented.  eg 10 days is a week and 3 days
@@ -124,65 +128,112 @@ const IndividualAd = props => {
   }
 
   const previous = () => {
-    if(index - 1 < 0){
-     setIndex(listing.images.length - 1)
-    }
-    else(
-    setIndex(index - 1)
-    )
-  }
+    if (index - 1 < 0) {
+      setIndex(listing.images.length - 1);
+    } else setIndex(index - 1);
+  };
 
   const next = () => {
-    if(index + 1 > listing.images.length-1){
-      setIndex(0)
-     }
-     else(
-    setIndex(index + 1)
-    )
-  }
+    if (index + 1 > listing.images.length - 1) {
+      setIndex(0);
+    } else setIndex(index + 1);
+  };
 
   return (
     <Box className={styles.background}>
-      <Container sx={{display:"flex", opacity: "97%", paddingTop: "50px", paddingBottom:"50px"}}>
-        <Paper sx={{width:"100%", display: "flex" , padding: "20px"}}>
+      <Container
+        sx={{
+          display: 'flex',
+          opacity: '97%',
+          paddingTop: '50px',
+          paddingBottom: '50px',
+        }}
+      >
+        <Paper sx={{ width: '100%', display: 'flex', padding: '20px' }}>
           {/* If there is a valid listing, show it, otherwise  */}
           {listing ? (
-          <Box sx={{display: "flex", flexDirection: "column", width:"100%"}}>
-            <Typography variant="h4" sx={{ textAlign: "center"}}>{listing.title}</Typography>
-            <Box sx={{display:"flex", justifyContent:"space-around"}}>
+            <Box
+              sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}
+            >
+              <Typography variant='h4' sx={{ textAlign: 'center' }}>
+                {listing.title}
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                {/* Image Container */}
+                <Paper
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: '100%',
+                  }}
+                >
+                  <IconButton
+                    onClick={() => {
+                      previous();
+                    }}
+                  >
+                    <ArrowBackIosIcon color='primary' />
+                  </IconButton>
+                  <img src={listing.images[index]} alt='Main' />
+                  <IconButton
+                    onClick={() => {
+                      next();
+                    }}
+                  >
+                    <ArrowForwardIosIcon color='primary' />
+                  </IconButton>
+                </Paper>
 
-              {/* Image Container */}
-              <Paper sx={{display: "flex", justifyContent:"center", alignItems:"center", width:"100%"}}>
-                <IconButton onClick={() => {previous()}}><ArrowBackIosIcon color="primary" /></IconButton > 
-                <img src={listing.images[index]} alt='Main' />
-                <IconButton onClick={() => {next()}}><ArrowForwardIosIcon color="primary" /></IconButton > 
+                {/* Description and Reservation Container */}
+                <Paper
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                  }}
+                >
+                  <IndividualAdDescription
+                    listing={listing}
+                  ></IndividualAdDescription>
+                  <Reserve
+                    listing={listing}
+                    booking={booking}
+                    callbackFunction={callbackFunction}
+                  ></Reserve>
+                </Paper>
+              </Box>
+
+              {/* Map */}
+              <Paper>
+                {!loading ? (
+                  <Map sx={{ width: '100%' }} listings={[listing]} />
+                ) : (
+                  'loading'
+                )}
               </Paper>
-
-              {/* Description and Reservation Container */}
-              <Paper sx={{display:"flex", flexDirection:"column", width: "100%"}}>
-                <IndividualAdDescription listing={listing}></IndividualAdDescription>
-                <Reserve listing={listing} booking={booking} callbackFunction={callbackFunction}></Reserve>
-              </Paper>
+              {/* Hosted By */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 'auto',
+                }}
+              >
+                <strong>Hosted By: </strong>
+                <img className='prof-img' src={listing.host.image} alt='Host' />
+                <strong>{listing.host.name}</strong>
+                <em>{listing.host.about}</em>
+              </Box>
             </Box>
-
-            {/* Map */}
-            <Paper>
-              {!loading ? <Map sx={{width: "100%"}} listings={[listing]}/> : "loading"}
-            </Paper>
-            {/* Hosted By */}
-            <Box sx={{display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center", marginTop:"auto"}}>
-              <strong>Hosted By: </strong>
-              <img className='prof-img' src={listing.host.image} alt='Host' />
-              <strong>{listing.host.name}</strong>
-              <em>{listing.host.about}</em>
-            </Box>
-          </Box>
-        ) : (
-          <div>
-            <br />
-            <h2>No Listing Found.</h2>
-          </div>
-        )}
+          ) : (
+            <div>
+              <br />
+              <h2>No Listing Found.</h2>
+            </div>
+          )}
         </Paper>
       </Container>
     </Box>
@@ -190,8 +241,3 @@ const IndividualAd = props => {
 };
 
 export default IndividualAd;
-
-
-
-
-
