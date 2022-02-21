@@ -12,4 +12,7 @@ router
   .put(UsersCtrl.apiUpdateUser)
   .delete(UsersCtrl.apiDeleteUser);
 
+router.route('/bookings').put(UsersCtrl.apiUpdateBookings);
+router.route('/deletebooking').put(UsersCtrl.apiDeleteBooking);
+
 export default router;

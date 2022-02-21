@@ -116,14 +116,43 @@ export default class UsersController {
   static async apiUpdateBookings(req, res, next) {
     try {
       const user_id = req.body.userId;
-      const listings = req.body.listings;
-      const type = req.body.type;
+      const bookings = req.body.bookings;
+      const newBooking = req.body.newBooking;
       const date = new Date();
 
       const adResponse = await UsersDAO.updateUserBookings(
         user_id,
-        listings,
-        type,
+        bookings,
+        newBooking,
+        date
+      );
+
+      var { error } = adResponse;
+      if (error) {
+        res.status(400).json({ error });
+      }
+
+      if (adResponse.modifiedCount === 0) {
+        throw new Error(
+          'unable to update user - current user may not be original user'
+        );
+      }
+
+      res.json({ status: 'success' });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
+
+  static async apiDeleteBooking(req, res, next) {
+    try {
+      const user_id = req.body.userId;
+      const newBookings = req.body.newBookings;
+      const date = new Date();
+
+      const adResponse = await UsersDAO.deleteUserBooking(
+        user_id,
+        newBookings,
         date
       );
 

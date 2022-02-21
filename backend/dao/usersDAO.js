@@ -153,8 +153,14 @@ export default class UsersDAO {
   }
 
   // Update a users information
-  static async updateUserBookings(user_id, booking_ids, type, date) {
-    const bookingIds = booking_ids.map(id => new ObjectId(id));
+  static async updateUserBookings(user_id, bookings, newBooking, date) {
+    const updatedBookings = bookings.map(element => ({
+      ...element,
+      booking: new ObjectId(element.booking),
+    }));
+    const newBookingId = new ObjectId();
+    const updatedNewBooking = { booking: newBookingId, ...newBooking };
+    updatedBookings.push(updatedNewBooking);
     try {
       const updateResponse = await users.updateOne(
         {
@@ -162,7 +168,33 @@ export default class UsersDAO {
         },
         {
           $set: {
-            booking_ids: bookingIds,
+            booking_ids: updatedBookings,
+            updated_on: date,
+          },
+        }
+      );
+
+      return updateResponse;
+    } catch (e) {
+      console.error(`Unable to update ad: ${e}`);
+      return { error: e };
+    }
+  }
+
+  // Delete a users booking
+  static async deleteUserBooking(user_id, newBookings, date) {
+    const updatedBookings = newBookings.map(element => ({
+      ...element,
+      booking: new ObjectId(element.booking),
+    }));
+    try {
+      const updateResponse = await users.updateOne(
+        {
+          _id: new ObjectId(user_id),
+        },
+        {
+          $set: {
+            booking_ids: updatedBookings,
             updated_on: date,
           },
         }
