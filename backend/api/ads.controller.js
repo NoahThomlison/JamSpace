@@ -26,7 +26,7 @@ export default class AdsController {
         province: req.body.province,
         country: req.body.country,
         postal_code: req.body.postal_code,
-        coordinates: req.body.coordinates
+        coordinates: req.body.coordinates,
       };
       const date = new Date();
       const adResponse = await AdsDAO.addAd(
@@ -43,7 +43,7 @@ export default class AdsController {
         address,
         date
       );
-      res.json({ status: 'success' });
+      res.json({ adResponse, status: 'success' });
     } catch (e) {
       res.status(500).json({ error: e.message });
     }
