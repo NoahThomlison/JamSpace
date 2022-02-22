@@ -138,7 +138,7 @@ export default class UsersController {
         );
       }
 
-      res.json({ status: 'success' });
+      res.json({ adResponse, status: 'success' });
     } catch (e) {
       res.status(500).json({ error: e.message });
     }

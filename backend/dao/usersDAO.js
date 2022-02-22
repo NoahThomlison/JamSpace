@@ -174,7 +174,7 @@ export default class UsersDAO {
         }
       );
 
-      return updateResponse;
+      return { updateResponse, updatedNewBooking };
     } catch (e) {
       console.error(`Unable to update ad: ${e}`);
       return { error: e };
