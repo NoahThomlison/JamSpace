@@ -56,7 +56,7 @@ const Filters = props => {
   };
 
   const findBySearch = (filter) => {
-    alert(filter)
+    // alert(filter)
     if(filter ===  'brand'){
       findByBrand()
     }
@@ -85,7 +85,7 @@ const Filters = props => {
   };
 
   const findByInstrumentType = () => {
-    alert("findbyinstrument")
+    // alert("findbyinstrument")
     find(searchInstrumentType, 'instrument_type');
   };
 
