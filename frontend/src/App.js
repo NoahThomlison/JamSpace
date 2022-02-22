@@ -107,11 +107,18 @@ function App() {
                 </li>
               </>
             ) : (
-              <li className='nav-item'>
-                <Link to={'/login'} className='nav-link'>
-                  Login
-                </Link>
-              </li>
+              <>
+                <li className='nav-item'>
+                  <Link to={'/login'} className='nav-link'>
+                    Login
+                  </Link>
+                </li>
+                <li className='nav-item'>
+                  <Link to={'/register'} className='nav-link'>
+                    Register
+                  </Link>
+                </li>
+              </>
             )}
           </div>
         </div>
@@ -151,12 +158,15 @@ function App() {
               />
             }
           />
-          <Route path='/listings/book' element={<Booking user={user} />} />
+          <Route
+            path='/listings/book'
+            element={<Booking user={user} setUser={setUser} />}
+          />
           <Route
             path='/user'
             element={
               <UserProfile
-                user={user}
+                currUser={user}
                 listings={listings}
                 setListings={setListings}
                 setUser={setUser}

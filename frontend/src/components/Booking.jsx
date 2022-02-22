@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 });
 
 const Booking = props => {
-  const { user } = props;
+  const { user, setUser } = props;
   const location = useLocation();
   const { booking, listing } = location.state;
   const steps = ['Review', 'Payment', 'Finish'];
@@ -127,6 +127,7 @@ const Booking = props => {
               {page === 'Finish' ? (
                 <FinishBooking
                   user={user}
+                  setUser={setUser}
                   styles={styles}
                   step={step}
                   next={next}

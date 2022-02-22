@@ -42,18 +42,23 @@ const useStyles = makeStyles({
 });
 
 const UserProfile = props => {
+  const { currUser, setListings, listings } = props;
+
   const [cookies, setCookies, removeCookie] = useCookies(['id']);
 
   // State Initializers
   const initialUserState = {
     userId: cookies.id || '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    address: {},
-    host: null,
-    listing_ids: [],
+    first_name: currUser.first_name || '',
+    last_name: currUser.last_name || '',
+    email: currUser.email || '',
+    password: currUser.password || '',
+    address: currUser.address || {},
+    host: currUser.host || null,
+    listing_ids: currUser.listing_ids || [],
+    booking_ids: currUser.booking_ids || [],
+    image: currUser.image || '',
+    about: currUser.about || '',
   };
 
   const styles = useStyles();
@@ -65,7 +70,6 @@ const UserProfile = props => {
     }
   }, [cookies.id]);
 
-  const { setListings, listings } = props;
   let listingIds = user.listing_ids;
   // const [listingIds, setListingIds] = useState(user.listing_ids);
   //const [bookingIds, setBookingIds] = useState(user.booking_ids);
@@ -131,10 +135,17 @@ const UserProfile = props => {
 
   const deleteBooking = async bookingId => {
     const updatedBookings = [...user.booking_ids];
-    const index = updatedBookings.indexOf(function (booking) {
-      return booking.booking === bookingId;
+    console.log(`deleteBooking - updatedBookings:`);
+    console.log(updatedBookings);
+    let bookingIndex;
+    updatedBookings.forEach((booking, index) => {
+      console.log(`index booking: ${booking}`);
+      if (booking.booking === bookingId) {
+        bookingIndex = index;
+      }
     });
-    updatedBookings.splice(index, 1);
+    console.log(`deleteBooking - index: ${bookingIndex}`);
+    updatedBookings.splice(bookingIndex, 1);
 
     await Promise.resolve(
       setUser(prev => ({ ...prev, booking_ids: updatedBookings }))
@@ -149,6 +160,7 @@ const UserProfile = props => {
   };
 
   const handleDeleteBooking = bookingId => {
+    console.log(`handleDeleteBooking: ${bookingId}`);
     deleteBooking(bookingId);
   };
 

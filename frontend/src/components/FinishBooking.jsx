@@ -37,8 +37,14 @@ const FinishingBooking = props => {
   const finalizeBooking = async () => {
     console.log(newBooking);
     await UsersDataService.updateUserBookings(user, newBooking)
-      .then(() => {
+      .then(response => {
+        const newBooking = response.data.adResponse.updatedNewBooking;
         console.log(`Added new booking.`);
+        console.log(response.data.adResponse);
+        const updatedBookings = [...user.booking_ids, newBooking];
+        Promise.resolve(
+          setUser(prev => ({ ...prev, booking_ids: updatedBookings }))
+        );
       })
       .catch(e => {
         console.log(e);
