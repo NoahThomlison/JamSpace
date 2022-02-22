@@ -36,7 +36,7 @@ const Filters = props => {
 
   const onChangeSearchInstrumentType = e => {
     const instrumentType = e.target.value;
-    if(instrumentType === true) {
+    if(instrumentType) {
       setSearchInstrumentType(instrumentType);
       setSearchType("instrumentType")
     }
