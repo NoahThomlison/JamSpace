@@ -1,17 +1,18 @@
-import { Typography, Container, } from '@mui/material';
-import React from 'react';
+import { Typography, Container } from "@mui/material";
+import React from "react";
+import AboutUs from "../staticData/AboutUs";
 
-const About = props => {
-
-  return (
-    <Container sx={{marginBottom: "50px"}}>
-      <Typography variant="h2" sx={{fontWeight: "800"}}>About Us</Typography>
-      <hr></hr>
-      <Typography>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris in lorem in orci interdum cursus et eu massa. Donec sagittis tellus quis lectus aliquet luctus.Morbi   quis  vehicula purus. Donec eleifend eleifend felis in tempus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer tristique eros turpis,consectetur  interdum  lorem ultricies quis. Mauris nec mi vulputate, porttitor ex a, ullamcorper arcu. Mauris et erat molestie, euismod felis at, vulputate eros.Mauris lacinia   ante lacus,   eget dictum est dapibus at. Donec pharetra tincidunt felis eget bibendum. Nulla non dapibus eros. Pellentesque eget elementum velit.Vestibulum eget  eleifend odio. Sed ex  dolor.
-      </Typography>
-    </Container>
-  );
+const About = (props) => {
+	return (
+		<Container sx={{ marginBottom: "50px" }}>
+			<Typography variant="h2" sx={{ fontWeight: "800" }}>
+				About Us
+			</Typography>
+			<hr></hr>
+			<Typography>{AboutUs[0]}</Typography>
+			<Typography  variant="h6" sx={{display:'flex', justifyContent:'center'}}>{AboutUs[1]}</Typography>
+		</Container>
+	);
 };
 
 export default About;

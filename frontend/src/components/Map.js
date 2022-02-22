@@ -8,12 +8,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Container } from '@mui/material';
 
-import drums from './icons/drums.jpg';
-import keyboard from './icons/keyboard.jpg';
-import bass from './icons/bass.jpg';
-import acoustic from './icons/acoustic.jpg';
-import electric from './icons/electric.jpg';
-import Ad from './Ad.js';
+import drums from "./icons/drums.jpg";
+import keyboard from "./icons/keyboard.jpg";
+import bass from "./icons/bass.jpg";
+import acoustic from "./icons/acoustic.png";
+import electric from "./icons/electric.jpg";
+import Ad from "./Ad.js";
 
 const containerStyle = {
   width: '100%',

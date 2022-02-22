@@ -120,6 +120,7 @@ const Booking = props => {
                   step={step}
                   next={next}
                   back={back}
+                  user={user}
                 ></PaymentBooking>
               ) : (
                 ''

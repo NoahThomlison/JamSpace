@@ -11,14 +11,20 @@ const PaymentBooking = props => {
     getCardImageProps,
     getCardNumberProps,
     getExpiryDateProps,
-    getCVCProps
+    getCVCProps, 
   } = usePaymentInputs();
+
+  const fakeData = {
+    cardNumber: "**** **** **** 1234",
+    expiryDate: "12/12",
+    cvc: "123"
+  }
 
   return (
     <Container>
       <Paper sx={{display:"flex", flexDirection: "column"}}>
-        <TextField className={props.styles.input} id='outlined-basic' name='email' label='Email' variant='outlined'/>
-        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='contact_number'  label='Contact Number' variant='outlined'/>    
+        <TextField className={props.styles.input} id='outlined-basic' name='email' label='Email' variant='outlined' value={props.user.email}/>
+        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='contact_number'  label='Contact Number' variant='outlined' value="1-555-555-5555"/>    
 
         <PaymentInputsWrapper
         {...wrapperProps}
@@ -38,15 +44,15 @@ const PaymentBooking = props => {
           },
         }}>
           <svg {...getCardImageProps({ images })} />
-          <input {...getCardNumberProps()} />
-          <input {...getExpiryDateProps()} />
-          <input {...getCVCProps()} />
+          <input {...getCardNumberProps()} value={fakeData.cardNumber}/>
+          <input {...getExpiryDateProps()} value={fakeData.expiryDate}/>
+          <input {...getCVCProps()} value={fakeData.cvc}/>
         </PaymentInputsWrapper>
 
-        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='name_on_card' label='Name on Card' variant='outlined'/>
+        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='name_on_card' label='Name on Card' variant='outlined' value={props.user.first_name +" "+ props.user.last_name}/>
 
-        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='country' label='Country' variant='outlined'/>
-        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='postal_code' label='Postal Code' variant='outlined'/>
+        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='country' label='Country' variant='outlined' value={props.user.address.country}/>
+        <TextField sx={{marginTop: "10px"}} className={props.styles.input} id='outlined-basic' name='postal_code' label='Postal Code' variant='outlined' value={props.user.address.postal_code}/>
         <Box sx={{display:"flex", justifyContent: "space-around"}}>
           <Button className={props.styles.input} variant="contained" sx={{width: "100%"}} onClick={() => props.next()}>Pay</Button>
           <Button className={props.styles.input} variant="contained" color="error" sx={{width: "100%"}} onClick={() => props.back()}>Back</Button>
