@@ -90,7 +90,7 @@ const IndividualAd = props => {
         console.log(e);
       });
   };
-const isInitialMount = useRef(true);
+  const isInitialMount = useRef(true);
   useEffect(() => {
     getListing(id);
   }, [id]);
@@ -101,7 +101,7 @@ const isInitialMount = useRef(true);
     } else {
       setLoading(false);
     }
-  })
+  });
 
   function callbackFunction(dates) {
     // Need to calculate the rate based on days rented.  eg 10 days is a week and 3 days
@@ -149,13 +149,22 @@ const isInitialMount = useRef(true);
           paddingBottom: '50px',
         }}
       >
-        <Paper sx={{ width: '100%', display: 'flex', padding: '20px' }}>
+        <Paper
+          sx={{
+            width: '100%',
+            display: 'flex',
+            padding: '20px',
+          }}
+        >
           {/* If there is a valid listing, show it, otherwise  */}
           {listing ? (
             <Box
               sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}
             >
-              <Typography variant='h4' sx={{ textAlign: 'center' }}>
+              <Typography
+                variant='h4'
+                sx={{ textAlign: 'center', fontSize: '50px' }}
+              >
                 {listing.title}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
@@ -166,6 +175,7 @@ const isInitialMount = useRef(true);
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '100%',
+                    marginTop: '2rem',
                   }}
                 >
                   <IconButton
@@ -191,14 +201,17 @@ const isInitialMount = useRef(true);
                     display: 'flex',
                     flexDirection: 'column',
                     width: '100%',
-                    zIndex: "10"
+                    zIndex: '10',
+                    marginTop: '2rem',
+                    marginLeft: '1.5rem',
+                    padding: '1.5rem',
                   }}
                 >
                   <IndividualAdDescription
                     listing={listing}
                   ></IndividualAdDescription>
                   <Reserve
-                  sx={{zIndex: "10"}}
+                    sx={{ zIndex: '10' }}
                     listing={listing}
                     booking={booking}
                     callbackFunction={callbackFunction}
@@ -207,11 +220,15 @@ const isInitialMount = useRef(true);
               </Box>
 
               {/* Map */}
-              <Paper>
+              <Paper
+                sx={{
+                  marginTop: '2rem',
+                }}
+              >
                 {!loading ? (
                   <Map sx={{ width: '100%' }} listings={[listing]} />
                 ) : (
-                'loading'
+                  'loading'
                 )}
               </Paper>
               {/* Hosted By */}
@@ -221,11 +238,16 @@ const isInitialMount = useRef(true);
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginTop: 'auto',
+                  marginTop: '2rem',
+                  marginBottom: '2rem',
                 }}
               >
                 <strong>Hosted By: </strong>
-                <img className='prof-img' src={listing.host.image} alt='Host' />
+                <img
+                  className='prof-img my-2'
+                  src={listing.host.image}
+                  alt='Host'
+                />
                 <strong>{listing.host.name}</strong>
                 <em>{listing.host.about}</em>
               </Box>
