@@ -14,7 +14,7 @@ const PaymentBooking = props => {
   } = usePaymentInputs();
 
   const fakeData = {
-    cardNumber: '**** **** **** 1234',
+    cardNumber: '4545 **** **** 1234',
     expiryDate: '12/22',
     cvc: '123',
   };
