@@ -303,7 +303,7 @@ const CreateListing = props => {
                           labelId='demo-simple-select-helper-label'
                           id='demo-simple-select-helper'
                           name='instrument_type'
-                          label='Brand'
+                          label='Instrument_Type'
                           onChange={handleInputChange}
                         >
                           {instruments.map(instrument => {

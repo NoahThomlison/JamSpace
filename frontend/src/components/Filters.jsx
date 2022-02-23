@@ -98,7 +98,6 @@ const Filters = props => {
   };
 
   const findByInstrumentType = () => {
-    // alert("findbyinstrument")
     find(searchInstrumentType, 'instrument_type');
   };
 
@@ -167,7 +166,7 @@ const Filters = props => {
                 labelId='demo-simple-select-label'
                 sx={{ width: '100%' }}
                 id='demo-simple-select'
-                label='Brand'
+                label='Search_By_Brand'
                 onChange={onChangeSearchBrand}
               >
                 <MenuItem value={false}>{'All Brands'}</MenuItem>
@@ -192,7 +191,7 @@ const Filters = props => {
                 labelId='demo-simple-select-label'
                 sx={{ width: '100%' }}
                 id='demo-simple-select'
-                label='Brand'
+                label='Search_By_Instrument_Type'
                 onChange={onChangeSearchInstrumentType}
               >
                 <MenuItem value={false}>{'All Types'}</MenuItem>
