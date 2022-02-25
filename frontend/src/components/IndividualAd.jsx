@@ -185,7 +185,11 @@ const IndividualAd = props => {
                   >
                     <ArrowBackIosIcon color='primary' />
                   </IconButton>
-                  <img src={listing.images[index]} alt='Main' />
+                  <img
+                    style={{ maxWidth: '85%' }}
+                    src={listing.images[index]}
+                    alt='Main'
+                  />
                   <IconButton
                     onClick={() => {
                       next();

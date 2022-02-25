@@ -74,7 +74,7 @@ const CreateListing = props => {
     monthly: null,
     deposit: null,
     images: [
-      'https://www.long-mcquade.com/files/93525/md_807427acf19e77c2ee3cd7b809a479f9.png',
+      'https://cdn.long-mcquade.com/files/136520/md_a406ff1c468f3251eb1f5dd325cc29d9.jpg',
     ],
     user_id: user._id,
     name: `${user.first_name} ${user.last_name}`,
