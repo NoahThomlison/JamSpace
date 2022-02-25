@@ -8,12 +8,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Container } from '@mui/material';
 
-import drums from "./icons/drums.jpg";
-import keyboard from "./icons/keyboard.jpg";
-import bass from "./icons/bass.jpg";
-import acoustic from "./icons/acoustic.png";
-import electric from "./icons/electric.jpg";
-import Ad from "./Ad.js";
+import drums from './icons/drums.jpg';
+import keyboard from './icons/keyboard.jpg';
+import bass from './icons/bass.jpg';
+import acoustic from './icons/acoustic.png';
+import electric from './icons/electric.jpg';
+import Ad from './Ad.js';
 
 const containerStyle = {
   width: '100%',
@@ -78,12 +78,14 @@ function Map(props) {
     };
     return spidered;
   };
+
+  console.log(process.env.REACT_APP_YOUR_API_KEY);
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAHC8XSAh1MI8qao7LNHuOqrc3-RIJjs-I',
+    googleMapsApiKey: process.env.REACT_APP_YOUR_API_KEY,
   });
   if (loadError) {
-    return <div>Map cannot be loaded right now, sorry.</div>;
     console.log('loaderror');
+    return <div>Map cannot be loaded right now, sorry.</div>;
   }
   return isLoaded ? (
     <Container>
