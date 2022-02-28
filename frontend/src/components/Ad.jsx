@@ -13,8 +13,7 @@ function Ad(props) {
   const daily = price.daily;
   const weekly = price.weekly;
   const monthly = price.monthly;
-  const subheader =
-    'D: $' + daily + ' - ' + ' W: $' + weekly + ' - M: $' + monthly;
+  const subheader = `D: $${daily} - W: $${weekly} - M: $${monthly}`;
 
   return (
     <NavLink to={`/listings/${id}`} className='nav-link px-1'>

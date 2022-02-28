@@ -13,7 +13,7 @@ import keyboard from './icons/keyboard.jpg';
 import bass from './icons/bass.jpg';
 import acoustic from './icons/acoustic.png';
 import electric from './icons/electric.jpg';
-import Ad from './Ad.js';
+import Ad from './Ad.jsx';
 
 const containerStyle = {
   width: '100%',
