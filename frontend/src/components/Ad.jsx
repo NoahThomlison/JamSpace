@@ -1,15 +1,19 @@
+// Import React Component
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+
+// Import Material UI
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
-function Ad({ ad, id, description, title, price, images, key }) {
+function Ad(props) {
+  const { id, title, price, images, key } = props;
+  //  Get the first image from the images array
   const image = images[0];
   const daily = price.daily;
   const weekly = price.weekly;
   const monthly = price.monthly;
-  const subheader =
-    'D: $' + daily + ' - ' + ' W: $' + weekly + ' - M: $' + monthly;
+  const subheader = `D: $${daily} - W: $${weekly} - M: $${monthly}`;
 
   return (
     <NavLink to={`/listings/${id}`} className='nav-link px-1'>

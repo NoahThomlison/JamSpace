@@ -1,4 +1,4 @@
-import Ad from './Ad.js';
+import Ad from './Ad.jsx';
 import { Container, Grid, Item, ImageList } from '@mui/material/';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -31,50 +31,50 @@ function AdList(props) {
 
   return (
     <Container
-          sx={{
-          maxWidth: 1,
-          maxHeight: 1,
-          display: 'flex',
-          justifyContents: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {min / adCount > 0 ? (
-          <IconButton
-            onClick={() => {
-              previous();
-            }}
-          >
-            <ArrowBackIosIcon color='primary' />
-          </IconButton>
-        ) : (
-          <IconButton>
-            <ArrowBackIosIcon color='disabled' />
-          </IconButton>
-        )}
-        <ImageList cols={5} rows={3}>
-          {ads.map(ad => {
-            return (
-              <Ad
-                ad={ad}
-                id={ad._id}
-                images={ad.images}
-                price={ad.price}
-                description={ad.description}
-                title={ad.title}
-              />
-            );
-          })}
-        </ImageList>
-        {max / adCount >= slideCount ? (
-          <IconButton>
-            <ArrowForwardIosIcon color='disabled' />
-          </IconButton>
-        ) : (
-          <IconButton onClick={() => next()}>
-            <ArrowForwardIosIcon color='primary' />
-          </IconButton>
-        )}
+      sx={{
+        maxWidth: 1,
+        maxHeight: 1,
+        display: 'flex',
+        justifyContents: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {min / adCount > 0 ? (
+        <IconButton
+          onClick={() => {
+            previous();
+          }}
+        >
+          <ArrowBackIosIcon color='primary' />
+        </IconButton>
+      ) : (
+        <IconButton>
+          <ArrowBackIosIcon color='disabled' />
+        </IconButton>
+      )}
+      <ImageList cols={5} rows={3}>
+        {ads.map(ad => {
+          return (
+            <Ad
+              ad={ad}
+              id={ad._id}
+              images={ad.images}
+              price={ad.price}
+              description={ad.description}
+              title={ad.title}
+            />
+          );
+        })}
+      </ImageList>
+      {max / adCount >= slideCount ? (
+        <IconButton>
+          <ArrowForwardIosIcon color='disabled' />
+        </IconButton>
+      ) : (
+        <IconButton onClick={() => next()}>
+          <ArrowForwardIosIcon color='primary' />
+        </IconButton>
+      )}
     </Container>
   );
 }
