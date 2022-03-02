@@ -1,19 +1,28 @@
+// Import React Components
+import { useState, useEffect } from 'react';
+
+// Import Custom Components
 import Ad from './Ad.jsx';
-import { Container, Grid, Item, ImageList } from '@mui/material/';
+
+// Import Material UI
+import { Container, ImageList } from '@mui/material/';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useState, useEffect } from 'react';
-import '../App.css';
-
 import IconButton from '@mui/material/IconButton';
 
-function AdList(props) {
+// Import Custom Styles
+import '../App.css';
+
+const AdList = props => {
+  const { listings } = props;
+
+  // adCount determines how many listings are displayed on each carousel page
   let adCount = 15;
-  const { listings, setListings } = props;
+  let slideCount = Math.ceil(listings.length / adCount);
+
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(adCount);
   const [ads, setAds] = useState(listings.slice(min, max));
-  let slideCount = Math.ceil(listings.length / adCount);
 
   useEffect(() => {
     setAds(listings.slice(min, max));
@@ -77,6 +86,6 @@ function AdList(props) {
       )}
     </Container>
   );
-}
+};
 
 export default AdList;
