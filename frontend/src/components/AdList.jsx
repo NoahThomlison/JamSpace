@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton';
 // Import Custom Styles
 import '../App.css';
 
+// The AdList component is the carousel on the home page that contains Ad components
 const AdList = props => {
   const { listings } = props;
 

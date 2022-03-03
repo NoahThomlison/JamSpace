@@ -1,4 +1,4 @@
-// Import React Component
+// Import React Components
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -6,13 +6,17 @@ import { NavLink } from 'react-router-dom';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
-function Ad(props) {
+// The Ad component is each individual listing in the carousel on the home page
+const Ad = props => {
   const { id, title, price, images, key } = props;
+
   //  Get the first image from the images array
   const image = images[0];
   const daily = price.daily;
   const weekly = price.weekly;
   const monthly = price.monthly;
+
+  // subheader is the text under the listing description on each ad in the carousel
   const subheader = `D: $${daily} - W: $${weekly} - M: $${monthly}`;
 
   return (
@@ -31,6 +35,6 @@ function Ad(props) {
       </ImageListItem>
     </NavLink>
   );
-}
+};
 
 export default Ad;
