@@ -1,14 +1,22 @@
+// Import React Components
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Paper, Container } from '@mui/material/';
 import { useNavigate } from 'react-router-dom';
 
+// Import Material UI
+import { Paper } from '@mui/material/';
+
+// The ListingCard component displays a listings information on the Listings page.
 const ListingCard = props => {
   const { listing } = props;
   const navigate = useNavigate();
 
+  // Set the address text on the ListingCard
   const address = `${listing.address.city}, ${listing.address.province}, ${listing.address.postal_code}`;
+
+  // Get the length of the specific listings description
   const descLength = listing.description.length;
+
+  // Sets the max allowable description length to display on the listings page in the ListingCard
   const maxLength = 250;
 
   const navigateToAd = listing => {
@@ -40,7 +48,7 @@ const ListingCard = props => {
         </div>
         <p className='card-text'>
           {descLength > maxLength
-            ? listing.description.substring(0, 200) + '  . . .'
+            ? listing.description.substring(0, maxLength) + '  . . .'
             : listing.description}
           <br />
           <br />

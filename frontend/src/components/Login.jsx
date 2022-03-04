@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+// The Login component allows the user to log into the application on the Login page.
 const Login = props => {
   // Pull in the login and setUser functions and the current user info
   const { login, handleCookie, setUser, user } = props;
