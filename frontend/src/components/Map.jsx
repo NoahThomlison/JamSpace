@@ -20,6 +20,7 @@ import bass from './icons/bass.jpg';
 import acoustic from './icons/acoustic.png';
 import electric from './icons/electric.jpg';
 
+// The Map component uses the Google API to put all ads on the map on the homepage and a single ad on the IndividualAd component
 const Map = props => {
   const { listings, user } = props;
 
@@ -28,6 +29,7 @@ const Map = props => {
     height: '400px',
   };
 
+  // Custom icons on the map
   const icons = {
     Drums: drums,
     'Acoustic Guitar': acoustic,
