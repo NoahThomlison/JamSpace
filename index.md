@@ -9,7 +9,7 @@ This app was built by [Brett](https://github.com/bbjarvis), [Noah](https://githu
 ## Screenshots
 
 ### Home Page
-![](Home_Page.gif)
+![screenshots](Home_Page.gif)
 
 ### Home Page Listings
 ![](Home_Listings.gif)
