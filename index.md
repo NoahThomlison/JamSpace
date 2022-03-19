@@ -9,10 +9,10 @@ This app was built by [Brett](https://github.com/bbjarvis), [Noah](https://githu
 ## Screenshots
 
 ### Home Page
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Page.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Page.gif?raw=true)
 
 ### Home Page Listings
-![](Home_Listings.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif)
 
 ### Filtered Home Page Listings
 ![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif)
