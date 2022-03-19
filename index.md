@@ -30,5 +30,5 @@ This app was built by [Brett](https://github.com/bbjarvis), [Noah](https://githu
 ![](Listings.gif)
 
 ### Booking an Instrument
-![](Booking.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Booking.gif)
 
