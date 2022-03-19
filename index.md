@@ -12,23 +12,23 @@ This app was built by [Brett](https://github.com/bbjarvis), [Noah](https://githu
 ![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Page.gif?raw=true)
 
 ### Home Page Listings
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif?raw=true)
 
 ### Filtered Home Page Listings
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif?raw=true)
 
 ### Create a Listing
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Listings.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Listings.gif?raw=true)
 
 ### Using Google Maps
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Map_Listing.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Map_Listing.gif?raw=true)
 
 ### My Profile
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/My_Profile_page.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/My_Profile_page.gif?raw=true)
 
 ### Listings
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Listings.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Listings.gif?raw=true)
 
 ### Booking an Instrument
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Booking.gif)
+![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Booking.gif?raw=true)
 
