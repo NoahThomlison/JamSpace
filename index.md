@@ -11,9 +11,6 @@ This app was built by [Brett](https://github.com/bbjarvis), [Noah](https://githu
 ### Home Page
 ![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Page.gif?raw=true)
 
-### Home Page Listings
-![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif?raw=true)
-
 ### Filtered Home Page Listings
 ![](https://github.com/NoahThomlison/JamSpace/blob/master/screenshots/Home_Listings.gif?raw=true)
 
