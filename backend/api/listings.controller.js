@@ -2,6 +2,7 @@ import { parse } from 'dotenv';
 import ListingsDAO from '../dao/listingsDAO.js';
 
 export default class ListingsController {
+  // Gets all the listings stored in the database.
   static async apiGetListings(req, res, next) {
     const listingsPerPage = req.query.listingsPerPage
       ? parseInt(req.query.listingsPerPage, 10)
@@ -35,6 +36,7 @@ export default class ListingsController {
     res.json(response);
   }
 
+  // Gets a single listing from the database by looking for the passed in id.
   static async apiGetListingById(req, res, next) {
     try {
       let id = req.params.id || {};

@@ -49,7 +49,6 @@ export default class AdsController {
     }
   }
 
-  // This may not work correctly
   static async apiUpdateAd(req, res, next) {
     try {
       const adId = req.body.ad_id;
