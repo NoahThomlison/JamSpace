@@ -144,6 +144,7 @@ export default class UsersController {
     }
   }
 
+  // Delete a specific booking
   static async apiDeleteBooking(req, res, next) {
     try {
       const user_id = req.body.userId;
