@@ -1,5 +1,6 @@
 # JamSpace
 
+## Project Summary
 Online marketplace that connects people with musical instruments they want to rent out to people who want to rent instruments.
 
 This can be person to person, band (especially touring bands), organization (recording studio), and so on.
